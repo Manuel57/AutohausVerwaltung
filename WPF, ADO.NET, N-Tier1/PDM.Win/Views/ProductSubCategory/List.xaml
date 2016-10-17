@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="PDM.Win.Views.ProductSubCategory.List"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+
+
+    <DataGrid Background="#F4EFE9" Margin="0,20,0,0" BorderBrush="Transparent" ItemsSource="{ Binding ProductSubCategoryCollection, Mode=TwoWay}"
+                      BorderThickness="0" Grid.Row="2"  SelectedItem="{Binding SelectedItem}"
+                      AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid.Resources>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+        </DataGrid.Resources>
+        <DataGrid.CellStyle>
+            <Style TargetType="{x:Type DataGridCell}">
+                <Setter Property="Background" Value="#F4EFE9"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                <Style.Triggers>
+                    <Trigger Property="DataGridCell.IsSelected" Value="True">
+                        <Setter Property="Foreground" Value="Black" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Sub Category Name" Width="1.5*" Binding="{Binding Name}"/>
+            <DataGridTextColumn Header="Category Name" Width="1.5*" Binding="{ Binding CategoryName}"/>
+            <DataGridTemplateColumn Width=".5*" Header="Details" >
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Height="30" Click="Details_Click" HorizontalAlignment="Center" 
+                                ToolTip="Detail SubCategory">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/PDM.Win;component/Resources/Images/list.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Width=".5*" Header="Edit">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Height="30" Click="Edit_Click" HorizontalAlignment="Center"
+                                ToolTip="Edit SubCategory">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/PDM.Win;component/Resources/Images/edit.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Width=".5*" Header="Delete">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Height="30" Click="Delete_Click" HorizontalAlignment="Center"
+                                ToolTip="Delete SubCategory">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/PDM.Win;component/Resources/Images/delete.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

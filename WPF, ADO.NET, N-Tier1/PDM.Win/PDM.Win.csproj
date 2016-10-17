@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1F7F0E5D-43CD-4DF1-A66F-EC4AB70B1E46}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PDM.Win</RootNamespace>
+    <AssemblyName>PDM.Win</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFTextBoxAutoComplete">
+      <HintPath>..\packages\WPFTextBoxAutoComplete.1.0.0\lib\net40\WPFTextBoxAutoComplete.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Events\CustomEventArgs.cs" />
+    <Compile Include="Events\EventArgs.cs" />
+    <Compile Include="Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\Create.xaml.cs">
+      <DependentUpon>Create.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\Delete.xaml.cs">
+      <DependentUpon>Delete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\Details.xaml.cs">
+      <DependentUpon>Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\List.xaml.cs">
+      <DependentUpon>List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductCategory\ToolBar.xaml.cs">
+      <DependentUpon>ToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\Create.xaml.cs">
+      <DependentUpon>Create.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\Delete.xaml.cs">
+      <DependentUpon>Delete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\Details.xaml.cs">
+      <DependentUpon>Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\List.xaml.cs">
+      <DependentUpon>List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductModel\ToolBar.xaml.cs">
+      <DependentUpon>ToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\Create.xaml.cs">
+      <DependentUpon>Create.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\Delete.xaml.cs">
+      <DependentUpon>Delete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\Details.xaml.cs">
+      <DependentUpon>Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\List.xaml.cs">
+      <DependentUpon>List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductSubCategory\ToolBar.xaml.cs">
+      <DependentUpon>ToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\Create.xaml.cs">
+      <DependentUpon>Create.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\Delete.xaml.cs">
+      <DependentUpon>Delete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\Details.xaml.cs">
+      <DependentUpon>Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\List.xaml.cs">
+      <DependentUpon>List.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Product\Create.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Product\Delete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Product\Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Product\Edit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Product\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Product\List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Resources\Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Page Include="Search.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\Create.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\Delete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\Edit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductCategory\ToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductModel\Create.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductModel\Delete.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductModel\Details.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductModel\Edit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductModel\Index.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductModel\List.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductModel\ToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\Create.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\Delete.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\Details.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\Edit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\Index.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\List.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductSubCategory\ToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\add.PNG" />
+    <Resource Include="Resources\Images\delete.PNG" />
+    <Resource Include="Resources\Images\edit.PNG" />
+    <Resource Include="Resources\Images\list.PNG" />
+    <Resource Include="Resources\Images\refresh.PNG" />
+    <Resource Include="Resources\Images\search.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\PDM.Business.Balc\PDM.Business.Balc.csproj">
+      <Project>{357ec9d6-11cd-48e5-8ee5-507e0ec884c2}</Project>
+      <Name>PDM.Business.Balc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Business\PDM.Business.Entities\PDM.Business.Entities.csproj">
+      <Project>{beaaad1b-8fb8-44ae-931f-da2b63672385}</Project>
+      <Name>PDM.Business.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Business\PDM.Business.IBalc\PDM.Business.IBalc.csproj">
+      <Project>{4a683ff2-1b7a-4c16-9614-21b41e4ae7b5}</Project>
+      <Name>PDM.Business.IBalc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\PDM.UI.Common\PDM.UI.Common.csproj">
+      <Project>{1772e832-1ac9-4605-ac30-b0e11f0bce09}</Project>
+      <Name>PDM.UI.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\PDM.UI.Entities\PDM.UI.Entities.csproj">
+      <Project>{79ce0607-095e-4a3e-8140-f9a8dfa3836a}</Project>
+      <Name>PDM.UI.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\PDM.UI.Mapper\PDM.UI.Mapper.csproj">
+      <Project>{01899d53-08e1-4a75-94c0-fc9ed7c6ce2f}</Project>
+      <Name>PDM.UI.Mapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

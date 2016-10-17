@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Copyright © Microsoft Corporation.  All Rights Reserved.
+// This code released under the terms of the 
+// Microsoft Public License (MS-PL, http://opensource.org/licenses/ms-pl.html.)
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,18 +15,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LagerVerwaltung
+namespace EmployeeTracker.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EmployeeDetailView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EmployeeDetailView : UserControl
     {
-        public MainWindow()
+        public EmployeeDetailView()
         {
-
             InitializeComponent();
-
         }
     }
 }

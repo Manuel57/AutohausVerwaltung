@@ -13,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LagerVerwaltung
+namespace PDM.Win.Views.ProductModel
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Index.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Index : UserControl
     {
-        public MainWindow()
+        public Index()
         {
-
             InitializeComponent();
-
         }
     }
 }

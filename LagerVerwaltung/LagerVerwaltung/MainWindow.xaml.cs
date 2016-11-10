@@ -30,9 +30,8 @@ namespace LagerVerwaltung
             //tom
             //nope
             InitializeComponent();
-            
+           
 
-            //Hallo
         }
     }
 }

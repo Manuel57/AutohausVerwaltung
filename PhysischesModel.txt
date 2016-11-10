@@ -1,0 +1,131 @@
+Create Table WerkstattKonzern(
+Name varchar2(50) primary key
+);
+
+CREATE TABLE Kunde(
+	KundenID     	INTEGER,
+  WerkstattKonzern varchar2(50),
+	Vorname     	VARCHAR2(50),
+	GebDate     	DATE,
+	Password     	VARCHAR2(200),
+	Username     	VARCHAR2(20) unique,
+	PRIMARY KEY (KundenID),
+  Foreign key (WerkstattKonzern) references WerkstattKonzern(Name)
+);
+
+
+CREATE TABLE Werkstatt(
+	Standort     VARCHAR2(100),
+	WerkstattKonzern   	 VARCHAR2(50),
+  Name Varchar2(50),
+	Koordinaten	 SDO_GEOMETRY,
+	PRIMARY KEY (Standort),
+  Foreign key (WerkstattKonzern) references WerkstattKonzern(Name)
+
+);
+INSERT INTO user_sdo_geom_metadata
+( TABLE_NAME,
+COLUMN_NAME,
+DIMINFO,
+SRID
+)
+VALUES
+( 'Werkstatt',
+'Koordinaten',
+ SDO_DIM_ARRAY( 
+      SDO_DIM_ELEMENT('x',-10000000000000,10000000000000,0.00005),
+      SDO_DIM_ELEMENT('y',-10000000000000,10000000000000,0.00005)),
+NULL -- SRID
+);
+
+CREATE INDEX idx_wekstatt ON Werkstatt(Koordinaten) INDEXTYPE IS MDSYS.SPATIAL_INDEX;
+
+Create Table AutoTeile(
+Bezeichnung varchar2(100) primary key,
+Preis DECIMAL
+);
+CREATE TABLE WerkstattLager(
+	Standort			VARCHAR2(100),
+	Bezeichnung		VARCHAR2(100),
+	Lagerbastand	INTEGER,
+	PRIMARY KEY (Bezeichnung, STANDORT),
+	FOREIGN KEY (Bezeichnung) REFERENCES AutoTeile(Bezeichnung),
+	FOREIGN KEY (STANDORT) REFERENCES Werkstatt(STANDORT)
+);
+CREATE TABLE Reparaturart(
+ReparaturartID integer,
+	Bezeichnung     VARCHAR2(50),
+	Preis    	    INTEGER,
+	PRIMARY KEY (ReparaturartID)
+);
+CREATE TABLE Rechnung(
+	Rechnungsnummer     INTEGER,
+	RDatum    			DATE,
+	Gesamtpreis     	INTEGER,
+  KundenID        Integer,
+	PRIMARY KEY (Rechnungsnummer),
+  FOREIGN KEY (KundenID) references Kunde(KundenID)
+);
+
+create Table ReparaturTeile(
+AutoTeilBez varchar2(50),
+ReparaturArtId integer,
+primary key (AutoTeilBez,ReparaturArtId),
+Foreign key (AutoTeilBez) references AutoTeile(Bezeichnung),
+Foreign key (ReparaturArtId) references Reparaturart(ReparaturartID)
+);
+
+CREATE TABLE ReparaturAngebot(
+	Standort     	VARCHAR2(100),
+	ReparaturartId     integer,
+	PRIMARY KEY (Standort, ReparaturartId),
+	FOREIGN KEY (STANDORT) REFERENCES  Werkstatt(STANDORT),
+	FOREIGN KEY (ReparaturartId) REFERENCES Reparaturart(ReparaturartId)
+);
+
+CREATE TABLE Reparatur(
+	RepID     			INTEGER,
+	Datum    			DATE,
+	RechnungsNr     	INTEGER,
+	RepArtId        Integer,
+  Standort varchar2(100),
+	PRIMARY KEY (RepID,RechnungsNr),
+	FOREIGN KEY (RECHNUNGSNR) REFERENCES RECHNUNG(RECHNUNGSNUMMER),
+	FOREIGN KEY (RepArtId,Standort) REFERENCES ReparaturAngebot(ReparaturartId,Standort)
+  
+);
+
+drop table zentrallager cascade CONSTRAINTS;
+CREATE TABLE Zentrallager(
+	Standort     	VARCHAR2(100),
+	KoordinatenZ    SDO_GEOMETRY,
+	Name     		VARCHAR2(50),
+	PRIMARY KEY (Standort)
+);
+
+INSERT INTO user_sdo_geom_metadata
+( TABLE_NAME,
+COLUMN_NAME,
+DIMINFO,
+SRID
+)
+VALUES
+( 'Zentrallager',
+'koordinatenz',
+ SDO_DIM_ARRAY( 
+      SDO_DIM_ELEMENT('x',-10000000000000,10000000000000,0.0005),
+      SDO_DIM_ELEMENT('y',-10000000000000,10000000000000,0.0005)),
+NULL -- SRID
+);
+
+CREATE INDEX idx_zentrallager ON Zentrallager(koordinatenz) INDEXTYPE IS MDSYS.SPATIAL_INDEX;
+
+
+
+CREATE TABLE ZentrallagerBestand(
+	STANDORT     	VARCHAR2(100),
+	Bezeichnung     VARCHAR2(50),
+	PRIMARY KEY (Bezeichnung, STANDORT),
+	FOREIGN KEY (STANDORT) REFERENCES Zentrallager (STANDORT),
+	FOREIGN KEY (BEZEICHNUNG) REFERENCES AutoTeile (BEZEICHNUNG)
+);

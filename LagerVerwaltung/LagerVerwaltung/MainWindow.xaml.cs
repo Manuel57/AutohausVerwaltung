@@ -22,7 +22,8 @@ namespace LagerVerwaltung
     {
         public MainWindow()
         {
-            //Hello
+            //new
+            //method
             //by 
             //This is my project
             //bla

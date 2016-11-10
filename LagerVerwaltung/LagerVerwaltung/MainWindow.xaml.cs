@@ -27,9 +27,9 @@ namespace LagerVerwaltung
             //This is my project
             //bla
             //tom
+            //nope
             InitializeComponent();
             
-
 
             //Hallo
         }

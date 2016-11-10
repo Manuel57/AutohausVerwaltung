@@ -23,6 +23,7 @@ namespace LagerVerwaltung
         public MainWindow()
         {
             //Hello
+            //by thomas
             InitializeComponent();
         }
     }

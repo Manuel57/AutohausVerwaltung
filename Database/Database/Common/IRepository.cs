@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace Database.Common
 {
-    public interface IRepository<T> where T : IEntity
+    // <copyright file="Databast.Common.IRepository">
+    // Copyright (c) 2016 All Rights Reserved
+    // <author>Manuel Lackenbucher</author>
+    // <author>Thomas Huber</author>
+    // </copyright>
+    /// <summary>
+    /// Repository interface
+    /// </summary>
+    public interface IRepository
     {
-        void Save(T entity);
-        void Delete(T entity);
-        T GetById(object objId);
+        
+        void Save<T>(T entity ) where T : IEntity;
+        void Delete<T>( T entity ) where T : IEntity;
+        T GetById<T>( object objId ) where T : IEntity;
 
-        IQueryable<TEntity> ToList<TEntity>();
+        IQueryable<T> ToList<T>( ) where T : IEntity;
     }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace Database.Configuration
 {
-    public interface IRepository 
+    
+    public enum Dialect
     {
-        //nein
+        Oracle11gDialect,
+        Oracle10gDialect
     }
 }

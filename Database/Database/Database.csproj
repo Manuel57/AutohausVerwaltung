@@ -63,6 +63,7 @@
     <Compile Include="Connection\DbUser.cs" />
     <Compile Include="Connection\Defaults\DefaultConfig.cs" />
     <Compile Include="Connection\IDbUser.cs" />
+    <Compile Include="DatabaseException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

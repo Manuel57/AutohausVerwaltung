@@ -28,7 +28,7 @@ namespace Database.Configuration
         private string provider = DefaultConfig.OLEDB_PROVIDER;
         private string service = DefaultConfig.SERVICE_NAME;
         private string dataSource = null;
-        private DbUser user = null;
+        private IDbUser user = null;
         private Type dirver =null;
         private Type dialect=null;
 
@@ -75,7 +75,7 @@ namespace Database.Configuration
         {
             this.provider = provider;
         }
-        public void registerUser(DbUser user)
+        public void registerUser(IDbUser user)
         {
             this.user = user;
         }

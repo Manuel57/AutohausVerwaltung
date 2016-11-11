@@ -9,6 +9,7 @@ using NHibernate;
 using NHibernate.Driver;
 using NHibernate.Dialect;
 using System.Reflection;
+using System.Net;
 
 namespace Database.Configuration
 {
@@ -25,11 +26,11 @@ namespace Database.Configuration
             
         private string provider = DefaultConfig.OLEDB_PROVIDER;
         private string service = DefaultConfig.SERVICE_NAME;
-        private string dataSource = null;
+        private IPAddress dataSource = null;
         private IDbUser user = null;
         private Type dirver =null;
         private Type dialect=null;
-
+        
         private static DatabaseConfiguration instance;
 
         private DatabaseConfiguration( ) { }
@@ -39,7 +40,7 @@ namespace Database.Configuration
         public Type Driver { get { return dirver; } }
         public Type Dialect { get { return dialect; } }
 
-        public void registerAll(string provider, string dataSource, string service, DbUser user, Type dialect, Type driver, Assembly assembly)
+        public void registerAll(string provider, IPAddress dataSource, string service, DbUser user, Type dialect, Type driver, Assembly assembly)
         {
             this.registerAssembly(assembly);
             this.registerDataSource(dataSource);
@@ -65,7 +66,7 @@ namespace Database.Configuration
         {
             this.service = servicename;
         }
-        public void registerDataSource(string dataSource)
+        public void registerDataSource(IPAddress dataSource)
         {
             this.dataSource = dataSource;
         }

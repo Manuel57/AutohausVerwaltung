@@ -1,4 +1,5 @@
 ﻿using Database.Configuration;
+using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,11 @@ namespace Database.Common.Impl
         public void SaveMore<T>(IEnumerable<T> items) where T : IEntity
         {
             //könnt ma noch brauchen vlt
+            throw new NotImplementedException();
+        }
+        public IQueryable<T> Select<T>(ICriteria creteria)
+        {
+            //Könnt ka vlt ah noch brauchen wür spezielle where und so
             throw new NotImplementedException();
         }
 

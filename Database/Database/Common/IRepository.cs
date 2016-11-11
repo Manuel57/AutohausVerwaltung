@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NHibernate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Database.Common
     /// </summary>
     public interface IRepository
     {
-        
+        IQueryable<T> Select<T>( ICriteria creteria );
         void Save<T>(T entity ) where T : IEntity;
         void SaveMore<T>(IEnumerable<T> items) where T : IEntity;
         void Delete<T>( T entity ) where T : IEntity;

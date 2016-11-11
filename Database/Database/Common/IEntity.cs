@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace Database.Common
 {
-    public interface IRepository
+    public interface IEntity
     {
     }
 }

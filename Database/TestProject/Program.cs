@@ -15,6 +15,13 @@ using System.Net;
 namespace TestProject
 {
 
+    // <copyright file="">
+    // Copyright (c) 2016 All Rights Reserved
+    // <author>Manuel Lackenbucher</author>
+    // <author>Thomas Huber</author>
+    // <date></date>
+    // </copyright>
+
     class Program
     {
         static void Main( string[] args )

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    public class Database
+    public interface IRepository
     {
     }
 }

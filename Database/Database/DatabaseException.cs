@@ -14,7 +14,7 @@ namespace Database
 
         public Exception ExceptionThrown
         {
-            set
+            private set
             {
                 if(value is Exception)
                 {
@@ -34,7 +34,7 @@ namespace Database
         
         public DatabaseException(Exception exThrown, string customMessage, params object[] information)
         {
-            ExceptionThrown = exThrown;
+            this.ExceptionThrown = exThrown;
             this.customMessage = customMessage;
             this.information = information;
         }

@@ -10,6 +10,7 @@ using Database.Connection;
 using System.Reflection;
 using Database.Common.Impl;
 using Database.Common;
+using System.Net;
 
 namespace TestProject
 {
@@ -20,7 +21,7 @@ namespace TestProject
         {
             DatabaseConfiguration.Instance.registerAll(
                 DefaultConfig.OLEDB_PROVIDER ,
-                "212.152.179.117" , "ora11g" , new DbUser("d5a09" , "d5a") ,
+                IPAddress.Parse("212.152.179.117") , "ora11g" , new DbUser("d5a09" , "d5a") ,
                 DefaultConfig.ORACLE_DIALECT , DefaultConfig.ORACLE_DRIVER ,
                 Assembly.GetExecutingAssembly());
 

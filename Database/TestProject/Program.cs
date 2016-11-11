@@ -23,6 +23,7 @@ namespace TestProject
                 "212.152.179.117" , "ora11g" , new DbUser("d5a09" , "d5a") ,
                 DefaultConfig.ORACLE_DIALECT , DefaultConfig.ORACLE_DRIVER ,
                 Assembly.GetExecutingAssembly());
+
             IRepository repository = RepositoryFactory.Instance.
                                     CreateRepository<Repository>();
 

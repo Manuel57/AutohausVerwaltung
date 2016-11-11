@@ -19,7 +19,7 @@ namespace Database.Configuration
     // <author>Thomas Huber</author>
     // </copyright>
     /// <summary>
-    /// Class holding the configuration settings or the database
+    /// Class holding the configuration settings for the database
     /// </summary>
     public class DatabaseConfiguration
     {

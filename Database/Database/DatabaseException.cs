@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    internal class DatabaseException
+
+    // <copyright file="Database.DatabaseException">
+    // Copyright (c) 2016 All Rights Reserved
+    // <author>Manuel Lackenbucher</author>
+    // <author>Thomas Huber</author>
+    // </copyright>
+
+    /// <summary>
+    /// DatabaseExcption class 
+    /// own excetpion to throw
+    /// </summary>
+    internal class DatabaseException : Exception
     {
         private Exception exceptionThrown = null;
         private string customMessage = string.Empty;

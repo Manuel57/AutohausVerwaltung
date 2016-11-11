@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database.Common
+namespace Database
 {
-    public interface IEntity
+    public interface IRepository 
     {
+        //nein
     }
 }

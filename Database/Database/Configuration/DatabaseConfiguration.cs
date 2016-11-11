@@ -22,8 +22,6 @@ namespace Database.Configuration
     /// </summary>
     public class DatabaseConfiguration
     {
-        //private static Log4NetLoggerFactory logger = new Log4NetLoggerFactory();
-
             
         private string provider = DefaultConfig.OLEDB_PROVIDER;
         private string service = DefaultConfig.SERVICE_NAME;
@@ -110,7 +108,7 @@ namespace Database.Configuration
             }
             catch ( Exception e )
             {
-                ExceptionHelper.HandleException(e , null, "Error at creating connection string");
+
             }
             return s;
         }

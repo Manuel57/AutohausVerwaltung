@@ -32,8 +32,8 @@ namespace Database.Common
         T SelectSingleWhere<T>(Expression<Func<T, bool>> expression);
         IQueryable<T> SelectManyWhere<T>(Expression<Func<T, bool>> expression);
 
-        void Save<T>(T entity ) where T : IEntity;
-        void SaveMore<T>(IEnumerable<T> items) where T : IEntity;
+        void SaveOrUpdate<T>(T entity ) where T : IEntity;
+        void SaveOrUpdateMore<T>(IEnumerable<T> items) where T : IEntity;
         void Delete<T>( T entity ) where T : IEntity;
         void DeleteWhere<T>(DetachedCriteria criteria);
         T GetById<T>( object objId ) where T : IEntity;

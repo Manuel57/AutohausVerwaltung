@@ -25,11 +25,17 @@ namespace Database.Common.Impl
 
         public T GetById<T>( object objId ) where T : IEntity
         {
-            return Database.Connection.Database.OpenSession().Get<T>(objId);
+            return Connection.Database.OpenSession().Get<T>(objId);
         }
 
         public void Save<T>( T entity ) where T : IEntity
         {
+            throw new NotImplementedException();
+        }
+
+        public void SaveMore<T>(IEnumerable<T> items) where T : IEntity
+        {
+            //könnt ma noch brauchen vlt
             throw new NotImplementedException();
         }
 

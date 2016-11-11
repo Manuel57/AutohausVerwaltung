@@ -18,9 +18,11 @@ namespace Database.Common
     {
         
         void Save<T>(T entity ) where T : IEntity;
+        void SaveMore<T>(IEnumerable<T> items) where T : IEntity;
         void Delete<T>( T entity ) where T : IEntity;
         T GetById<T>( object objId ) where T : IEntity;
 
         IQueryable<T> ToList<T>( ) where T : IEntity;
+       
     }
 }

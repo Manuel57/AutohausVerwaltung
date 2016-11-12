@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Criterion;
 using System.Linq.Expressions;
+using NHibernate.Linq;
 
 namespace Database.Common.Impl
 {
@@ -18,13 +19,17 @@ namespace Database.Common.Impl
     /// <summary>
     /// Repository class
     /// </summary>
-    public class Repository : IRepository
+    
+        //wie werma den das mitn session close machn?? 
+        //lass ma de imma offen oda machma imma a neue oda ka?
+    public class Repository :  IRepository, IDisposable
     {
-        protected ISession Session = null;
+        protected ISession session = null;
         protected ITransaction Transaction = null;
-        public Repository( ) { }
+        public Repository(ISession _session ) { session = _session; }
+        public Repository() { /*session = database.openSession();*/}
 
-        #region transaction methods
+        #region transaction session methods
         /// <summary>
         /// commits the transaction and 
         /// closes it
@@ -37,13 +42,14 @@ namespace Database.Common.Impl
         
         /// <summary>
         /// Rollbacks the transaction
-        /// and closes it
+        /// and closes it.
+        /// Closes the session!
         /// </summary>
         public void RollbackTransaction()
         {
             Transaction.Rollback();
             CloseTransaction();
-
+           
         }
 
         /// <summary>
@@ -55,19 +61,27 @@ namespace Database.Common.Impl
             Transaction.Dispose();
             Transaction = null;
         }
+
+        private void CloseSession()
+        {
+            session.Close();
+            session.Dispose();
+            session = null;
+        }
         #endregion
-       
-        
+
+
+        #region other methods like save/update delete ...
         /// <summary>
         /// Returns the number of entities matching the given criteria
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="creteria"></param>
         /// <returns>count as long</returns>
-        public long CountWhere<T>(DetachedCriteria criteria)
+        public long CountWhere<T>(DetachedCriteria criteria) where T : IEntity
         {
             try {
-                return Convert.ToInt64(criteria.GetExecutableCriteria(Session)
+                return Convert.ToInt64(criteria.GetExecutableCriteria(session)
                      .SetProjection(Projections.RowCountInt64()).UniqueResult());
             }
             catch(Exception ex)
@@ -88,8 +102,8 @@ namespace Database.Common.Impl
         {
             try
             {
-                Transaction = Session.BeginTransaction();
-                Session.Delete(entity);
+                Transaction = session.BeginTransaction();
+                session.Delete(entity);
                 CommitTransaction();
             }
             catch(Exception ex)
@@ -99,9 +113,30 @@ namespace Database.Common.Impl
             }
         }
 
-        public void DeleteWhere<T>(DetachedCriteria creteria)
+        /// <summary>
+        /// calls the delete method foreach entity matching the
+        /// given criteria
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="criteria"></param>
+        public void DeleteWhere<T>(DetachedCriteria criteria) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                //kann sicha anders gmacht werden!!
+                foreach(T entity in SelectManyWhere<T>(criteria))
+                {
+                    Delete(entity);
+                }
+            }
+            catch(DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in deletewhere!"));
+            }
         }
 
         /// <summary>
@@ -135,8 +170,8 @@ namespace Database.Common.Impl
         {
             try
             {
-                Transaction = Session.BeginTransaction();
-                Session.SaveOrUpdate(entity);
+                Transaction = session.BeginTransaction();
+                session.SaveOrUpdate(entity);
                 CommitTransaction();
             }
             catch (Exception ex)
@@ -171,26 +206,93 @@ namespace Database.Common.Impl
             }
             
         }
+        #endregion
 
         #region Criteria methods
-        public IQueryable<T> Select<T>(DetachedCriteria creteria)
+
+        /// <summary>
+        /// selects a certain amount of entitys 
+        /// matching a given criteria.
+        /// Should be used if a lot of data is expected!!
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="criteria"></param>
+        /// <param name="firstResult">the index of the first result</param>
+        /// <param name="numberOfResults">how many results do you want to have</param>
+        /// <param name="orders">the order in which it should be selected</param>
+        /// <returns></returns>
+        public IEnumerable<T> SelectCertainNumberWhere<T>(DetachedCriteria criteria, int firstResult, int numberOfResults, params Order[] orders) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                criteria.SetFirstResult(firstResult).SetMaxResults(numberOfResults);
+                return SelectManyWhere<T>(criteria, orders);
+            }
+            catch(DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "Differnet Error in selecting"));
+            }
         }
 
-        public IQueryable<T> SelectCertainNumberWhere<T>(DetachedCriteria creteria, int firstResult, int numberOfResults, params Order[] orders)
+        /// <summary>
+        /// Retunrs the First result matching the given
+        /// criteria or a default entity if there is no result
+        /// thorws an exception if an error occurs.
+        /// Should be used if a lot of data is expected!!
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public T SelectFirstOfMany<T>(DetachedCriteria criteria) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                var results = criteria.SetFirstResult(0).SetMaxResults(1)
+                                .GetExecutableCriteria(session).List<T>();
+                if(results.Count > 0)
+                {
+                    return results[0];
+                }
+                return default(T);
+            }
+            catch(DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select first entity!"));
+            }
         }
 
-        public T SelectFirstOfMany<T>(DetachedCriteria creteria)
+        /// <summary>
+        /// returns the first result matching the criteria given
+        /// and ordered in the given order.
+        /// Throws an Exception if an error occurs.
+        ///  Should be used if a lot of data is expected!!
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="criteria"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public T SelectFirstOfManyOrdered<T>(DetachedCriteria criteria,  Order order) where T : IEntity
         {
-            throw new NotImplementedException();
-        }
-
-        public T SelectFirstOfManyOrdered<T>(DetachedCriteria creteria, params Order[] orders)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                return SelectFirstOfMany<T>(criteria.AddOrder(order));
+            }
+            catch (DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select first entity orderd!"));
+            }
         }
 
 
@@ -203,36 +305,145 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="creteria">the criteria the values are supposed to match</param>
         /// <returns></returns>
-        public IQueryable<T> SelectManyWhere<T>(DetachedCriteria creteria)
+        public IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                return criteria.GetExecutableCriteria(session).List<T>();
+            }
+            catch (DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select all entity!","selectManyWhere"));
+            }
         }
 
-        public IQueryable<T> SelectManyWhere<T>(DetachedCriteria creteria, params Order[] orders)
+      /// <summary>
+      /// returns all entitys matching the given criteria
+      /// and orders the result in the given order.
+      /// Throws an exception if an error occurs.
+      /// Should only be used if a lot of data is expected!!
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="criteria"></param>
+      /// <param name="orders"></param>
+      /// <returns></returns>
+        public IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria, params Order[] orders) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                if(orders != null)
+                {
+                    foreach(var order in orders)
+                    {
+                        criteria.AddOrder(order);
+                    }
+                }
+                return SelectManyWhere<T>(criteria);
+            }
+            catch (DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select all entity!", "selectManyWhere"));
+            }
+
         }
 
-        public T SelectSingle<T>(DetachedCriteria creteria)
+        /// <summary>
+        /// returns the one entity matching the criteria.
+        /// Throws an exception if more than entity matching the criteria.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="creteria"></param>
+        /// <returns></returns>
+        public T SelectSingle<T>(DetachedCriteria criteria) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                return criteria.GetExecutableCriteria(session).UniqueResult<T>();
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "More than one entity is matching the criteria", "SelectSingel"));
+            }
         }
         #endregion
 
         #region Linq methods
+
+        /// <summary>
+        /// returns a linq queryable list of all entities.
+        /// Throws an exception if an error occurs.
+        /// Should be used if not much data is expeced.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IQueryable<T> SelectMany<T>()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return session.Linq<T>();
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select entity/ies. Watch your linq expression!", "selectManyWhere Linq Expression"));
+            }
         }
 
-        public IQueryable<T> SelectManyWhere<T>(Expression<Func<T, bool>> expression)
+        /// <summary>
+        /// calls the selectMany method and quries the result with the
+        /// given linq expression!
+        /// Throws an exception if an error occurs.
+        /// Should be used if not much data is expeced.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression">the linq expression you want to query the results</param>
+        /// <returns>a IQueryable of the entíty T</returns>
+        public IQueryable<T> SelectManyWhere<T>(Expression<Func<T, bool>> expression) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                return SelectMany<T>().Where(expression).AsQueryable();
+            }
+            catch(DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select entities. Watch your linq expression!", "selectManyWhere Linq Expression"));
+            }
         }
 
-        public T SelectSingleWhere<T>(Expression<Func<T, bool>> expression)
+        /// <summary>
+        /// Calls the SelectManyWhere method with the given linq expression.
+        /// returns only one entity matching the expression!
+        /// Throws an excpetion if there are more entities matching the expression
+        /// or if other errors occur.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns>a singel entity or an exception if more entities matching the expression</returns>
+        public T SelectSingleWhere<T>(Expression<Func<T, bool>> expression) where T : IEntity
         {
-            throw new NotImplementedException();
+            try
+            {
+                return SelectManyWhere(expression).Single();
+            }
+            catch (DatabaseException dex)
+            {
+                throw (dex);
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Could not select entity. Watch your linq expression!", "selectSingelWhere Linq Expression"));
+            }
         }
         #endregion
 
@@ -240,7 +451,22 @@ namespace Database.Common.Impl
         {
             throw new NotImplementedException();
         }
-
-       
+        
+        /// <summary>
+        /// commits open transactions if there are any.
+        /// flushes the session and closes it.
+        /// </summary>
+        public void Dispose()
+        {
+            if (Transaction != null)
+            {
+                CommitTransaction();
+            }
+            if (session != null)
+            {
+                session.Flush();
+                CloseSession();
+            }
+        }
     }
 }

@@ -1,8 +1,8 @@
-﻿// <copyright file="Benutzerverwaltung.MainWindow.xaml.cs">
+﻿// <copyright file="Benutzerverwaltung.View.UserInfoView.xaml.cs">
 // Copyright (c) 2016 All Rights Reserved
 // <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
-// <date>2016-11-07</date>
+// <date>2016-11-12</date>
 // </copyright>
 
 using Benutzerverwaltung.ViewModel;
@@ -18,24 +18,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Benutzerverwaltung
+namespace Benutzerverwaltung.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserInfoView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserInfoView : Window
     {
-        public MainWindow()
+        public UserInfoView( )
         {
             InitializeComponent();
-            //This is my first comment
-        }
-
-        private void listboxFolder1_SelectionChanged( object sender , SelectionChangedEventArgs e )
-        {
+            UserInfoViewModel uivm = new UserInfoViewModel();
+            uivm.CloseAction += ( ) => { this.Close(); };
+            this.DataContext = uivm;
         }
     }
 }

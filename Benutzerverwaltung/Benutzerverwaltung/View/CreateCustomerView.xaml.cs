@@ -1,11 +1,10 @@
-﻿// <copyright file="Benutzerverwaltung.MainWindow.xaml.cs">
+﻿// <copyright file="Benutzerverwaltung.View.CreateCustomerView.xaml.cs">
 // Copyright (c) 2016 All Rights Reserved
 // <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
-// <date>2016-11-07</date>
+// <date>2016-11-12</date>
 // </copyright>
 
-using Benutzerverwaltung.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,24 +17,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Benutzerverwaltung
+namespace Benutzerverwaltung.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CreateCustomerView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CreateCustomerView : Window
     {
-        public MainWindow()
+        public CreateCustomerView( )
         {
             InitializeComponent();
-            //This is my first comment
-        }
-
-        private void listboxFolder1_SelectionChanged( object sender , SelectionChangedEventArgs e )
-        {
         }
     }
 }

@@ -4,9 +4,57 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benutzerverwaltung"
+          xmlns:p="clr-namespace:Benutzerverwaltung.Properties"
+       xmlns:viewmodel="clr-namespace:Benutzerverwaltung.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.Resources>
+        
+        
+        <viewmodel:MainWindowViewModel x:Key="mainViewmodel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource mainViewmodel}" x:Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label x:Name="lblSearch" Content="{x:Static p:Resources.Search}" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="39,39,0,35"/>
+        <TextBox x:Name="tbSearch" HorizontalAlignment="Left" Height="23" Margin="99,43,0,0" TextWrapping="Wrap" Text="{Binding Path=TextSearchField}" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnCreateCustomer" Content="{x:Static p:Resources.Create}" HorizontalAlignment="Left" Margin="263,45,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CreateCustomerCommand}"/>
+
+
+        <ListView ItemContainerStyle="{StaticResource HighlightingOff}" x:Name="lvCustomer" Grid.Row="1" BorderThickness="0" 
+     ItemsSource="{Binding Path=Emp }">
+            
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Line Items">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" 
+                        Header="Name" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" 
+                        Header="Id" Width="50"/>
+                    <GridViewColumn
+                        Header="" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel  Width="70">
+                                    <Button Command="{Binding DetailsCustomerCommand}" Style="{StaticResource ImageButton}">
+                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                            <Image Source="Images/Lupe.png" Width="16" Height="16" Margin="0,0,10,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ImageButton}" Command="{Binding DeleteCustomerCommand}">
+                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                            <Image Source="Images/DelSymbol.png" Width="16" Height="16" Margin="0,0,10,0"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
         
     </Grid>
 </Window>

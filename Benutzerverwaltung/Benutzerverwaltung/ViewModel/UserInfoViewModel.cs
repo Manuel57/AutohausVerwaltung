@@ -1,0 +1,32 @@
+﻿// <copyright file="Benutzerverwaltung.ViewModel.UserInfoViewModel.cs">
+// Copyright (c) 2016 All Rights Reserved
+// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2016-11-13</date>
+// </copyright>
+
+using Benutzerverwaltung.Helpers;
+using Benutzerverwaltung.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Benutzerverwaltung.ViewModel
+{
+    public class UserInfoViewModel : ModelBase
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public Action CloseAction { get; set; }
+        public RelayCommand PrintCommand { get; set; }
+        public RelayCommand OkCommand { get; set; }
+
+        public UserInfoViewModel( )
+        {
+            this.OkCommand = new RelayCommand(( ) => { this.CloseAction(); });
+            this.PrintCommand = new RelayCommand(( ) => { });
+        }
+    }
+}

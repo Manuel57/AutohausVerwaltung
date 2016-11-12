@@ -1,0 +1,44 @@
+﻿<Window x:Class="Benutzerverwaltung.View.CreateCustomerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Benutzerverwaltung.View"
+        xmlns:viewmodel="clr-namespace:Benutzerverwaltung.ViewModel"
+         xmlns:p="clr-namespace:Benutzerverwaltung.Properties"
+        mc:Ignorable="d"
+        Title="CreateCustomerView" Height="400" Width="600">
+    <Window.Resources>
+
+
+        <viewmodel:CreateCustomerViewModel x:Key="mainViewmodel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource mainViewmodel}" x:Name="root" Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+       <!--Labels-->
+        <Label Content="{x:Static p:Resources.FirstName}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Content="{x:Static p:Resources.LastName}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+        <Label Content="{x:Static p:Resources.Address}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+        <Label Content="{x:Static p:Resources.Birthdate}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+        
+        <!--Textboxex-->
+
+        <TextBox x:Name="txtFirstName" Grid.Column="1" Grid.Row="0" Margin="20" Text="{Binding Path=FirstName}"/>
+        <TextBox x:Name="txtLastName" Grid.Column="1" Grid.Row="1" Margin="20" Text="{Binding Path=LastName}"/>
+        <TextBox x:Name="txtAddress" Grid.Column="1" Grid.Row="2" Margin="20" Text="{Binding Path=Address}"/>
+        <TextBox x:Name="txtBirthDate" Grid.Column="1" Grid.Row="3" Margin="20" Text="{Binding Path=BirthDate}"/>
+ 
+        <!-- Buttons-->
+        <Button x:Name="btnCreate" Grid.Column="0" Grid.Row="4" Margin="20" Content="{x:Static p:Resources.Create}" Command="{Binding CreateCommand}" />
+    </Grid>
+</Window>

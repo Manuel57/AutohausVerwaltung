@@ -1,4 +1,11 @@
-﻿using NHibernate;
+﻿// <copyright file="Database.Common.irepository.cs">
+// Copyright (c) 2016 All Rights Reserved
+// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2016-11-11</date>
+// </copyright>
+
+using NHibernate;
 using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
@@ -9,15 +16,10 @@ using System.Threading.Tasks;
 
 namespace Database.Common
 {
-    // <copyright file="Databast.Common.IRepository">
-    // Copyright (c) 2016 All Rights Reserved
-    // <author>Manuel Lackenbucher</author>
-    // <author>Thomas Huber</author>
-    // </copyright>
     /// <summary>
     /// Repository interface
     /// </summary>
-    public interface IRepository
+    public interface IRepository : IDisposable
     {
         //Criteria methods
         IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria ) where T : IEntity;
@@ -40,7 +42,6 @@ namespace Database.Common
         void DeleteWhere<T>(DetachedCriteria criteria) where T : IEntity;
         T GetById<T>( object objId ) where T : IEntity;
 
-        IQueryable<T> ToList<T>( ) where T : IEntity;
        
     }
 }

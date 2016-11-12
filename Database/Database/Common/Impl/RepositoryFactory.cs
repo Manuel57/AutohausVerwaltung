@@ -1,4 +1,11 @@
-﻿using Database.Common;
+﻿// <copyright file="Database.Common.Impl.repositoryfactory.cs">
+// Copyright (c) 2016 All Rights Reserved
+// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2016-11-11</date>
+// </copyright>
+
+using Database.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +14,15 @@ using System.Threading.Tasks;
 
 namespace Database.Common.Impl
 {
-    // <copyright file="Database.Common.Impl.RepositoryFactory">
-    // Copyright (c) 2016 All Rights Reserved
-    // <author>Manuel Lackenbucher</author>
-    // <author>Thomas Huber</author>
-    // </copyright>
+   
     /// <summary>
     /// Factory for creating Repositores
     /// </summary>
     public class RepositoryFactory
     {
-
+        /// <summary>
+        /// The instance
+        /// </summary>
         private static RepositoryFactory instance = null;
 
         internal RepositoryFactory( ) { }
@@ -34,10 +39,14 @@ namespace Database.Common.Impl
             }
         }
 
-
+        /// <summary>
+        /// Factory method for creating a repository
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IRepository CreateRepository<T>() where T : IRepository
         {
-            return Activator.CreateInstance<T>();
+            return (T)Activator.CreateInstance(typeof(T),true);
         }
 
 

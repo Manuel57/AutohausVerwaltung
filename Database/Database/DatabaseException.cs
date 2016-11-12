@@ -1,4 +1,11 @@
-﻿using System;
+﻿// <copyright file="Database.databaseexception.cs">
+// Copyright (c) 2016 All Rights Reserved
+// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2016-11-11</date>
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,25 +13,21 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-
-    // <copyright file="Database.DatabaseException">
-    // Copyright (c) 2016 All Rights Reserved
-    // <author>Manuel Lackenbucher</author>
-    // <author>Thomas Huber</author>
-    // </copyright>
-
     /// <summary>
     /// DatabaseExcption class 
     /// own excetpion to throw
     /// </summary>
+    
     internal class DatabaseException : Exception
     {
+        
         private Exception exceptionThrown = null;
         private string customMessage = string.Empty;
         private object[] information = null;
 
         public Exception ExceptionThrown
         {
+            
             private set
             {
                 if(value is Exception)

@@ -26,17 +26,27 @@ namespace TestProject
     {
         static void Main( string[] args )
         {
-            DatabaseConfiguration.Instance.registerAll(
+            DatabaseConfiguration.Instance.RegisterAll(
                 DefaultConfig.OLEDB_PROVIDER ,
                 IPAddress.Parse("212.152.179.117") , "ora11g" , new DbUser("d5a09" , "d5a") ,
                 DefaultConfig.ORACLE_DIALECT , DefaultConfig.ORACLE_DRIVER ,
                 Assembly.GetExecutingAssembly());
 
-            IRepository repository = RepositoryFactory.Instance.
-                                    CreateRepository<Repository>();
+            using ( IRepository repository = RepositoryFactory.Instance.
+                                    CreateRepository<Repository>() )
+            {
+                Employee emp = repository.GetById<Employee>(1);
+                Console.WriteLine(emp.Mnr + " " + emp.Name);
+                
+                long cnt =repository.CountWhere<Employee>(NHibernate.Criterion.DetachedCriteria.For<Employee>().Add(new NHibernate.Criterion.InExpression("Mnr" , new object [] { 1 ,2,3})));
+                Console.WriteLine(cnt);
+                emp.Name = "Einstein";
+                repository.SaveOrUpdate(emp);
+                Console.WriteLine(repository.GetById<Employee>(1).Name);
+            }
 
-            Employee emp = repository.GetById<Employee>(1);
-            Console.WriteLine(emp.Mnr + " " + emp.Name);
+
+          
         }
     }
 }

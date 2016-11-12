@@ -1,4 +1,11 @@
-﻿using Database.Configuration;
+﻿// <copyright file="Database.Common.Impl.repository.cs">
+// Copyright (c) 2016 All Rights Reserved
+// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2016-11-11</date>
+// </copyright>
+
+using Database.Configuration;
 using NHibernate;
 using System;
 using System.Collections.Generic;
@@ -8,65 +15,119 @@ using System.Threading.Tasks;
 using NHibernate.Criterion;
 using System.Linq.Expressions;
 using NHibernate.Linq;
+using System.Reflection;
 
 namespace Database.Common.Impl
 {
-    // <copyright file="Database.Common.Impl">
-    // Copyright (c) 2016 All Rights Reserved
-    // <author>Manuel Lackenbucher</author>
-    // <author>Thomas Huber</author>
-    // </copyright>
     /// <summary>
     /// Repository class
     /// </summary>
-    
-        //wie werma den das mitn session close machn?? 
-        //lass ma de imma offen oda machma imma a neue oda ka?
-    public class Repository :  IRepository, IDisposable
+
+    //wie werma den das mitn session close machn?? 
+    //lass ma de imma offen oda machma imma a neue oda ka?
+    public class Repository : IRepository
     {
+        #region fields
+        #region protected fields
         protected ISession session = null;
         protected ITransaction Transaction = null;
-        public Repository(ISession _session ) { session = _session; }
-        public Repository() { /*session = database.openSession();*/}
-
+        #endregion protected fields
+        #endregion fields
+        #region constructors
+        internal Repository( ISession _session ) { session = _session; }
+        internal Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
+        #endregion constructors
         #region transaction session methods
         /// <summary>
         /// commits the transaction and 
         /// closes it
         /// </summary>
-        public void CommitTransaction()
+        public void CommitTransaction( )
         {
-            Transaction.Commit();
-            CloseTransaction();
+
+            try
+            {
+                Transaction.Commit();
+                CloseTransaction();
+            }
+            catch ( DatabaseException ex )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+
+                throw ( new DatabaseException(ex , "Error at trancaction commit" ) );
+            } 
+
         }
-        
+
         /// <summary>
         /// Rollbacks the transaction
         /// and closes it.
         /// Closes the session!
         /// </summary>
-        public void RollbackTransaction()
+        public void RollbackTransaction( )
         {
-            Transaction.Rollback();
-            CloseTransaction();
-           
+
+            try
+            {
+                Transaction.Rollback();
+                CloseTransaction();
+            }
+            catch ( DatabaseException ex )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Errow at transaction rollback") );
+            }
+
+
         }
 
         /// <summary>
         /// Disposes the Transaction
         /// and sets it to null
         /// </summary>
-        private void CloseTransaction()
+        private void CloseTransaction( )
         {
-            Transaction.Dispose();
-            Transaction = null;
+
+            try
+            {
+                Transaction.Dispose();
+                Transaction = null;
+            }
+            catch ( DatabaseException ex )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error at closing the transaction" ) );
+            }
+
         }
 
-        private void CloseSession()
+        private void CloseSession( )
         {
-            session.Close();
-            session.Dispose();
-            session = null;
+
+            try
+            {
+                session.Close();
+                session.Dispose();
+                session = null;
+            }
+            catch ( DatabaseException ex )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error at closing the session" ) );
+            }
+
         }
         #endregion
 
@@ -78,17 +139,24 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="creteria"></param>
         /// <returns>count as long</returns>
-        public long CountWhere<T>(DetachedCriteria criteria) where T : IEntity
+        public long CountWhere<T>( DetachedCriteria criteria ) where T : IEntity
         {
-            try {
+            try
+            {
                 return Convert.ToInt64(criteria.GetExecutableCriteria(session)
                      .SetProjection(Projections.RowCountInt64()).UniqueResult());
             }
-            catch(Exception ex)
+            catch(DatabaseException ex)
             {
-                throw (new DatabaseException(ex, "Error in counting the Rows", null));
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error in counting the Rows" , null) );
             }
         }
+
+
 
         /// <summary>
         /// Deletes the given Entity and commits it
@@ -106,10 +174,14 @@ namespace Database.Common.Impl
                 session.Delete(entity);
                 CommitTransaction();
             }
-            catch(Exception ex)
+            catch(DatabaseException ex)
+            {
+                throw;
+            }
+            catch ( Exception ex )
             {
                 RollbackTransaction();
-                throw (new DatabaseException(ex, "Could not delete the entity!", entity));
+                throw ( new DatabaseException(ex , "Could not delete the entity!" , entity) );
             }
         }
 
@@ -119,23 +191,23 @@ namespace Database.Common.Impl
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="criteria"></param>
-        public void DeleteWhere<T>(DetachedCriteria criteria) where T : IEntity
+        public void DeleteWhere<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
             {
                 //kann sicha anders gmacht werden!!
-                foreach(T entity in SelectManyWhere<T>(criteria))
+                foreach ( T entity in SelectManyWhere<T>(criteria) )
                 {
                     Delete(entity);
                 }
             }
-            catch(DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in deletewhere!"));
+                throw ( new DatabaseException(ex , "Error in deletewhere!") );
             }
         }
 
@@ -150,13 +222,17 @@ namespace Database.Common.Impl
         {
             try
             {
-                return Connection.Database.OpenSession().Get<T>(objId);
+                return Connection.Database.Instance.OpenSession().Get<T>(objId);
             }
-            catch(Exception ex)
+            catch(DatabaseException ex)
             {
-                throw (new DatabaseException(ex, "Could not load the entity with the id " + objId, null));
+                throw;
             }
-           
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Could not load the entity with the id " + objId , null) );
+            }
+
         }
 
         /// <summary>
@@ -174,10 +250,14 @@ namespace Database.Common.Impl
                 session.SaveOrUpdate(entity);
                 CommitTransaction();
             }
-            catch (Exception ex)
+            catch(DatabaseException ex)
+            {
+                throw;
+            }
+            catch ( Exception ex )
             {
                 RollbackTransaction();
-                throw (new DatabaseException(ex, "Could not save/update the entity!", entity));
+                throw ( new DatabaseException(ex , "Could not save/update the entity!" , entity) );
             }
         }
 
@@ -187,24 +267,24 @@ namespace Database.Common.Impl
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
-        public void SaveOrUpdateMore<T>(IEnumerable<T> items) where T : IEntity
+        public void SaveOrUpdateMore<T>( IEnumerable<T> items ) where T : IEntity
         {
             try
             {
-                foreach(T item in items)
+                foreach ( T item in items )
                 {
                     SaveOrUpdate(item);
                 }
             }
-            catch (DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "An Error in List occurd"));
+                throw ( new DatabaseException(ex , "An Error in List occurd") );
             }
-            
+
         }
         #endregion
 
@@ -221,20 +301,20 @@ namespace Database.Common.Impl
         /// <param name="numberOfResults">how many results do you want to have</param>
         /// <param name="orders">the order in which it should be selected</param>
         /// <returns></returns>
-        public IEnumerable<T> SelectCertainNumberWhere<T>(DetachedCriteria criteria, int firstResult, int numberOfResults, params Order[] orders) where T : IEntity
+        public IEnumerable<T> SelectCertainNumberWhere<T>( DetachedCriteria criteria , int firstResult , int numberOfResults , params Order[] orders ) where T : IEntity
         {
             try
             {
                 criteria.SetFirstResult(firstResult).SetMaxResults(numberOfResults);
-                return SelectManyWhere<T>(criteria, orders);
+                return SelectManyWhere<T>(criteria , orders);
             }
-            catch(DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Differnet Error in selecting"));
+                throw ( new DatabaseException(ex , "Differnet Error in selecting") );
             }
         }
 
@@ -247,25 +327,25 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        public T SelectFirstOfMany<T>(DetachedCriteria criteria) where T : IEntity
+        public T SelectFirstOfMany<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
             {
                 var results = criteria.SetFirstResult(0).SetMaxResults(1)
                                 .GetExecutableCriteria(session).List<T>();
-                if(results.Count > 0)
+                if ( results.Count > 0 )
                 {
                     return results[0];
                 }
                 return default(T);
             }
-            catch(DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select first entity!"));
+                throw ( new DatabaseException(ex , "Could not select first entity!") );
             }
         }
 
@@ -279,19 +359,19 @@ namespace Database.Common.Impl
         /// <param name="criteria"></param>
         /// <param name="order"></param>
         /// <returns></returns>
-        public T SelectFirstOfManyOrdered<T>(DetachedCriteria criteria,  Order order) where T : IEntity
+        public T SelectFirstOfManyOrdered<T>( DetachedCriteria criteria , Order order ) where T : IEntity
         {
             try
             {
                 return SelectFirstOfMany<T>(criteria.AddOrder(order));
             }
-            catch (DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select first entity orderd!"));
+                throw ( new DatabaseException(ex , "Could not select first entity orderd!") );
             }
         }
 
@@ -305,52 +385,52 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="creteria">the criteria the values are supposed to match</param>
         /// <returns></returns>
-        public IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria) where T : IEntity
+        public IEnumerable<T> SelectManyWhere<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
             {
                 return criteria.GetExecutableCriteria(session).List<T>();
             }
-            catch (DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select all entity!","selectManyWhere"));
+                throw ( new DatabaseException(ex , "Could not select all entity!" , "selectManyWhere") );
             }
         }
 
-      /// <summary>
-      /// returns all entitys matching the given criteria
-      /// and orders the result in the given order.
-      /// Throws an exception if an error occurs.
-      /// Should only be used if a lot of data is expected!!
-      /// </summary>
-      /// <typeparam name="T"></typeparam>
-      /// <param name="criteria"></param>
-      /// <param name="orders"></param>
-      /// <returns></returns>
-        public IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria, params Order[] orders) where T : IEntity
+        /// <summary>
+        /// returns all entitys matching the given criteria
+        /// and orders the result in the given order.
+        /// Throws an exception if an error occurs.
+        /// Should only be used if a lot of data is expected!!
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="criteria"></param>
+        /// <param name="orders"></param>
+        /// <returns></returns>
+        public IEnumerable<T> SelectManyWhere<T>( DetachedCriteria criteria , params Order[] orders ) where T : IEntity
         {
             try
             {
-                if(orders != null)
+                if ( orders != null )
                 {
-                    foreach(var order in orders)
+                    foreach ( var order in orders )
                     {
                         criteria.AddOrder(order);
                     }
                 }
                 return SelectManyWhere<T>(criteria);
             }
-            catch (DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select all entity!", "selectManyWhere"));
+                throw ( new DatabaseException(ex , "Could not select all entity!" , "selectManyWhere") );
             }
 
         }
@@ -362,15 +442,15 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="creteria"></param>
         /// <returns></returns>
-        public T SelectSingle<T>(DetachedCriteria criteria) where T : IEntity
+        public T SelectSingle<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
             {
                 return criteria.GetExecutableCriteria(session).UniqueResult<T>();
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "More than one entity is matching the criteria", "SelectSingel"));
+                throw ( new DatabaseException(ex , "More than one entity is matching the criteria" , "SelectSingel") );
             }
         }
         #endregion
@@ -384,15 +464,16 @@ namespace Database.Common.Impl
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IQueryable<T> SelectMany<T>()
+        public IQueryable<T> SelectMany<T>( )
         {
             try
             {
-                return session.Linq<T>();
+
+                return session.Query<T>();
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select entity/ies. Watch your linq expression!", "selectManyWhere Linq Expression"));
+                throw ( new DatabaseException(ex , "Could not select entity/ies. Watch your linq expression!" , "selectManyWhere Linq Expression") );
             }
         }
 
@@ -405,19 +486,19 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="expression">the linq expression you want to query the results</param>
         /// <returns>a IQueryable of the entíty T</returns>
-        public IQueryable<T> SelectManyWhere<T>(Expression<Func<T, bool>> expression) where T : IEntity
+        public IQueryable<T> SelectManyWhere<T>( Expression<Func<T , bool>> expression ) where T : IEntity
         {
             try
             {
                 return SelectMany<T>().Where(expression).AsQueryable();
             }
-            catch(DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select entities. Watch your linq expression!", "selectManyWhere Linq Expression"));
+                throw ( new DatabaseException(ex , "Could not select entities. Watch your linq expression!" , "selectManyWhere Linq Expression") );
             }
         }
 
@@ -430,39 +511,36 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="expression"></param>
         /// <returns>a singel entity or an exception if more entities matching the expression</returns>
-        public T SelectSingleWhere<T>(Expression<Func<T, bool>> expression) where T : IEntity
+        public T SelectSingleWhere<T>( Expression<Func<T , bool>> expression ) where T : IEntity
         {
             try
             {
                 return SelectManyWhere(expression).Single();
             }
-            catch (DatabaseException dex)
+            catch ( DatabaseException dex )
             {
-                throw (dex);
+                throw ( dex );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Could not select entity. Watch your linq expression!", "selectSingelWhere Linq Expression"));
+                throw ( new DatabaseException(ex , "Could not select entity. Watch your linq expression!" , "selectSingelWhere Linq Expression") );
             }
         }
         #endregion
 
-        public IQueryable<T> ToList<T>( ) where T : IEntity
-        {
-            throw new NotImplementedException();
-        }
-        
+
+
         /// <summary>
         /// commits open transactions if there are any.
         /// flushes the session and closes it.
         /// </summary>
-        public void Dispose()
+        public void Dispose( )
         {
-            if (Transaction != null)
+            if ( Transaction != null )
             {
                 CommitTransaction();
             }
-            if (session != null)
+            if ( session != null )
             {
                 session.Flush();
                 CloseSession();

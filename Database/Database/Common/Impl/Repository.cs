@@ -220,6 +220,21 @@ namespace Database.Common.Impl
         }
 
         /// <summary>
+        /// Return the maximum of a column
+        /// </summary>
+        /// <typeparam name="T">The Enitity type representing the database table</typeparam>
+        /// <typeparam name="E">The type of the column</typeparam>
+        /// <param name="propertyName">The property name</param>
+        /// <returns></returns>
+        public E Max<T,E>(string propertyName) where T : IEntity
+        {
+            return DetachedCriteria.For<T>().SetProjection(
+               Projections.Max(propertyName))
+               .GetExecutableCriteria(session).UniqueResult<E>();
+          
+        }
+
+        /// <summary>
         /// Loads the Entity with the given id from the database
         /// throws an exception if an error occurs
         /// </summary>

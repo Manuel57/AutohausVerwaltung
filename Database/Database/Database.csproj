@@ -64,6 +64,7 @@
     <Compile Include="Common\ObserverPattern\Subject.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Common\IRepository.cs" />
+    <Compile Include="Configuration\IDatabaseConfiguration.cs" />
     <Compile Include="Connection\Database.cs" />
     <Compile Include="Connection\DbUser.cs" />
     <Compile Include="Connection\Defaults\DefaultConfig.cs" />

@@ -32,6 +32,7 @@ namespace TestProject
                 DefaultConfig.ORACLE_DIALECT , DefaultConfig.ORACLE_DRIVER ,
                 Assembly.GetExecutingAssembly());
 
+
             using ( IRepository repository = RepositoryFactory.Instance.
                                     CreateRepository<Repository>() )
             {

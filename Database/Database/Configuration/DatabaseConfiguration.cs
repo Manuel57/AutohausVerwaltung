@@ -24,7 +24,7 @@ namespace Database.Configuration
     /// <summary>
     /// Class holding the configuration settings for the database
     /// </summary>
-    public class DatabaseConfiguration : Subject
+    public class DatabaseConfiguration : Subject, IDatabaseConfiguration
     {
         #region fields
         /// <summary>
@@ -126,7 +126,7 @@ namespace Database.Configuration
         /// <param name="dialect">The dialect</param>
         /// <param name="driver">The dirver</param>
         /// <param name="assembly">The assembly</param>
-        public void RegisterAll( string provider , IPAddress dataSource , string service , DbUser user , Type dialect , Type driver , Assembly assembly )
+        public void RegisterAll( string provider , IPAddress dataSource , string service , IDbUser user , Type dialect , Type driver , Assembly assembly )
         {
             this.RegisterAssembly(assembly);
             this.RegisterDataSource(dataSource);

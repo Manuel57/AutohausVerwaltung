@@ -228,9 +228,15 @@ namespace Database.Common.Impl
         /// <returns></returns>
         public E Max<T,E>(string propertyName) where T : IEntity
         {
-            return DetachedCriteria.For<T>().SetProjection(
-               Projections.Max(propertyName))
-               .GetExecutableCriteria(session).UniqueResult<E>();
+            try {
+                return DetachedCriteria.For<T>().SetProjection(
+                   Projections.Max(propertyName))
+                   .GetExecutableCriteria(session).UniqueResult<E>();
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in selecting max"));
+            }
           
         }
 

@@ -41,7 +41,7 @@ namespace Database.Common
         void Delete<T>( T entity ) where T : IEntity;
         void DeleteWhere<T>(DetachedCriteria criteria) where T : IEntity;
         T GetById<T>( object objId ) where T : IEntity;
-
+        E Max<T, E>(string propname) where T : IEntity;
        
     }
 }

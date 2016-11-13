@@ -57,8 +57,8 @@ namespace Database.Common.Impl
             catch ( Exception ex )
             {
 
-                throw ( new DatabaseException(ex , "Error at trancaction commit" ) );
-            } 
+                throw ( new DatabaseException(ex , "Error at trancaction commit") );
+            }
 
         }
 
@@ -105,7 +105,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Error at closing the transaction" ) );
+                throw ( new DatabaseException(ex , "Error at closing the transaction") );
             }
 
         }
@@ -125,7 +125,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Error at closing the session" ) );
+                throw ( new DatabaseException(ex , "Error at closing the session") );
             }
 
         }
@@ -133,6 +133,16 @@ namespace Database.Common.Impl
 
 
         #region other methods like save/update delete ...
+
+        /// <summary>
+        /// creates an sql query and returns it
+        /// </summary>
+        /// <param name="query">the query string</param>
+        /// <returns>the sql query</returns>
+        public ISQLQuery GetQuery( string query )
+        {
+            return this.session.CreateSQLQuery(query);
+        }
         /// <summary>
         /// Returns the number of entities matching the given criteria
         /// </summary>
@@ -146,7 +156,7 @@ namespace Database.Common.Impl
                 return Convert.ToInt64(criteria.GetExecutableCriteria(session)
                      .SetProjection(Projections.RowCountInt64()).UniqueResult());
             }
-            catch(DatabaseException ex)
+            catch ( DatabaseException ex )
             {
                 throw;
             }
@@ -174,7 +184,7 @@ namespace Database.Common.Impl
                 session.Delete(entity);
                 CommitTransaction();
             }
-            catch(DatabaseException ex)
+            catch ( DatabaseException ex )
             {
                 throw;
             }
@@ -196,10 +206,9 @@ namespace Database.Common.Impl
             try
             {
                 //kann sicha anders gmacht werden!!
-                foreach ( T entity in SelectManyWhere<T>(criteria) )
-                {
-                    Delete(entity);
-                }
+                SelectManyWhere<T>(criteria).ToList<T>().
+                    ForEach(item => Delete(item));
+
             }
             catch ( DatabaseException dex )
             {
@@ -224,7 +233,7 @@ namespace Database.Common.Impl
             {
                 return Connection.Database.Instance.OpenSession().Get<T>(objId);
             }
-            catch(DatabaseException ex)
+            catch ( DatabaseException ex )
             {
                 throw;
             }
@@ -250,7 +259,7 @@ namespace Database.Common.Impl
                 session.SaveOrUpdate(entity);
                 CommitTransaction();
             }
-            catch(DatabaseException ex)
+            catch ( DatabaseException ex )
             {
                 throw;
             }
@@ -271,10 +280,7 @@ namespace Database.Common.Impl
         {
             try
             {
-                foreach ( T item in items )
-                {
-                    SaveOrUpdate(item);
-                }
+                items.ToList<T>().ForEach(x => SaveOrUpdate<T>(x));
             }
             catch ( DatabaseException dex )
             {
@@ -333,11 +339,7 @@ namespace Database.Common.Impl
             {
                 var results = criteria.SetFirstResult(0).SetMaxResults(1)
                                 .GetExecutableCriteria(session).List<T>();
-                if ( results.Count > 0 )
-                {
-                    return results[0];
-                }
-                return default(T);
+                return ( results.Count > 0 ) ? results[0] : default(T);
             }
             catch ( DatabaseException dex )
             {
@@ -415,13 +417,16 @@ namespace Database.Common.Impl
         {
             try
             {
-                if ( orders != null )
-                {
-                    foreach ( var order in orders )
-                    {
-                        criteria.AddOrder(order);
-                    }
-                }
+
+                orders?.ToList().ForEach(item => criteria.AddOrder(item));
+               
+                //if ( orders != null )
+                //{
+                //    foreach ( var order in orders )
+                //    {
+                //        criteria.AddOrder(order);                        
+                //    }
+                //}
                 return SelectManyWhere<T>(criteria);
             }
             catch ( DatabaseException dex )
@@ -468,8 +473,7 @@ namespace Database.Common.Impl
         {
             try
             {
-
-                return session.Query<T>();
+                return session.Linq<T>();
             }
             catch ( Exception ex )
             {

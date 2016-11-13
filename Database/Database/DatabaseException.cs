@@ -18,7 +18,7 @@ namespace Database
     /// own excetpion to throw
     /// </summary>
     
-    internal class DatabaseException : Exception
+    public class DatabaseException : Exception
     {
         
         private Exception exceptionThrown = null;

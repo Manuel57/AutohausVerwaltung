@@ -38,16 +38,18 @@ namespace TestProject
             {
                 Employee emp = repository.GetById<Employee>(1);
                 Console.WriteLine(emp.Mnr + " " + emp.Name);
-                
-                long cnt =repository.CountWhere<Employee>(NHibernate.Criterion.DetachedCriteria.For<Employee>().Add(new NHibernate.Criterion.InExpression("Mnr" , new object [] { 1 ,2,3})));
+
+                long cnt = repository.CountWhere<Employee>(NHibernate.Criterion.DetachedCriteria.For<Employee>().Add(new NHibernate.Criterion.InExpression("Mnr" , new object[] { 1 , 2 , 3 })));
                 Console.WriteLine(cnt);
                 emp.Name = "Einstein";
                 repository.SaveOrUpdate(emp);
                 Console.WriteLine(repository.GetById<Employee>(1).Name);
+
             }
 
 
-          
+
         }
+
     }
 }

@@ -18,15 +18,19 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         //Username VARCHAR2(20) unique,
         [Id(Column ="KundenId")]
         public int CustomerId { get; set; }
+
         [Property(Column ="WerkstattKonzern")]
         public string WerkstattKonzern { get; set; }
 
         [Property(Column = "Vorname")]
         public int FullName { get; set; }
+
         [Property(Column = "GebDate")]
         public DateTime BirthDate { get; set; }
+
         [Property(Column ="Username", Unique =true)]
         public string Username { get; set; }
+
         [Property(Column ="Password")]
         public string Password { get; set; }
     }

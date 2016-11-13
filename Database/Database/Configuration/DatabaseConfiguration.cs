@@ -190,7 +190,7 @@ namespace Database.Configuration
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Error at creating the connectin string" , s) );
+                throw ( new DatabaseException(ex , "Error at creating the connecting string!" , s) );
             }
 
 

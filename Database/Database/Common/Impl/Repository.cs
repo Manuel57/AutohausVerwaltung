@@ -208,7 +208,6 @@ namespace Database.Common.Impl
                 //kann sicha anders gmacht werden!!
                 SelectManyWhere<T>(criteria).ToList<T>().
                     ForEach(item => Delete(item));
-
             }
             catch ( DatabaseException dex )
             {

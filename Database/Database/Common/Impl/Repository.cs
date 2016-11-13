@@ -320,7 +320,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Differnet Error in selecting") );
+                throw ( new DatabaseException(ex , "Different Error in selecting") );
             }
         }
 
@@ -373,7 +373,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Could not select first entity orderd!") );
+                throw ( new DatabaseException(ex , "Could not select first entity orderd!",null) );
             }
         }
 
@@ -419,14 +419,7 @@ namespace Database.Common.Impl
             {
 
                 orders?.ToList().ForEach(item => criteria.AddOrder(item));
-               
-                //if ( orders != null )
-                //{
-                //    foreach ( var order in orders )
-                //    {
-                //        criteria.AddOrder(order);                        
-                //    }
-                //}
+              
                 return SelectManyWhere<T>(criteria);
             }
             catch ( DatabaseException dex )

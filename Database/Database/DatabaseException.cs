@@ -44,13 +44,23 @@ namespace Database
 
         public string CustomMessage { get { return customMessage; } }
 
-        public object[] Information { get { return information; } }
+        public object[] Information
+        {
+            set
+            {
+                if(value != null)
+                {
+                    information = value;
+                }
+            }
+            get { return information; }
+        }
         
         public DatabaseException(Exception exThrown, string customMessage, params object[] information)
         {
             this.ExceptionThrown = exThrown;
             this.customMessage = customMessage;
-            this.information = information;
+            this.Information = information;
         }
     }
 }

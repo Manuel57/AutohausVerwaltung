@@ -124,7 +124,7 @@ namespace Database.Connection
         {
             try
             {
-                this.updateConfuguration();
+                updateConfuguration();
             }
             catch ( DatabaseException ex )
             {

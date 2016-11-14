@@ -6,6 +6,9 @@
 // </copyright>
 
 using Benutzerverwaltung.ViewModel;
+using BenutzerverwaltungBL.Configuration;
+using BenutzerverwaltungBL.Controller;
+using BenutzerverwaltungBL.Model.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +35,22 @@ namespace Benutzerverwaltung
         {
             InitializeComponent();
             //This is my first comment
+            
         }
+
+       
 
         private void listboxFolder1_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigureBl.Initialize();
+            CutomerManager.CreateCustomer("as", "Lackenbucher Manuel", DateTime.Today, "9500 Villach");
+            CutomerManager.CreateCustomer("as", "Huber Thomas", DateTime.Today, "9560 Feldkirchen");
+            IEnumerable<Customer> customers = BenutzerverwaltungBL.Controller.CutomerManager.GetAllCutomer();
+            MessageBox.Show(customers.Count().ToString());
         }
     }
 }

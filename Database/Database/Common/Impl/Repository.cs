@@ -34,8 +34,8 @@ namespace Database.Common.Impl
         #endregion protected fields
         #endregion fields
         #region constructors
-        internal Repository( ISession _session ) { session = _session; }
-        internal Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
+        public  Repository( ISession _session ) { session = _session; }
+        public Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
         #endregion constructors
         #region transaction session methods
         /// <summary>

@@ -14,7 +14,7 @@ using BenutzerverwaltungBL.Common;
 
 namespace BenutzerverwaltungBL.Controller
 {
-    public static class UserManager
+    public static class CutomerManager
     {
         #region private fields
         private static string DEFAULTWERKSTATTKONZERN = "THE MECHANICS";
@@ -29,9 +29,10 @@ namespace BenutzerverwaltungBL.Controller
                 using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication();
-                  
+                   
                     Customer customer = new Customer()
                     {
+                        CustomerId = repository.Max<Customer, int>("CustomerId")+1,
                         Adress = adresse,
                         WerkstattKonzern = DEFAULTWERKSTATTKONZERN,
                         FullName = fullName,
@@ -42,11 +43,11 @@ namespace BenutzerverwaltungBL.Controller
 
                     repository.SaveOrUpdate(customer);
 
-                    return (Customer)customer.Clone();
+                    return customer.Clone() as Customer;
                 }
 
             }
-            catch (DatabaseException ex)
+            catch (DatabaseException )
             {
                 throw;
             }
@@ -67,7 +68,7 @@ namespace BenutzerverwaltungBL.Controller
                     return repository.GetById<Customer>(id);
                 }
             }
-            catch (DatabaseException ex)
+            catch (DatabaseException )
             {
                 throw;
             }
@@ -80,7 +81,23 @@ namespace BenutzerverwaltungBL.Controller
 
         public static Customer GetSingleCustomerByExpression(Expression<Func<Customer, bool>> expression)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    return repository.SelectSingleWhere(expression);
+                }
+            }
+            catch (DatabaseException )
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
+            }
+
         }
 
         public static IEnumerable<Customer> GetAllCutomer()
@@ -88,12 +105,15 @@ namespace BenutzerverwaltungBL.Controller
 
             try
             {
+                IEnumerable<Customer> ret = null;
                 using (IRepository repo = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                    return repo.SelectMany<Customer>();
+                   ret = new List<Customer>(repo.SelectMany<Customer>().AsEnumerable<Customer>());
+                   
                 }
+                return ret;
             }
-            catch (DatabaseException ex)
+            catch (DatabaseException )
             {
                 throw;
             }

@@ -18,7 +18,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         //   Password        VARCHAR2(200),
         //Username VARCHAR2(20) unique,
         [Id(Column ="KundenId",Name ="CustomerId")]
-        public int CustomerId { get; set; }
+        public virtual int CustomerId { get; set; }
 
         [Property(Column ="WerkstattKonzern",Lazy =false)] 
         public virtual string WerkstattKonzern { get; set; }
@@ -38,8 +38,8 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column ="Password")]
         public virtual string Password { get; set; }
 
-        internal Customer() { }
-        internal Customer(Customer c)
+        public Customer() { }
+        public Customer(Customer c)
         {
             Adress = c.Adress;
             CustomerId = c.CustomerId;
@@ -50,7 +50,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
             Password = c.Password;
         }
 
-        public object Clone()
+        public virtual object Clone()
         {
             return new Customer(this);
         }

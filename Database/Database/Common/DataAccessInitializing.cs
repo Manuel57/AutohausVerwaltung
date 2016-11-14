@@ -40,7 +40,7 @@ namespace Database.Common
 
         }
 
-        public static bool Initialize()
+        public static bool Initialize(Assembly assembbly)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Database.Common
                 IPAddress.Parse(Properties.Settings.Default.IpCurrent),Properties.Settings.Default.ServiceName , 
                 new DbUser(Properties.Settings.Default.User, Properties.Settings.Default.Password),
                 DefaultConfig.ORACLE_DIALECT, DefaultConfig.ORACLE_DRIVER,
-                Assembly.GetExecutingAssembly());
+              assembbly);
 
                 return true;
             }

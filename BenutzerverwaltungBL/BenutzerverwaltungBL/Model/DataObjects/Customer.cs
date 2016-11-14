@@ -11,12 +11,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
     [Class(Table ="kunde")]
     public class Customer:ICloneable,IEntity
     {
-        //       KundenID        INTEGER,
-        // WerkstattKonzern varchar2(50),
-        //Vorname VARCHAR2(50),
-        //GebDate         DATE,
-        //   Password        VARCHAR2(200),
-        //Username VARCHAR2(20) unique,
+        
         [Id(Column ="KundenId",Name ="CustomerId")]
         public virtual int CustomerId { get; set; }
 

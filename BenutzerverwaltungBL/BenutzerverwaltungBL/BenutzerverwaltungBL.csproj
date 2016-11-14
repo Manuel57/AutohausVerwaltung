@@ -55,6 +55,9 @@
     <Compile Include="Common\UserdataGenerator.cs" />
     <Compile Include="Configuration\ConfigureBl.cs" />
     <Compile Include="Controller\CustomerManager.cs" />
+    <Compile Include="Controller\RechnungManager.cs" />
+    <Compile Include="Controller\ReparaturManager.cs" />
+    <Compile Include="Controller\WerkstattkonzernManager.cs" />
     <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
     <Compile Include="Model\DataObjects\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

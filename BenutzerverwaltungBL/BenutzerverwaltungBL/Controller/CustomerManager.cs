@@ -18,15 +18,25 @@ namespace BenutzerverwaltungBL.Controller
     {
         #region private fields
         private static string DEFAULTWERKSTATTKONZERN = "THE MECHANICS";
+        private static IRepository repository = null;
         #endregion
+
         #region methods
+        /// <summary>
+        /// Creates a customer and inserts it into the database.
+        /// Creates the random username and password for the customer.
+        /// </summary>
+        /// <param name="werkstattKonzern">name of the werkstattkonzern</param>
+        /// <param name="fullName">the full name of the customer e.g. Huber Thomas</param>
+        /// <param name="birthDate">the birth date of the customer</param>
+        /// <param name="adresse">the adresse of the customer e.g. 9500 Villach Italienerstraße 3</param>
+        /// <returns>a copie of the customer</returns>
         public static Customer CreateCustomer(string werkstattKonzern,string fullName, DateTime birthDate,
                                         string adresse)
         {
-
             try
             {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication();
                    
@@ -58,15 +68,22 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
+        /// <summary>
+        /// returns the customer with the givn id from the database.
+        /// throws an exception if an error occurs or more than one customer have got
+        /// the given id.
+        /// </summary>
+        /// <param name="id">the id of the customer to select</param>
+        /// <returns>the customer with the given id from the database</returns>
         public static Customer GetSingleCustomerById(int id)
         {
-
             try
-            {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+            {               
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                    return repository.GetById<Customer>(id);
+                   return repository.GetById<Customer>(id);
                 }
+                
             }
             catch (DatabaseException )
             {
@@ -79,12 +96,18 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
+        /// <summary>
+        /// returns the customer matching the given
+        /// linq expression.
+        /// throws an exception if an error occurs.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns>the customer matching the given expression</returns>
         public static Customer GetSingleCustomerByExpression(Expression<Func<Customer, bool>> expression)
         {
-
             try
             {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     return repository.SelectSingleWhere(expression);
                 }
@@ -100,15 +123,19 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
-        public static IEnumerable<Customer> GetAllCustomer()
+        /// <summary>
+        /// returns all customers from the database.
+        /// throws an exception if an error occurs.
+        /// </summary>
+        /// <returns> a IEnumerable of all customers</returns>
+        public static IEnumerable<Customer> GetAllCustomers()
         {
-
             try
             {
                 IEnumerable<Customer> ret = null;
                 using (IRepository repo = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                   ret = new List<Customer>(repo.SelectMany<Customer>().AsEnumerable<Customer>());
+                   ret = new List<Customer>(repo.SelectMany<Customer>().AsEnumerable());
                    
                 }
                 return ret;
@@ -120,6 +147,117 @@ namespace BenutzerverwaltungBL.Controller
             catch (Exception ex)
             {
                 throw (new DatabaseException(ex, "Error in UserManager selecting all customers" ));
+            }
+
+        }
+        
+        /// <summary>
+        /// returns all customers matching the given expression.
+        /// throws an exception if an error occurs.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns>IEnumerable of all customers mathcing the expression given</returns>
+        public static IEnumerable<Customer>GetAllCustomersWhere(Expression<Func<Customer, bool>> expression)
+        {
+            try
+            {
+                IEnumerable<Customer> ret = null;
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    ret = new List<Customer>(repository.SelectManyWhere(expression));
+                }
+                return ret;
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in selecting customers with linq expression!"));
+            }
+
+        }
+
+        /// <summary>
+        /// returns all customers matching the given criteria.
+        /// throws an exception if an error occurs.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns>IEnumerable of all customers mathcing the criteria given</returns>
+        public static IEnumerable<Customer> GetAllCustomersWhere(DetachedCriteria criteria)
+        {
+            try
+            {
+                IEnumerable<Customer> ret = null;
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    ret = new List<Customer>(repository.SelectManyWhere<Customer>(criteria));
+                }
+                return ret;
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in selecting customers with criteria!"));
+            }
+
+        }
+
+
+        /// <summary>
+        /// updates all changes in the given customer to the database.
+        /// throws an exception if an error occurs.
+        /// </summary>
+        /// <param name="newCustomer"></param>
+        /// <returns>true if succeeded or throws an exception</returns>
+        public static bool UpdateCustomer(Customer newCustomer)
+        {
+            try
+            {
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    repository.SaveOrUpdate(newCustomer);
+                }
+                return true;
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
+            }
+
+        }
+        
+        /// <summary>
+        /// deletes the given customer in the database.
+        /// throws an exception if an error occurs.
+        /// </summary>
+        /// <param name="customerToDelete"></param>
+        /// <returns>true if succeeded or throws an exception</returns>
+        public static bool DeleteCustomer(Customer customerToDelete)
+        {
+            try
+            {
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    repository.Delete(customerToDelete);
+                }
+                return true;
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in CustomerManager deleting customer "+customerToDelete.FullName));
             }
 
         }

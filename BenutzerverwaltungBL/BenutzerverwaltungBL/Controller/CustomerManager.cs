@@ -14,7 +14,7 @@ using BenutzerverwaltungBL.Common;
 
 namespace BenutzerverwaltungBL.Controller
 {
-    public static class CutomerManager
+    public static class CustomerManager
     {
         #region private fields
         private static string DEFAULTWERKSTATTKONZERN = "THE MECHANICS";
@@ -100,7 +100,7 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
-        public static IEnumerable<Customer> GetAllCutomer()
+        public static IEnumerable<Customer> GetAllCustomer()
         {
 
             try

@@ -204,8 +204,7 @@ namespace Database.Common.Impl
         public void DeleteWhere<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
-            {
-                //kann sicha anders gmacht werden!!
+            {               
                 SelectManyWhere<T>(criteria).ToList<T>().
                     ForEach(item => Delete(item));
             }
@@ -300,7 +299,7 @@ namespace Database.Common.Impl
         {
             try
             {
-                items.ToList<T>().ForEach(x => SaveOrUpdate<T>(x));
+                items.ToList().ForEach(x => SaveOrUpdate<T>(x));
             }
             catch ( DatabaseException dex )
             {

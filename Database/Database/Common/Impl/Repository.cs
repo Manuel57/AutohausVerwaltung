@@ -34,8 +34,8 @@ namespace Database.Common.Impl
         #endregion protected fields
         #endregion fields
         #region constructors
-        internal Repository( ISession _session ) { session = _session; }
-        internal Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
+        public  Repository( ISession _session ) { session = _session; }
+        public Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
         #endregion constructors
         #region transaction session methods
         /// <summary>
@@ -204,8 +204,7 @@ namespace Database.Common.Impl
         public void DeleteWhere<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
-            {
-                //kann sicha anders gmacht werden!!
+            {               
                 SelectManyWhere<T>(criteria).ToList<T>().
                     ForEach(item => Delete(item));
             }
@@ -228,9 +227,15 @@ namespace Database.Common.Impl
         /// <returns></returns>
         public E Max<T,E>(string propertyName) where T : IEntity
         {
-            return DetachedCriteria.For<T>().SetProjection(
-               Projections.Max(propertyName))
-               .GetExecutableCriteria(session).UniqueResult<E>();
+            try {
+                return DetachedCriteria.For<T>().SetProjection(
+                   Projections.Max(propertyName))
+                   .GetExecutableCriteria(session).UniqueResult<E>();
+            }
+            catch(Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in selecting max"));
+            }
           
         }
 
@@ -294,7 +299,7 @@ namespace Database.Common.Impl
         {
             try
             {
-                items.ToList<T>().ForEach(x => SaveOrUpdate<T>(x));
+                items.ToList().ForEach(x => SaveOrUpdate<T>(x));
             }
             catch ( DatabaseException dex )
             {

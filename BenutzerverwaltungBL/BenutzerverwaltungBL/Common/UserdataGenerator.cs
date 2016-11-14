@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Common
 {
-    public class UserdataGenerator
+    public  class UserdataGenerator
     {
         public static UserAuthenticationData CreateUserAuthentication( )
         {

@@ -42,7 +42,7 @@ namespace Database
             }
         }
 
-        public string CustomMessage { get { return customMessage; } }
+        public string CustomMessage { set { customMessage = value; } get { return customMessage; } }
 
         public object[] Information
         {
@@ -59,7 +59,7 @@ namespace Database
         public DatabaseException(Exception exThrown, string customMessage, params object[] information)
         {
             this.ExceptionThrown = exThrown;
-            this.customMessage = customMessage;
+            this.CustomMessage = customMessage;
             this.Information = information;
         }
     }

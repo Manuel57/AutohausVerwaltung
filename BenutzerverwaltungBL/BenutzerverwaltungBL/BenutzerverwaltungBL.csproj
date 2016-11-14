@@ -30,7 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Database">
+    <Reference Include="Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Database\Database\bin\Debug\Database.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
@@ -52,7 +53,11 @@
   <ItemGroup>
     <Compile Include="Common\MD5Hash.cs" />
     <Compile Include="Common\UserdataGenerator.cs" />
-    <Compile Include="Controller\UserManager.cs" />
+    <Compile Include="Configuration\ConfigureBl.cs" />
+    <Compile Include="Controller\CustomerManager.cs" />
+    <Compile Include="Controller\RechnungManager.cs" />
+    <Compile Include="Controller\ReparaturManager.cs" />
+    <Compile Include="Controller\WerkstattkonzernManager.cs" />
     <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
     <Compile Include="Model\DataObjects\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

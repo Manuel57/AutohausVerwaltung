@@ -4,26 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Mapping.Attributes;
+using Database.Common;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
     [Class(Table ="kunde")]
-    public class Customer
+    public class Customer:ICloneable,IEntity
     {
-        //       KundenID        INTEGER,
-        // WerkstattKonzern varchar2(50),
-        //Vorname VARCHAR2(50),
-        //GebDate         DATE,
-        //   Password        VARCHAR2(200),
-        //Username VARCHAR2(20) unique,
+        
         [Id(Column ="KundenId",Name ="CustomerId")]
-        public int CustomerId { get; set; }
+        public virtual int CustomerId { get; set; }
 
         [Property(Column ="WerkstattKonzern",Lazy =false)] 
         public virtual string WerkstattKonzern { get; set; }
 
         [Property(Column = "Vorname",Name ="FullName")]
-        public virtual int FullName { get; set; }
+        public virtual string FullName { get; set; }
 
         [Property(Column = "GebDate",Name ="BirthDate")]
         public virtual DateTime BirthDate { get; set; }
@@ -36,5 +32,22 @@ namespace BenutzerverwaltungBL.Model.DataObjects
 
         [Property(Column ="Password")]
         public virtual string Password { get; set; }
+
+        public Customer() { }
+        public Customer(Customer c)
+        {
+            Adress = c.Adress;
+            CustomerId = c.CustomerId;
+            WerkstattKonzern = c.WerkstattKonzern;
+            FullName = c.FullName;
+            BirthDate = c.BirthDate;
+            Username = c.Username;
+            Password = c.Password;
+        }
+
+        public virtual object Clone()
+        {
+            return new Customer(this);
+        }
     }
 }

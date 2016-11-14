@@ -24,19 +24,24 @@
 
 
         <ListView ItemContainerStyle="{StaticResource HighlightingOff}" x:Name="lvCustomer" Grid.Row="1" BorderThickness="0" 
-     ItemsSource="{Binding Path=Emp }">
+     ItemsSource="{Binding Path=Emp, UpdateSourceTrigger=PropertyChanged}">
             
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Line Items">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" 
-                        Header="Name" Width="50"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" 
-                        Header="Id" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerId }" 
+                        Header="Id"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=FullName}" 
+                        Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BirthDate }" 
+                        Header="Geburtsdatum" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Adress }" 
+                        Header="Adresse" Width="100"/>
+                    
                     <GridViewColumn
-                        Header="" Width="100">
+                        Header="" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel  Width="70">
+                                <StackPanel  Width="50">
                                     <Button Command="{Binding DetailsCustomerCommand}" Style="{StaticResource ImageButton}">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/Lupe.png" Width="16" Height="16" Margin="0,0,10,0"/>
@@ -55,7 +60,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="26" Margin="426,39,0,0" VerticalAlignment="Top" Width="85" Click="button_Click"/>
 
     </Grid>
 </Window>

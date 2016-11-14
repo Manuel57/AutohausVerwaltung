@@ -6,6 +6,10 @@
 // </copyright>
 
 using BenutzerverwaltungBL.Model.BusinesObjects;
+using BenutzerverwaltungBL.Model.DataObjects;
+using Database.Common;
+using Database.Common.Impl;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +20,14 @@ namespace BenutzerverwaltungBL.Common
 {
     public  class UserdataGenerator
     {
-        public static UserAuthenticationData CreateUserAuthentication( )
+        public static UserAuthenticationData CreateUserAuthentication(string name, DateTime bd)
         {
             UserAuthenticationData userdata = null;
             try
             {
-                string guidUsername = Guid.NewGuid().ToString().Replace("-" , "");
+                string guidUsername = string.Format("{0}{1}{2}" , name?.Replace(" " , "") , bd.Year,new Random(bd.Day).Next(99));
+
+                //TOTO_ check username
                 string guidPassword = Guid.NewGuid().ToString().Replace("-" , "");
 
                 userdata = new UserAuthenticationData

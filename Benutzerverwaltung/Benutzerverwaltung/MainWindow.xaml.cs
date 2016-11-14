@@ -51,14 +51,6 @@ namespace Benutzerverwaltung
         /// <param name="e"></param>
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            ConfigureBl.Initialize();
-            CustomerManager.CreateCustomer("as", "Lackenbucher Manuel", DateTime.Today, "9500 Villach");
-            CustomerManager.CreateCustomer("as", "Huber Thomas", DateTime.Today, "9560 Feldkirchen");
-            IEnumerable<Customer> customers = CustomerManager.GetAllCustomers();
-            MessageBox.Show(customers.Count().ToString());
-
-            Customer c = CustomerManager.GetSingleCustomerById(1);
-            MessageBox.Show(c.FullName + " " + c.Adress);
         }
     }
 }

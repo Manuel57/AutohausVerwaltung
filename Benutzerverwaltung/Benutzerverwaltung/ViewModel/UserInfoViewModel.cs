@@ -7,6 +7,7 @@
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.Model;
+using BenutzerverwaltungBL.Model.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,15 @@ namespace Benutzerverwaltung.ViewModel
         public RelayCommand PrintCommand { get; set; }
         public RelayCommand OkCommand { get; set; }
 
-        public UserInfoViewModel( )
+        public UserInfoViewModel( Customer c)
         {
             this.OkCommand = new RelayCommand(( ) => { this.CloseAction(); });
             this.PrintCommand = new RelayCommand(( ) => { });
+            this.Username = c.Username;
+            this.Password = c.Password;
+            this.OnPropertyChanged("Username");
+            this.OnPropertyChanged("Password");
+            this.OnPropertyChanged();
         }
     }
 }

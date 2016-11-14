@@ -6,6 +6,7 @@
 // </copyright>
 
 using Benutzerverwaltung.ViewModel;
+using BenutzerverwaltungBL.Model.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,14 @@ namespace Benutzerverwaltung.View
         public UserInfoView( )
         {
             InitializeComponent();
-            UserInfoViewModel uivm = new UserInfoViewModel();
+            //UserInfoViewModel uivm = new UserInfoViewModel();
+            //uivm.CloseAction += ( ) => { this.Close(); };
+            //this.DataContext = uivm;
+        }
+        public UserInfoView(Customer c )
+        {
+            InitializeComponent();
+            UserInfoViewModel uivm = new UserInfoViewModel(c);
             uivm.CloseAction += ( ) => { this.Close(); };
             this.DataContext = uivm;
         }

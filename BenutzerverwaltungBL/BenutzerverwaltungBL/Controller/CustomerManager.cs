@@ -38,7 +38,7 @@ namespace BenutzerverwaltungBL.Controller
             {
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                    UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication();
+                    UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(fullName, birthDate);
                    
                     Customer customer = new Customer()
                     {

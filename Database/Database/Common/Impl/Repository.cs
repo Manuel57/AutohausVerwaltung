@@ -144,10 +144,7 @@ namespace Database.Common.Impl
             return this.session.CreateSQLQuery(query);
         }
 
-        public void Test()
-        {
-            //hallo
-        }
+       
 
         /// <summary>
         /// Returns the number of entities matching the given criteria

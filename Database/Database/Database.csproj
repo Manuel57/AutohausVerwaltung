@@ -60,6 +60,7 @@
     <Compile Include="Common\IEntity.cs" />
     <Compile Include="Common\Impl\Repository.cs" />
     <Compile Include="Common\Impl\RepositoryFactory.cs" />
+    <Compile Include="Common\Impl\RepositoryForSpecialDataTypes.cs" />
     <Compile Include="Common\ObserverPattern\IObservable.cs" />
     <Compile Include="Common\ObserverPattern\IObserver.cs" />
     <Compile Include="Common\ObserverPattern\Subject.cs" />

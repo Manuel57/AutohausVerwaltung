@@ -42,7 +42,6 @@ namespace Database.Common
         {
             try
             {
-
                 DatabaseConfiguration.Instance.RegisterAll(
                 DefaultConfig.OLEDB_PROVIDER ,
                 IPAddress.Parse(Properties.Settings.Default.IpCurrent) , Properties.Settings.Default.ServiceName ,

@@ -36,7 +36,7 @@ namespace BenutzerverwaltungBL.Common
                     MD5Hash.Compute(guidPassword)
                 );
             }
-            catch ( Exception e )
+            catch ( Exception  )
             {
                 throw;
             }

@@ -255,7 +255,7 @@ namespace Database.Common.Impl
             {
                 return Connection.Database.Instance.OpenSession().Get<T>(objId);
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 throw;
             }
@@ -281,7 +281,7 @@ namespace Database.Common.Impl
                 session.SaveOrUpdate(entity);
                 CommitTransaction();
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 throw;
             }
@@ -547,8 +547,7 @@ namespace Database.Common.Impl
         }
         #endregion
 
-
-
+        
         /// <summary>
         /// commits open transactions if there are any.
         /// flushes the session and closes it.

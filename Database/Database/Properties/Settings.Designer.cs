@@ -85,7 +85,7 @@ namespace Database.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("212.152.179.117")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.128.152")]
         public string IpCurrent {
             get {
                 return ((string)(this["IpCurrent"]));

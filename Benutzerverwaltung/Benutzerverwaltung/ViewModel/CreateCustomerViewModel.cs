@@ -41,7 +41,6 @@ namespace Benutzerverwaltung.ViewModel
             
             try
             {
-                MessageBox.Show(this.BirthDate);
                 Customer c = CustomerManager.CreateCustomer("" , string.Format("{0} {1}" , this.FirstName , this.LastName) , DateTime.Parse(BirthDate), this.Address);
                 UserInfoView uiv = new UserInfoView(c);
                 uiv.ShowDialog();

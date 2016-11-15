@@ -15,5 +15,6 @@ namespace BenutzerverwaltungBL.Controller
 {
     public static class RechnungManager
     {
+        
     }
 }

@@ -133,9 +133,9 @@ namespace BenutzerverwaltungBL.Controller
             try
             {
                 IEnumerable<Customer> ret = null;
-                using (IRepository repo = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                   ret = new List<Customer>(repo.SelectMany<Customer>().AsEnumerable());
+                   ret = new List<Customer>(repository.SelectMany<Customer>().AsEnumerable());
                    
                 }
                 return ret;

@@ -39,7 +39,6 @@ namespace BenutzerverwaltungBL.Controller
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(fullName, birthDate);
-                   
                     Customer customer = new Customer()
                     {
                         CustomerId = repository.Max<Customer, int>("CustomerId")+1,

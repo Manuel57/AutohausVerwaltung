@@ -33,10 +33,12 @@ namespace Database.Common.Impl
         protected ITransaction Transaction = null;
         #endregion protected fields
         #endregion fields
+
         #region constructors
         public  Repository( ISession _session ) { session = _session; }
         public Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
         #endregion constructors
+
         #region transaction session methods
         /// <summary>
         /// commits the transaction and 
@@ -130,8 +132,7 @@ namespace Database.Common.Impl
 
         }
         #endregion
-
-
+        
         #region other methods like save/update delete ...
 
         /// <summary>

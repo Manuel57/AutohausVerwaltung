@@ -59,7 +59,12 @@
     <Compile Include="Controller\ReparaturManager.cs" />
     <Compile Include="Controller\WerkstattkonzernManager.cs" />
     <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
+    <Compile Include="Model\DataObjects\AutoTeile.cs" />
     <Compile Include="Model\DataObjects\Customer.cs" />
+    <Compile Include="Model\DataObjects\Rechnung.cs" />
+    <Compile Include="Model\DataObjects\Reparatur.cs" />
+    <Compile Include="Model\DataObjects\ReparaturAngebot.cs" />
+    <Compile Include="Model\DataObjects\ReparaturArt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

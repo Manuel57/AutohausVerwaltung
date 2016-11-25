@@ -476,7 +476,7 @@ namespace Database.Common.Impl
         #endregion
 
         #region Linq methods
-
+        
         /// <summary>
         /// returns a linq queryable list of all entities.
         /// Throws an exception if an error occurs.

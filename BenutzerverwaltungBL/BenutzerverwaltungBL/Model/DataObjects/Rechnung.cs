@@ -14,18 +14,18 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Id(Name ="Rechnungsnummer",Column ="Rechnungsnummer")]
         public virtual int Rechnungsnummer { get; set; }
 
-        [Property(Name = "Rechnungsdatum",Column ="Rdatum",Type= "date")]
+        [Property(Name = "Rechnungsdatum",Column ="Rdatum",TypeType= typeof(DateTime))]
         public virtual DateTime Rechnungsdatum { get; set; }
 
        [Property(Name = "Gesamtpreis",Column ="Gesamtpreis")]
         public virtual long Gesamtpreis { get; set; }
 
         [ManyToOne(Class ="Customer",Column ="KundenId",NotNull = true,Cascade = "save-update")]
-        public virtual Customer KundenId { get; set; }
+        public virtual Customer Kunde { get; set; }
 
-        [List(Name ="Reparaturen")]
-        [Key(Column ="Rechnungsnummer")] 
-        [OneToMany(Class ="Reparatur")]
+        [List(1,Name ="Reparaturen",Table = "Reparatur",Lazy =CollectionLazy.False)]
+        [Key(2,Column ="Rechnungsnummer")] 
+        [OneToMany(3,Class ="Reparatur")]
         public virtual IList<Reparatur> Reparaturen { get; set; }
 
         public object Clone()

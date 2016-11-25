@@ -11,14 +11,38 @@ namespace BenutzerverwaltungBL.Model.DataObjects
     [Class(Table ="Reparatur")]
    public  class Reparatur : IEntity
     {
-       //iwi mit compostie id den zusammengesetztn primary key
-        public virtual int ReparaturId { get; set; }
+         [CompositeId(1)]
+         [KeyProperty(2,Name = "ReparaturId",Column ="RepId",TypeType = typeof(int))]
+         [KeyManyToOne(3,Name ="Rechnungsnummer", Column ="Rechnungsnummer", Class = "Rechnung")]
+         [Column(Name ="RepId")]
+         public virtual int ReparaturId { get; set; }
 
-        [KeyManyToOne(Class ="Rechnung",Column ="Rechnungsnummer",ForeignKey ="Rechnungsnummer")]
-        public virtual int Rechnungsnummer { get; set; }
+        [Column(Name ="Rechnungsnummer")]
+        public virtual Rechnung Rechnungsnummer { get; set; }
 
-        public virtual int RepArtId { get; set; }
+        [ManyToOne(Class ="ReparaturArt",Column ="RepArtId",NotNull =true,Lazy =Laziness.False)]
+        public virtual ReparaturArt RepArt { get; set; }
+
+        [Property(Name ="Standort",Column ="Standort",TypeType =typeof(string))]
         public virtual string Standort { get; set; }
+
+        [Property(Name = "ReparaturDatum",Column ="Datum",TypeType =typeof(DateTime))]
         public virtual DateTime ReparaturDatum { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            var t = obj as Reparatur;
+            if (t == null)
+                return false;
+            if (ReparaturId == t.ReparaturId && Rechnungsnummer == t.Rechnungsnummer)
+                return true;
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

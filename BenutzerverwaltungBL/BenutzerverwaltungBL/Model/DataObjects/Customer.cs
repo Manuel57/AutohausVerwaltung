@@ -30,12 +30,12 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column ="Username", Unique =true)]
         public virtual string Username { get; set; }
 
-        [Property(Column ="Password")]
+        [Property(Column ="Password", Name ="Password")]
         public virtual string Password { get; set; }
 
-        [List(Name ="Rechnungen", Lazy = CollectionLazy.True,Table ="Rechnung")]
-        [Key(Column ="CustomerId")]
-        [OneToMany(Class = "Rechnung")]
+        [List(1,Name ="Rechnungen", Lazy = CollectionLazy.False,Table ="Rechnung")]
+        [Key(2,Column ="CustomerId")]
+        [OneToMany(3,Class = "Rechnung")]
         public virtual IList<Rechnung> Rechnungen { get; set; }
 
         public Customer() { }

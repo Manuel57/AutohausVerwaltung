@@ -19,10 +19,10 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Name ="Preis",Column ="Preis")]
         public virtual long Preis { get; set; }
 
-        [List(Name ="Teile", Table ="Reparaturteile")] 
+       /* [List(Name ="Teile", Table ="Reparaturteile")] 
         [Key(Column ="ReparaturArtId")]
         [ManyToMany(Column ="Autoteilbez",Class = "AutoTeile")]
-        public virtual IList<AutoTeile> Teile { get; set; }
+        public virtual IList<AutoTeile> Teile { get; set; }*/
 
         public ReparaturArt() { }
     }

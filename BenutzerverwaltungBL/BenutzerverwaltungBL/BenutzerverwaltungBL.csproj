@@ -30,8 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Database">
       <HintPath>..\..\Database\Database\bin\Debug\Database.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">

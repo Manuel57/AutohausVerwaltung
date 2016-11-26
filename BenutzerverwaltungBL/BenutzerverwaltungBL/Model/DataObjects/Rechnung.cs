@@ -23,9 +23,9 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [ManyToOne(Class ="Customer",Column ="KundenId",NotNull = true,Cascade = "save-update")]
         public virtual Customer Kunde { get; set; }
 
-        [List(1,Name ="Reparaturen",Table = "Reparatur",Lazy =CollectionLazy.False)]
+        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy =CollectionLazy.False)]
         [Key(2,Column ="Rechnungsnummer")] 
-        [OneToMany(3,Class ="Reparatur")]
+        [OneToMany(3,Class ="Reparatur",ClassType =typeof(Reparatur))]
         public virtual IList<Reparatur> Reparaturen { get; set; }
 
         public object Clone()

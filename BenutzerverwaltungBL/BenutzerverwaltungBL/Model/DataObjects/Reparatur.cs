@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table ="Reparatur")]
+    [Class(Table ="Reparatur",Name ="Reparatur")]
    public  class Reparatur : IEntity
     {
          [CompositeId(1)]
-         [KeyProperty(2,Name = "ReparaturId",Column ="RepId",TypeType = typeof(int))]
-         [KeyManyToOne(3,Name ="Rechnungsnummer", Column ="Rechnungsnummer", Class = "Rechnung")]
+         [KeyProperty(2,Name = "ReparaturId",Column ="RepId",TypeType = typeof(long))]
+         [KeyManyToOne(3,Name ="Rechnungsnummer", Column ="Rechnungsnummer", Class = "Rechnung",ClassType =typeof(Rechnung))]
          [Column(Name ="RepId")]
-         public virtual int ReparaturId { get; set; }
+         public virtual long ReparaturId { get; set; }
 
         [Column(Name ="Rechnungsnummer")]
         public virtual Rechnung Rechnungsnummer { get; set; }

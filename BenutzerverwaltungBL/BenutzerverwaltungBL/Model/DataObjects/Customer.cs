@@ -8,7 +8,7 @@ using Database.Common;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table ="kunde",Name ="Customer")]
+    [Class(Table ="Kunde",Name ="Customer")]
     public class Customer:ICloneable,IEntity
     {
         
@@ -33,9 +33,9 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column ="Password", Name ="Password")]
         public virtual string Password { get; set; }
 
-        [List(1,Name ="Rechnungen", Lazy = CollectionLazy.False,Table ="Rechnung")]
+        [Set(1,Name ="Rechnungen", Lazy = CollectionLazy.False,Table ="Rechnung")]
         [Key(2,Column ="CustomerId")]
-        [OneToMany(3,Class = "Rechnung")]
+        [OneToMany(3,Class = "Rechnung",ClassType =typeof(Rechnung))]
         public virtual IList<Rechnung> Rechnungen { get; set; }
 
         public Customer() { }

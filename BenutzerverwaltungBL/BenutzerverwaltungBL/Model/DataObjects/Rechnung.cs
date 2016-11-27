@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table = "Rechnung",Name ="Rechnung")]
-    public class Rechnung : IEntity, ICloneable
+    [Class(Table = "Rechnung",Name = "BenutzerverwaltungBL.Model.DataObjects.Rechnung,BenutzerverwaltungBL")]
+    public class Rechnung : IEntity
     {
         [Id(Name ="Rechnungsnummer",Column ="Rechnungsnummer")]
         public virtual int Rechnungsnummer { get; set; }
@@ -20,17 +20,14 @@ namespace BenutzerverwaltungBL.Model.DataObjects
        [Property(Name = "Gesamtpreis",Column ="Gesamtpreis")]
         public virtual long Gesamtpreis { get; set; }
 
-        [ManyToOne(Class ="Customer",Column ="KundenId",NotNull = true,Cascade = "save-update")]
+        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "save-update")]
         public virtual Customer Kunde { get; set; }
 
-        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy =CollectionLazy.False)]
+        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch =CollectionFetchMode.Join)]
         [Key(2,Column ="Rechnungsnummer")] 
-        [OneToMany(3,Class ="Reparatur",ClassType =typeof(Reparatur))]
-        public virtual IList<Reparatur> Reparaturen { get; set; }
+        [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur",ClassType =typeof(Reparatur))]
+        public virtual ISet<Reparatur> Reparaturen { get; set; }
 
-        public object Clone()
-        {
-            throw new NotImplementedException();
-        }
+       public  Rechnung() { }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
-{
+{/*
     [Class (Table ="Autoteile")]
     public class AutoTeile
     {
@@ -17,5 +17,5 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         public virtual long Preis { get; set; }
 
         public AutoTeile() { }
-    }
+    }*/
 }

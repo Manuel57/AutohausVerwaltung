@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table ="Reparaturart")]
+    [Class(Table ="Reparaturart",Name = "BenutzerverwaltungBL.Model.DataObjects.ReparaturArt,BenutzerverwaltungBL")]
    public class ReparaturArt
     {
         [Id(Name ="ReparaturArtId",Column ="Reparaturartid")]
@@ -18,6 +18,8 @@ namespace BenutzerverwaltungBL.Model.DataObjects
 
         [Property(Name ="Preis",Column ="Preis")]
         public virtual long Preis { get; set; }
+
+      
 
        /* [List(Name ="Teile", Table ="Reparaturteile")] 
         [Key(Column ="ReparaturArtId")]

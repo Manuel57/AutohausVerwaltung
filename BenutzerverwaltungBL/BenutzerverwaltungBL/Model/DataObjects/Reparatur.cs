@@ -8,20 +8,22 @@ using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table ="Reparatur",Name ="Reparatur")]
+    [Class(Table ="Reparatur",Name = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL")]
    public  class Reparatur : IEntity
     {
          [CompositeId(1)]
-         [KeyProperty(2,Name = "ReparaturId",Column ="RepId",TypeType = typeof(long))]
-         [KeyManyToOne(3,Name ="Rechnungsnummer", Column ="Rechnungsnummer", Class = "Rechnung",ClassType =typeof(Rechnung))]
+         [KeyProperty(2,Name = "ReparaturId",Column ="RepId",TypeType = typeof(int))]
+         [KeyManyToOne(3,Name ="Rechnungsnummer", Column ="Rechnungsnummer", Class = "BenutzerverwaltungBL.Model.DataObjects.Rechnung", ClassType =typeof(Rechnung))]
          [Column(Name ="RepId")]
-         public virtual long ReparaturId { get; set; }
+         public virtual int ReparaturId { get; set; }
 
         [Column(Name ="Rechnungsnummer")]
         public virtual Rechnung Rechnungsnummer { get; set; }
 
-        [ManyToOne(Class ="ReparaturArt",Column ="RepArtId",NotNull =true,Lazy =Laziness.False)]
-        public virtual ReparaturArt RepArt { get; set; }
+        /* [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.ReparaturArt", Column ="RepArtId",NotNull =true,Lazy =Laziness.False)]
+         public virtual ReparaturArt RepArt { get; set; }*/
+        [Property(Name ="RepArt",Column = "RepArtId")]
+        public virtual int RepArt { get; set; }
 
         [Property(Name ="Standort",Column ="Standort",TypeType =typeof(string))]
         public virtual string Standort { get; set; }
@@ -29,7 +31,9 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Name = "ReparaturDatum",Column ="Datum",TypeType =typeof(DateTime))]
         public virtual DateTime ReparaturDatum { get; set; }
 
-        public override bool Equals(object obj)
+        public Reparatur() { }
+
+        public  override bool Equals(object obj)
         {
             if (obj == null)
                 return false;

@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1599BC0C-7340-4D68-8F78-46379CBE4025}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{B0921BAC-6104-400C-BF2C-DCD566BA6E63}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BenutzerverwaltungBL</RootNamespace>
-    <AssemblyName>BenutzerverwaltungBL</AssemblyName>
+    <RootNamespace>TestProject</RootNamespace>
+    <AssemblyName>TestProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,15 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Database">
-      <HintPath>..\..\Database\Database\bin\Debug\Database.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\..\Database\Database\bin\Debug\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Mapping.Attributes, Version=4.0.0.1, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.Mapping.Attributes.4.0.0.1\lib\net40\NHibernate.Mapping.Attributes.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BenutzerverwaltungBL">
+      <HintPath>..\BenutzerverwaltungBL\bin\Debug\BenutzerverwaltungBL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,25 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\MD5Hash.cs" />
-    <Compile Include="Common\UserdataGenerator.cs" />
-    <Compile Include="Configuration\ConfigureBl.cs" />
-    <Compile Include="Controller\CustomerManager.cs" />
-    <Compile Include="Controller\RechnungManager.cs" />
-    <Compile Include="Controller\ReparaturManager.cs" />
-    <Compile Include="Controller\WerkstattkonzernManager.cs" />
-    <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
-    <Compile Include="Model\DataObjects\AutoTeile.cs" />
-    <Compile Include="Model\DataObjects\Customer.cs" />
-    <Compile Include="Model\DataObjects\Rechnung.cs" />
-    <Compile Include="Model\DataObjects\Reparatur.cs" />
-    <Compile Include="Model\DataObjects\ReparaturAngebot.cs" />
-    <Compile Include="Model\DataObjects\ReparaturArt.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BenutzerverwaltungBL3.licenseheader" />
-    <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

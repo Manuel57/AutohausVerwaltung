@@ -109,7 +109,7 @@ namespace Database.Connection
                     cfg.AddInputStream(stream);
                 }
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 throw;
             }
@@ -126,7 +126,7 @@ namespace Database.Connection
             {
                 updateConfuguration();
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 throw;
             }

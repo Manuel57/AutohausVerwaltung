@@ -20,12 +20,12 @@ namespace BenutzerverwaltungBL.Model.DataObjects
        [Property(Name = "Gesamtpreis",Column ="Gesamtpreis")]
         public virtual long Gesamtpreis { get; set; }
 
-        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "save-update")]
+        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "save-update")]
         public virtual Customer Kunde { get; set; }
 
         [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch =CollectionFetchMode.Join)]
         [Key(2,Column ="Rechnungsnummer")] 
-        [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur",ClassType =typeof(Reparatur))]
+        [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL", ClassType =typeof(Reparatur))]
         public virtual ISet<Reparatur> Reparaturen { get; set; }
 
        public  Rechnung() { }

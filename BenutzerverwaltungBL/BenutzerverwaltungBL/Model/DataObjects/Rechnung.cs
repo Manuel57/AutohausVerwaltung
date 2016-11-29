@@ -23,7 +23,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "save-update")]
         public virtual Customer Kunde { get; set; }
 
-        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch =CollectionFetchMode.Join,Cascade ="all")]
+        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch = CollectionFetchMode.Join,Cascade ="all")]
         [Key(2,Column ="RNR")] 
         [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL", ClassType =typeof(Reparatur))]
         public virtual ISet<Reparatur> Reparaturen { get; set; }

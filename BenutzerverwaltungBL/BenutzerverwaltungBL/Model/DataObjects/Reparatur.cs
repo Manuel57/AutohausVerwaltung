@@ -13,7 +13,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
     {
          [CompositeId(1)]
          [KeyProperty(2,Name = "ReparaturId",Column ="RepId",TypeType = typeof(int))]
-         [KeyManyToOne(3,Name ="Rechnungsnummer",Column ="RNR", Class = "BenutzerverwaltungBL.Model.DataObjects.Rechnung, BenutzerverwaltungBL", ClassType =typeof(Rechnung),Lazy =RestrictedLaziness.False)]
+         [KeyManyToOne(3,Name ="Rechnungsnummer",Column ="RNR", Class = "BenutzerverwaltungBL.Model.DataObjects.Rechnung, BenutzerverwaltungBL", ClassType =typeof(Rechnung))]
          [Column(Name ="RepId")]
          public virtual int ReparaturId { get; set; }
 

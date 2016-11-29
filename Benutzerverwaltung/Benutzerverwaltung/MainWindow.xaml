@@ -44,12 +44,12 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel  Width="50">
-                                    <Button Command="{Binding DetailsCustomerCommand}" Style="{StaticResource ImageButton}">
+                                    <Button Style="{StaticResource ImageButton}" Click="Button_Click_1">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/Lupe.png" Width="16" Height="16" Margin="0,0,10,0"/>
                                         </StackPanel>
                                     </Button>
-                                    <Button Style="{StaticResource ImageButton}" Command="{Binding DeleteCustomerCommand}">
+                                    <Button Style="{StaticResource ImageButton}" Click="button_Click">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/DelSymbol.png" Width="16" Height="16" Margin="0,0,10,0"/>
                                         </StackPanel>

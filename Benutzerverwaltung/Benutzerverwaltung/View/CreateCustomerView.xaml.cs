@@ -5,6 +5,7 @@
 // <date>2016-11-12</date>
 // </copyright>
 
+using Benutzerverwaltung.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,6 @@ namespace Benutzerverwaltung.View
         {
             InitializeComponent();
         }
+        
     }
 }

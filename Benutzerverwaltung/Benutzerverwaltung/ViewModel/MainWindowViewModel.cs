@@ -32,17 +32,26 @@ namespace Benutzerverwaltung.ViewModel
 
         public MainWindowViewModel( )
         {
+            ConfigureBl.Initialize();
             this.Emp = new ObservableCollection<Customer>();
             this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
             this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
             this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
             this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
-            ConfigureBl.Initialize();
+           
             updateView();
         }
 
-        private void deleteCustomer( ) { }
-        private void showCustomerDetails( ) { }
+        private void deleteCustomer( ) {
+            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete);
+            cdv.Show();
+        }
+        private void showCustomerDetails( )
+        {
+            MessageBox.Show("TEST");
+            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details);
+            cdv.Show();
+        }
         private void createCustomer( )
         {
             CreateCustomerView ccv = new CreateCustomerView();

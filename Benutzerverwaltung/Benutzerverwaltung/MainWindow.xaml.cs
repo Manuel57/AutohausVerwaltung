@@ -5,6 +5,8 @@
 // <date>2016-11-07</date>
 // </copyright>
 
+using Benutzerverwaltung.Helpers;
+using Benutzerverwaltung.View;
 using Benutzerverwaltung.ViewModel;
 using BenutzerverwaltungBL.Configuration;
 using BenutzerverwaltungBL.Controller;
@@ -51,6 +53,14 @@ namespace Benutzerverwaltung
         /// <param name="e"></param>
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete);
+            cdv.Show();
+        }
+
+        private void Button_Click_1( object sender , RoutedEventArgs e )
+        {
+            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details);
+            cdv.Show();
         }
     }
 }

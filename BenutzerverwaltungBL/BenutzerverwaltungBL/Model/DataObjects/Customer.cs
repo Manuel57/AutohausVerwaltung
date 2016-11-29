@@ -35,7 +35,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
 
         [Set(1,Name ="Rechnungen", Lazy = CollectionLazy.False,Table ="Rechnung")]
         [Key(2,Column = "KundenId")]
-        [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Rechnung", ClassType =typeof(Rechnung))]
+        [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Rechnung,BenutzerverwaltungBL", ClassType =typeof(Rechnung))]
         public virtual ISet<Rechnung> Rechnungen { get; set; }
 
         public Customer() { }

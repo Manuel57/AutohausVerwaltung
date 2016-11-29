@@ -19,13 +19,21 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Name ="Preis",Column ="Preis")]
         public virtual long Preis { get; set; }
 
-      
+        [Set(1, Name = "Reparaturen", Table = "Reparatur", Lazy = CollectionLazy.True, Fetch = CollectionFetchMode.Join)]
+        [Key(2, Column = "RepartId")]
+        [OneToMany(3, Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL", ClassType = typeof(Reparatur))]
+        public virtual ISet<Reparatur> Reparaturen { get; set; }
 
-       /* [List(Name ="Teile", Table ="Reparaturteile")] 
-        [Key(Column ="ReparaturArtId")]
-        [ManyToMany(Column ="Autoteilbez",Class = "AutoTeile")]
-        public virtual IList<AutoTeile> Teile { get; set; }*/
+        /* [List(Name ="Teile", Table ="Reparaturteile")] 
+         [Key(Column ="ReparaturArtId")]
+         [ManyToMany(Column ="Autoteilbez",Class = "AutoTeile")]
+         public virtual IList<AutoTeile> Teile { get; set; }*/
 
         public ReparaturArt() { }
+
+        public override string ToString()
+        {
+            return this.Bezeichnung + " " + this.Preis;
+        }
     }
 }

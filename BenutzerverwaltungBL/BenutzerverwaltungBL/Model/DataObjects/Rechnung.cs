@@ -24,7 +24,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         public virtual Customer Kunde { get; set; }
 
         [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch =CollectionFetchMode.Join)]
-        [Key(2,Column ="Rechnungsnummer")] 
+        [Key(2,Column ="RNR")] 
         [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL", ClassType =typeof(Reparatur))]
         public virtual ISet<Reparatur> Reparaturen { get; set; }
 

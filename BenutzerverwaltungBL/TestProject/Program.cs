@@ -14,7 +14,7 @@ namespace TestProject
         static void Main(string[] args)
         {
             Console.WriteLine("Start");
-            List<Customer> allCustomer = null;
+            List<Customer> allCustomer = new List<Customer>();
             try
             {
                 ConfigureBl.Initialize();
@@ -22,7 +22,7 @@ namespace TestProject
                 {
                     allCustomer.Add(c);
                 }
-
+                displayList(allCustomer);
             }
             catch(Exception ex)
             {
@@ -34,7 +34,8 @@ namespace TestProject
         {
             foreach(Customer c in lisst)
             {
-                Console.WriteLine(c.FullName + "\nRechnungen" + c.Rechnungen.Count + "\n");
+
+                Console.WriteLine(c.FullName + "\nRechnungen" + ((c.Rechnungen.ElementAt(1) as Rechnung).Reparaturen.ElementAt(1) as Reparatur).RepArt.ToString() + "\n");
                 Console.WriteLine();
             }
         }

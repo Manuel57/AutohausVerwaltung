@@ -20,7 +20,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Column(Name ="RNR")]
         public virtual Rechnung Rechnungsnummer { get; set; }
 
-        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.ReparaturArt,BenutzerverwaltungBL", Column ="RepArtId",NotNull =true,Lazy =Laziness.False)]
+        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.ReparaturArt,BenutzerverwaltungBL", Column ="RepArtId",NotNull =true,Lazy =Laziness.False,Cascade ="none")]
          public virtual ReparaturArt RepArt { get; set; }
        
 

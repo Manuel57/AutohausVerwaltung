@@ -17,14 +17,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Benutzerverwaltung.ViewModel
 {
-    public class Emps
-    {
-        public string Name { get; set; }
-        public int Id { get; set; }
-    }
     public class MainWindowViewModel : ModelBase
     {
         public string TextSearchField { get; set; }
@@ -32,6 +28,7 @@ namespace Benutzerverwaltung.ViewModel
         public RelayCommand DetailsCustomerCommand { get; set; }
         public RelayCommand DeleteCustomerCommand { get; set; }
         public RelayCommand CreateCustomerCommand { get; set; }
+        public RelayCommand SearchFieldChanged { get; set; }
 
         public MainWindowViewModel( )
         {
@@ -39,7 +36,7 @@ namespace Benutzerverwaltung.ViewModel
             this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
             this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
             this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
-
+            this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
             ConfigureBl.Initialize();
             updateView();
         }

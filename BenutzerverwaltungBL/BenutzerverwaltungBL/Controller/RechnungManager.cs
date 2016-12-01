@@ -15,6 +15,7 @@ namespace BenutzerverwaltungBL.Controller
 {
     public static class RechnungManager
     {
-        
+        //aus der rechnung a pfd gnerieren und ins oracle docs tabelle speichern
+        // und get von rechnungen ( list von rechnungsnummern oder text durchsuchen)
     }
 }

@@ -33,7 +33,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column ="Password", Name ="Password")]
         public virtual string Password { get; set; }
 
-        [Set(1,Name ="Rechnungen", Lazy = CollectionLazy.False,Table ="Rechnung",Cascade ="all")]
+        [Set(1,Name ="Rechnungen", Lazy = CollectionLazy.False,Table ="Rechnung",Cascade ="save-update")]
         [Key(2,Column = "KundenId")]
         [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Rechnung,BenutzerverwaltungBL", ClassType =typeof(Rechnung))]
         public virtual ISet<Rechnung> Rechnungen { get; set; }

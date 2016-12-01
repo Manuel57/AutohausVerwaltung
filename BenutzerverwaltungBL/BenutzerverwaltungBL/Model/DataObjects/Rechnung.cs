@@ -20,7 +20,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
        [Property(Name = "Gesamtpreis",Column ="Gesamtpreis")]
         public virtual long Gesamtpreis { get; set; }
 
-        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "save-update")]
+        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "none")]
         public virtual Customer Kunde { get; set; }
 
         [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch = CollectionFetchMode.Join,Cascade ="all")]

@@ -22,7 +22,15 @@ namespace TestProject
                 {
                     allCustomer.Add(c);
                 }
-                displayList(allCustomer);
+                //displayList(allCustomer);
+                if(CustomerManager.DeleteCustomer(allCustomer.Find(item => item.CustomerId == 2)))
+                {
+                    Console.WriteLine("delete succede");
+                }
+                else
+                {
+                    Console.WriteLine("not succede delete");
+                }
             }
             catch(Exception ex)
             {

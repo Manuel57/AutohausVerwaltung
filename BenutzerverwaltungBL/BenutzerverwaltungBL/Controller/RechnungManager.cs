@@ -60,10 +60,12 @@ namespace BenutzerverwaltungBL.Controller
 
         private static byte[] GenerateDoc(Rechnung rechnungn)
         {
+            // hier aus objekt die pdf erzeugen 
             throw new NotImplementedException();
         }
         private static string GenerateDocString(Rechnung rechnungn)
         {
+            // hier aus objekt die pdf erzeugen 
             throw new NotImplementedException();
         }
 

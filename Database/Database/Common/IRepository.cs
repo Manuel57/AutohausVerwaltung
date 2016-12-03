@@ -42,7 +42,7 @@ namespace Database.Common
         void DeleteWhere<T>(DetachedCriteria criteria) where T : IEntity;
         T GetById<T>( object objId ) where T : IEntity;
         E Max<T, E>(string propname) where T : IEntity;
-        IQuery GetQuery(string query);
+        ISQLQuery GetQuery(string query);
        
     }
 }

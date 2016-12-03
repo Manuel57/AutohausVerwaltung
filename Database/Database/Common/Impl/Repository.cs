@@ -140,7 +140,7 @@ namespace Database.Common.Impl
         /// </summary>
         /// <param name="query">the query string</param>
         /// <returns>the sql query</returns>
-        public IQuery GetQuery( string query )
+        public ISQLQuery GetQuery( string query )
         {
             return this.session.CreateSQLQuery(query);
         }

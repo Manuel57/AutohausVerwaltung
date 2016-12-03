@@ -5,6 +5,11 @@
 // <date>2016-11-14</date>
 // </copyright>
 
+using BenutzerverwaltungBL.Model.DataObjects;
+using Database;
+using Database.Common;
+using Database.Common.Impl;
+using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +22,55 @@ namespace BenutzerverwaltungBL.Controller
     {
         //aus der rechnung a pfd gnerieren und ins oracle docs tabelle speichern
         // und get von rechnungen ( list von rechnungsnummern oder text durchsuchen)
+
+        #region private fields
+        private static string SEARCHFFORRECHNUNGEN = "SEARCHFORRECHNUNG";
+        private static string TABLERECHNUNGDOCS = "RECHNUNGDOCS";
+        private static string TABLERECHNUNGHELP = "RECHNUNGDOCSHELPTABLE";
+        private static IRepository repository = null;
+        #endregion
+
+        public static bool InsertRechnungAsDoc(Rechnung rechnungn)
+        {
+            try
+            {
+                bool ret = true;
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    int id = rechnungn.Rechnungsdatum.Millisecond + Convert.ToInt32(rechnungn.Gesamtpreis);
+                    IQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Titel,Text) values (:id,:titel,:doc)");
+                    query.SetInt32(":id", id);
+                    query.SetString(":titel", GenerateTitel(rechnungn));
+                   // query.SetBinary(":doc", GenerateDoc(rechnungn));
+                    query.SetParameter(":doc", GenerateDocString(rechnungn), NHibernateUtil.StringClob);
+                    
+                }
+                return ret;
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
+            }
+            
+        }
+
+        private static byte[] GenerateDoc(Rechnung rechnungn)
+        {
+            throw new NotImplementedException();
+        }
+        private static string GenerateDocString(Rechnung rechnungn)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private static string GenerateTitel(Rechnung rechnungn)
+        {
+            return rechnungn.Kunde.FullName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
+        }
     }
 }

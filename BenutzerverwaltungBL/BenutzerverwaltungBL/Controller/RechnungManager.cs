@@ -38,12 +38,12 @@ namespace BenutzerverwaltungBL.Controller
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     int id = rechnungn.Rechnungsdatum.Millisecond + Convert.ToInt32(rechnungn.Gesamtpreis);
-                    IQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Titel,Text) values (:id,:titel,:doc)");
+                    ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Titel,Text) values (:id,:titel,:doc)");
                     query.SetInt32(":id", id);
                     query.SetString(":titel", GenerateTitel(rechnungn));
                    // query.SetBinary(":doc", GenerateDoc(rechnungn));
                     query.SetParameter(":doc", GenerateDocString(rechnungn), NHibernateUtil.StringClob);
-                    
+                    query.ExecuteUpdate();
                 }
                 return ret;
             }

@@ -101,7 +101,7 @@ namespace Database.Common.Impl
                 Transaction.Dispose();
                 Transaction = null;
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 throw;
             }
@@ -121,7 +121,7 @@ namespace Database.Common.Impl
                 session.Dispose();
                 session = null;
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 throw;
             }
@@ -140,7 +140,7 @@ namespace Database.Common.Impl
         /// </summary>
         /// <param name="query">the query string</param>
         /// <returns>the sql query</returns>
-        public ISQLQuery GetQuery( string query )
+        public IQuery GetQuery( string query )
         {
             return this.session.CreateSQLQuery(query);
         }

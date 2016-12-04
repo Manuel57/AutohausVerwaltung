@@ -12,6 +12,7 @@ using Database.Common.Impl;
 using NHibernate;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace BenutzerverwaltungBL.Controller
         private static IRepository repository = null;
         #endregion
 
+        //bin ma nit ganz sia ab des mit dem string clob da funkt
+        //werd a pdf als clob oder blob gspeichert ???
         public static bool InsertRechnungAsDoc(Rechnung rechnungn)
         {
             try
@@ -41,7 +44,7 @@ namespace BenutzerverwaltungBL.Controller
                     ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Titel,Text) values (:id,:titel,:doc)");
                     query.SetInt32(":id", id);
                     query.SetString(":titel", GenerateTitel(rechnungn));
-                   // query.SetBinary(":doc", GenerateDoc(rechnungn));
+                   // query.SetParameter(":doc", GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);
                     query.SetParameter(":doc", GenerateDocString(rechnungn), NHibernateUtil.StringClob);
                     query.ExecuteUpdate();
                 }
@@ -58,6 +61,46 @@ namespace BenutzerverwaltungBL.Controller
             
         }
 
+        /// <summary>
+        /// des könnt abisi falsch sein ^^
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="path"></param>
+        public static void GetAllRechnungenForKunde(int customerID, string path)
+        {
+            try
+            {               
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS + " r where r.titel like ?");
+                    query.SetString(0, "%" + customerID);
+                    query.AddScalar("text", NHibernateUtil.StringClob);
+                    var all = query.List();
+
+                    int i = 0;
+                    foreach (var s in all)
+                    {                        
+                        using (StreamWriter outputFile = new StreamWriter(path+"/"+i+"Rechnung.pdf"))
+                        {
+                            outputFile.WriteLine(s.ToString());
+                        }
+
+                        i++;
+                    }
+                }
+                
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
+            }
+
+        }
+
         private static byte[] GenerateDoc(Rechnung rechnungn)
         {
             // hier aus objekt die pdf erzeugen 
@@ -72,7 +115,7 @@ namespace BenutzerverwaltungBL.Controller
 
         private static string GenerateTitel(Rechnung rechnungn)
         {
-            return rechnungn.Kunde.FullName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
+            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FullName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
         }
     }
 }

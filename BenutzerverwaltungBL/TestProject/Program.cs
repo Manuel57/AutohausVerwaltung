@@ -1,5 +1,6 @@
 ﻿using BenutzerverwaltungBL.Configuration;
 using BenutzerverwaltungBL.Controller;
+using BenutzerverwaltungBL.Model;
 using BenutzerverwaltungBL.Model.DataObjects;
 using System;
 using System.Collections.Generic;

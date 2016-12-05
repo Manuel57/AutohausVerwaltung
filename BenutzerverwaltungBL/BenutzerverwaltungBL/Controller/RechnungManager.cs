@@ -31,8 +31,7 @@ namespace BenutzerverwaltungBL.Controller
         private static IRepository repository = null;
         #endregion
 
-        //bin ma nit ganz sia ab des mit dem string clob da funkt
-        //werd a pdf als clob oder blob gspeichert ???
+        //sollte dann nur mehr mit der rechnung gehen und das byte[] selber erzeugen
         public static bool InsertRechnungAsDoc(Rechnung rechnungn, byte [] doc)
         {
             try
@@ -44,8 +43,7 @@ namespace BenutzerverwaltungBL.Controller
                     ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Title,Text) values (?,?,?)");
                     query.SetInt32(0, id);
                     query.SetString(1, GenerateTitel(rechnungn));
-                    // query.SetParameter(":doc", GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);
-                    //query.SetParameter(":doc", GenerateDocString(rechnungn), NHibernateUtil.BinaryBlob);
+                    // query.SetParameter(2, GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);                  
                     query.SetParameter(2, doc, NHibernateUtil.BinaryBlob);
                     query.ExecuteUpdate();
                 }
@@ -63,10 +61,10 @@ namespace BenutzerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// des könnt abisi falsch sein ^^
+        /// returns a list of byte[] containing all
+        /// docs for the given customer id
         /// </summary>
-        /// <param name="customerID"></param>
-        /// <param name="path"></param>
+        /// <param name="customerID">the id of the customer</param>
         public static List<byte[]> GetAllRechnungenForKunde(int customerID)
         {
             try
@@ -76,12 +74,13 @@ namespace BenutzerverwaltungBL.Controller
                 {
                     ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS +" r where r.title like ?");
                     query.SetString(0, "%" + customerID+"%");
+                    query.AddScalar("title", NHibernateUtil.String);
                     query.AddScalar("text",NHibernateUtil.BinaryBlob);
                     var all = query.List();
-                                       
+                   
                     foreach (var s in all)
-                    {
-                        ret.Add(s as byte[]);
+                    {                        
+                        ret.Add(s as byte []);
                     }
                 }
                 return ret;
@@ -102,13 +101,13 @@ namespace BenutzerverwaltungBL.Controller
             // hier aus objekt die pdf erzeugen 
             throw new NotImplementedException();
         }
-        private static string GenerateDocString(Rechnung rechnungn)
-        {
-            // hier aus objekt die pdf erzeugen 
-            throw new NotImplementedException();
-        }
-
-
+      
+        /// <summary>
+        /// generates the titel for storing in the database
+        /// out of the given bill
+        /// </summary>
+        /// <param name="rechnungn"></param>
+        /// <returns>a generated titel</returns>
         private static string GenerateTitel(Rechnung rechnungn)
         {
             return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FullName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();

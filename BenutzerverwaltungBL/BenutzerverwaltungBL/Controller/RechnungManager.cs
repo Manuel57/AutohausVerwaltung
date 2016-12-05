@@ -33,7 +33,7 @@ namespace BenutzerverwaltungBL.Controller
 
         //bin ma nit ganz sia ab des mit dem string clob da funkt
         //werd a pdf als clob oder blob gspeichert ???
-        public static bool InsertRechnungAsDoc(Rechnung rechnungn)
+        public static bool InsertRechnungAsDoc(Rechnung rechnungn, byte [] doc)
         {
             try
             {
@@ -41,11 +41,12 @@ namespace BenutzerverwaltungBL.Controller
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     int id = rechnungn.Rechnungsdatum.Millisecond + Convert.ToInt32(rechnungn.Gesamtpreis);
-                    ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Titel,Text) values (:id,:titel,:doc)");
-                    query.SetInt32(":id", id);
-                    query.SetString(":titel", GenerateTitel(rechnungn));
-                   // query.SetParameter(":doc", GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);
-                    query.SetParameter(":doc", GenerateDocString(rechnungn), NHibernateUtil.StringClob);
+                    ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Title,Text) values (?,?,?)");
+                    query.SetInt32(0, id);
+                    query.SetString(1, GenerateTitel(rechnungn));
+                    // query.SetParameter(":doc", GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);
+                    //query.SetParameter(":doc", GenerateDocString(rechnungn), NHibernateUtil.BinaryBlob);
+                    query.SetParameter(2, doc, NHibernateUtil.BinaryBlob);
                     query.ExecuteUpdate();
                 }
                 return ret;
@@ -66,29 +67,24 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="customerID"></param>
         /// <param name="path"></param>
-        public static void GetAllRechnungenForKunde(int customerID, string path)
+        public static List<byte[]> GetAllRechnungenForKunde(int customerID)
         {
             try
-            {               
+            {
+                List<byte[]> ret = new List<byte[]>();           
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                    ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS + " r where r.titel like ?");
-                    query.SetString(0, "%" + customerID);
-                    query.AddScalar("text", NHibernateUtil.StringClob);
+                    ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS +" r where r.title like ?");
+                    query.SetString(0, "%" + customerID+"%");
+                    query.AddScalar("text",NHibernateUtil.BinaryBlob);
                     var all = query.List();
-
-                    int i = 0;
+                                       
                     foreach (var s in all)
-                    {                        
-                        using (StreamWriter outputFile = new StreamWriter(path+"/"+i+"Rechnung.pdf"))
-                        {
-                            outputFile.WriteLine(s.ToString());
-                        }
-
-                        i++;
+                    {
+                        ret.Add(s as byte[]);
                     }
                 }
-                
+                return ret;
             }
             catch (DatabaseException)
             {

@@ -58,11 +58,11 @@ namespace BenutzerverwaltungBL.Controller
 
                 double gesamtPreis = r.Reparaturen.Sum(item => item.RepArt.Preis);
                 addCellRightNoBorder(preisInfo , "Gesamt Netto:");
-                addCellRightNoBorder(preisInfo , gesamtPreis.ToString());
+                addCellRightNoBorder(preisInfo , Math.Round(gesamtPreis,2).ToString());
                 addCellRightNoBorder(preisInfo , "MwSt 20%:");
-                addCellRightNoBorder(preisInfo , (gesamtPreis*0.2).ToString());
+                addCellRightNoBorder(preisInfo , Math.Round((gesamtPreis*0.2),2).ToString());
                 addCellRightNoBorder(preisInfo , "Gesamt:");
-                addCellRightNoBorder(preisInfo , (gesamtPreis * 1.2).ToString());
+                addCellRightNoBorder(preisInfo , Math.Round(( gesamtPreis * 1.2),2).ToString());
 
                 document.Add(preisInfo);
                 addZahlungsInformation(document);

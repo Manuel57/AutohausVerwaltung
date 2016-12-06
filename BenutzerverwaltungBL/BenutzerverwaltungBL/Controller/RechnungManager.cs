@@ -74,13 +74,13 @@ namespace BenutzerverwaltungBL.Controller
                 {
                     ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS +" r where r.title like ?");
                     query.SetString(0, "%" + customerID+"%");
-                    query.AddScalar("title", NHibernateUtil.String);
+                    //query.AddScalar("title", NHibernateUtil.String);
                     query.AddScalar("text",NHibernateUtil.BinaryBlob);
                     var all = query.List();
                    
                     foreach (var s in all)
                     {                        
-                        ret.Add(s as byte []);
+                        ret.Add(s as byte[]);
                     }
                 }
                 return ret;
@@ -109,7 +109,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <param name="rechnungn"></param>
         /// <returns>a generated titel</returns>
         private static string GenerateTitel(Rechnung rechnungn)
-        {
+        {            
             return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FullName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
         }
     }

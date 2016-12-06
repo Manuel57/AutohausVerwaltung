@@ -33,6 +33,10 @@
     <Reference Include="Database">
       <HintPath>..\..\Database\Database\bin\Debug\Database.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\Database\Database\bin\Debug\NHibernate.dll</HintPath>
     </Reference>
@@ -54,6 +58,7 @@
     <Compile Include="Common\UserdataGenerator.cs" />
     <Compile Include="Configuration\ConfigureBl.cs" />
     <Compile Include="Controller\CustomerManager.cs" />
+    <Compile Include="Controller\PdfGenerator.cs" />
     <Compile Include="Controller\RechnungManager.cs" />
     <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
     <Compile Include="Model\DataObjects\AutoTeile.cs" />

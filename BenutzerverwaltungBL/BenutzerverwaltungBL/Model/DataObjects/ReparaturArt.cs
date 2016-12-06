@@ -17,7 +17,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         public virtual string Bezeichnung { get; set; }
 
         [Property(Name ="Preis",Column ="Preis")]
-        public virtual long Preis { get; set; }
+        public virtual double Preis { get; set; }
 
         /* [Set(1, Name = "Reparaturen", Table = "Reparatur", Lazy = CollectionLazy.True, Fetch = CollectionFetchMode.Join,Cascade ="all")]
          [Key(2, Column = "RepartId")]

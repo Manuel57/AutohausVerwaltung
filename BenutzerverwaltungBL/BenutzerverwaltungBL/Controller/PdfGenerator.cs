@@ -56,7 +56,7 @@ namespace BenutzerverwaltungBL.Controller
 
                 preisInfo.SetWidths(new int[] { PAGEWIDTH_TWO_THIRD , PAGEWIDTH_ONE_THIRD });
 
-                long gesamtPreis = r.Reparaturen.Sum(item => item.RepArt.Preis);
+                double gesamtPreis = r.Reparaturen.Sum(item => item.RepArt.Preis);
                 addCellRightNoBorder(preisInfo , "Gesamt Netto:");
                 addCellRightNoBorder(preisInfo , gesamtPreis.ToString());
                 addCellRightNoBorder(preisInfo , "MwSt 20%:");

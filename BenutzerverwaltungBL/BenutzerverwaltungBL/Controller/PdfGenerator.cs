@@ -8,6 +8,7 @@ using BenutzerverwaltungBL.Model.DataObjects;
 using iTextSharp.text.pdf;
 using System.IO;
 using iTextSharp.text;
+using iTextSharp;
 
 namespace BenutzerverwaltungBL.Controller
 {
@@ -29,11 +30,11 @@ namespace BenutzerverwaltungBL.Controller
             {
                
                 Document document = new Document(PageSize.A4);
+                PdfWriter writer = PdfWriter.GetInstance(document , ms);
                 document.Open();
-                PdfWriter writer = PdfWriter.GetInstance(document, ms);
                 document.Add(new Paragraph(rechnung.Kunde.WerkstattKonzern , new Font(Font.FontFamily.HELVETICA , 25 , Font.BOLD)));
-
-                document.Add(CreateInfoTable());
+                PdfPTable tab = CreateInfoTable();
+                document.Add(tab);
 
                 addAnredeText(document);
 
@@ -58,19 +59,18 @@ namespace BenutzerverwaltungBL.Controller
                 long gesamtPreis = r.Reparaturen.Sum(item => item.RepArt.Preis);
                 addCellRightNoBorder(preisInfo , "Gesamt Netto:");
                 addCellRightNoBorder(preisInfo , gesamtPreis.ToString());
-                addCellRightNoBorder(preisInfo , "MwSt 20%");
+                addCellRightNoBorder(preisInfo , "MwSt 20%:");
                 addCellRightNoBorder(preisInfo , (gesamtPreis*0.2).ToString());
-                addCellRightNoBorder(preisInfo , "Gesamt");
+                addCellRightNoBorder(preisInfo , "Gesamt:");
                 addCellRightNoBorder(preisInfo , (gesamtPreis * 1.2).ToString());
 
                 document.Add(preisInfo);
                 addZahlungsInformation(document);
 
                 // Close the document
-                
-                bytes = ms.ToArray();
-                writer.Close();
+
                 document.Close();
+                bytes = ms.ToArray();
             }
             return bytes;
         }
@@ -126,7 +126,7 @@ namespace BenutzerverwaltungBL.Controller
             table.AddCell(new PdfPCell(new Phrase("Rechnung" , new Font(Font.FontFamily.HELVETICA , 14 , 1))) { Border = 0 });
             table.AddCell(new PdfPCell() { Border = 0 });
 
-            addCellNoBorder(table , r.Kunde.FirstName+" "+r.Kunde.LastName);
+            addCellNoBorder(table , r.Kunde.FirstName + " " + r.Kunde.LastName);
             addCellNoBorder(table , "Rechnungsnummer:");
             addCellRightNoBorder(table , r.Rechnungsnummer.ToString());
 

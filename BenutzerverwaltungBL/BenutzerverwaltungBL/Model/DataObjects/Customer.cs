@@ -18,8 +18,11 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column ="WerkstattKonzern",Lazy =false,Name = "WerkstattKonzern")] 
         public virtual string WerkstattKonzern { get; set; }
 
-        [Property(Column = "Vorname",Name ="FullName")]
-        public virtual string FullName { get; set; }
+        [Property(Column = "Vorname",Name = "FirstName")]
+        public virtual string FirstName { get; set; }
+
+        // [Property(Column = "Nachname", Name = "LastName")]
+        public virtual string LastName { get; set; } = "test";
 
         [Property(Column = "GebDate",Name ="BirthDate",TypeType =typeof(DateTime))]
         public virtual DateTime BirthDate { get; set; }
@@ -44,7 +47,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
             Adress = c.Adress;
             CustomerId = c.CustomerId;
             WerkstattKonzern = c.WerkstattKonzern;
-            FullName = c.FullName;
+            FirstName = c.FirstName;
             BirthDate = c.BirthDate;
             Username = c.Username;
             Password = c.Password;

@@ -26,8 +26,8 @@ namespace TestProject
                     allCustomer.Add(c);
                 }
                 Customer manuel = allCustomer.Find(item => item.CustomerId == 1);
-                // RechnungManager.InsertRechnungAsDoc(manuel.Rechnungen.First(), GetFile());
-                List<byte[]> docs = RechnungManager.GetAllRechnungenForKunde(manuel.CustomerId);
+                 RechnungManager.InsertRechnungAsDoc(manuel.Rechnungen.First());
+                //List<byte[]> docs = RechnungManager.GetAllRechnungenForKunde(manuel.CustomerId);
             }
             catch(Exception ex)
             {
@@ -40,7 +40,7 @@ namespace TestProject
             foreach(Customer c in lisst)
             {
 
-                Console.WriteLine(c.FullName + "\nRechnungen" + ((c.Rechnungen.ElementAt(1) as Rechnung).Reparaturen.ElementAt(1) as Reparatur).RepArt.ToString() + "\n");
+                Console.WriteLine(c.FirstName + "\nRechnungen" + ((c.Rechnungen.ElementAt(1) as Rechnung).Reparaturen.ElementAt(1) as Reparatur).RepArt.ToString() + "\n");
                 Console.WriteLine();
             }
         }

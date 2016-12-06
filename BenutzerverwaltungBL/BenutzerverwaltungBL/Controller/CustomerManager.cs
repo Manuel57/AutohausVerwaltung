@@ -51,7 +51,7 @@ namespace BenutzerverwaltungBL.Controller
                         CustomerId = repository.Max<Customer, int>("CustomerId")+1,
                         Adress = adresse,
                         WerkstattKonzern = DEFAULTWERKSTATTKONZERN,
-                        FullName = fullName,
+                        FirstName = fullName,
                         BirthDate = birthDate,
                         Username = user.Username,
                         Password = user.Password
@@ -264,7 +264,7 @@ namespace BenutzerverwaltungBL.Controller
             }
             catch (Exception ex)
             {
-                throw (new DatabaseException(ex, "Error in CustomerManager deleting customer "+customerToDelete.FullName));
+                throw (new DatabaseException(ex, "Error in CustomerManager deleting customer "+customerToDelete.FirstName));
             }
 
         }

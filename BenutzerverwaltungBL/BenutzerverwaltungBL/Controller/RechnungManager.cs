@@ -32,7 +32,7 @@ namespace BenutzerverwaltungBL.Controller
         #endregion
 
         //sollte dann nur mehr mit der rechnung gehen und das byte[] selber erzeugen
-        public static bool InsertRechnungAsDoc(Rechnung rechnungn, byte [] doc)
+        public static bool InsertRechnungAsDoc(Rechnung rechnungn)
         {
             try
             {
@@ -43,8 +43,8 @@ namespace BenutzerverwaltungBL.Controller
                     ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Title,Text) values (?,?,?)");
                     query.SetInt32(0, id);
                     query.SetString(1, GenerateTitel(rechnungn));
-                    // query.SetParameter(2, GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);                  
-                    query.SetParameter(2, doc, NHibernateUtil.BinaryBlob);
+                    query.SetParameter(2, GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);                  
+                    //query.SetParameter(2, doc, NHibernateUtil.BinaryBlob);
                     query.ExecuteUpdate();
                 }
                 return ret;
@@ -98,8 +98,7 @@ namespace BenutzerverwaltungBL.Controller
 
         private static byte[] GenerateDoc(Rechnung rechnungn)
         {
-            // hier aus objekt die pdf erzeugen 
-            throw new NotImplementedException();
+            return PdfGenerator.GeneratePDF(rechnungn);
         }
       
         /// <summary>
@@ -110,7 +109,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <returns>a generated titel</returns>
         private static string GenerateTitel(Rechnung rechnungn)
         {            
-            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FullName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
+            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FirstName + "x" + rechnungn.Rechnungsdatum.ToShortDateString();
         }
     }
 }

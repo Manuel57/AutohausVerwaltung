@@ -109,7 +109,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <returns>a generated titel</returns>
         private static string GenerateTitel(Rechnung rechnungn)
         {            
-            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FirstName + "x" + rechnungn.Rechnungsdatum.ToShortDateString();
+            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FirstName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
         }
     }
 }

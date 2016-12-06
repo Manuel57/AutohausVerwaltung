@@ -77,7 +77,7 @@ namespace BenutzerverwaltungBL.Controller
 
         private static void addZahlungsInformation( Document d )
         {
-            d.Add(new Paragraph("Zahlbar immerhalb von 10 Tagen abzüglich 2%, 60 Tage ohne Abzug" , new Font(Font.FontFamily.HELVETICA , 8)) { Leading = 100 });
+            d.Add(new Paragraph("Zahlbar immerhalb von 10 Tagen abzüglich 2% Skonto, 60 Tage ohne Abzug" , new Font(Font.FontFamily.HELVETICA , 8)) { Leading = 100 });
 
         }
         private static void addCellRightNoBorder( PdfPTable table , string text )

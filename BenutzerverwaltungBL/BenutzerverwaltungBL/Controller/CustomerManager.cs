@@ -243,7 +243,7 @@ namespace BenutzerverwaltungBL.Controller
         }
         
         /// <summary>
-        /// deletes the given customer in the database.
+        /// deletes the given customer in the database and all bills of the customer.
         /// throws an exception if an error occurs.
         /// </summary>
         /// <param name="customerToDelete"></param>

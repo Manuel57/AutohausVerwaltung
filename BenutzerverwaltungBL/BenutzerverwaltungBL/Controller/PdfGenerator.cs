@@ -22,25 +22,35 @@ namespace BenutzerverwaltungBL.Controller
         private static int PAGECORRECTURE = PAGEWIDTH / 9;
         private static Rechnung r = null;
         #endregion
+
+        /// <summary>
+        /// generates a bill as pdf out of the given bill
+        /// and returns it as byte[] for storing it in a db
+        /// </summary>
+        /// <param name="rechnung">the object whhich should be "converted" to a pdf</param>
+        /// <returns> a byte[]</returns>
         public static byte[] GeneratePDF( Rechnung rechnung )
         {
             byte[] bytes = null;
             r = rechnung;
             using ( MemoryStream ms = new MemoryStream() )
-            {
-               
+            {               
                 Document document = new Document(PageSize.A4);
                 PdfWriter writer = PdfWriter.GetInstance(document , ms);
+
                 document.Open();
+
+                //1.titel
                 document.Add(new Paragraph(rechnung.Kunde.WerkstattKonzern , new Font(Font.FontFamily.HELVETICA , 25 , Font.BOLD)));
+                //2.kunden und rechnungsinfo
                 PdfPTable tab = CreateInfoTable();
                 document.Add(tab);
-
+                //3.anrede "sehr geehrte.."
                 addAnredeText(document);
 
+                //4.rechnungsposten und deren preis
                 PdfPTable posten = new PdfPTable(2);
                 posten.WidthPercentage = 100;
-
                 posten.SetWidths(new int[] {PAGEWIDTH_TWO_THIRD , PAGEWIDTH_ONE_THIRD });
                 AddCellToHeader(posten , "Bezeichnung");
                 AddCellToHeader(posten , "Preis Netto");
@@ -49,11 +59,11 @@ namespace BenutzerverwaltungBL.Controller
                     addCell(posten , reparatur.RepArt.Bezeichnung);
                     addCellRight(posten ,reparatur.RepArt.Preis.ToString());
                 }
-
                 document.Add(posten);
+
+                //5.gesamtpreis und mwst
                 PdfPTable preisInfo = new PdfPTable(2);
                 preisInfo.WidthPercentage = 100;
-
                 preisInfo.SetWidths(new int[] { PAGEWIDTH_TWO_THIRD , PAGEWIDTH_ONE_THIRD });
 
                 double gesamtPreis = r.Reparaturen.Sum(item => item.RepArt.Preis);
@@ -65,16 +75,18 @@ namespace BenutzerverwaltungBL.Controller
                 addCellRightNoBorder(preisInfo , Math.Round(( gesamtPreis * 1.2),2).ToString());
 
                 document.Add(preisInfo);
+
+                //6.zahlungsbedingungen
                 addZahlungsInformation(document);
 
-                // Close the document
-
+                //7.Close the document
                 document.Close();
                 bytes = ms.ToArray();
             }
             return bytes;
         }
 
+        #region methods for generating
         private static void addZahlungsInformation( Document d )
         {
             d.Add(new Paragraph("Zahlbar immerhalb von 10 Tagen abzüglich 2% Skonto, 60 Tage ohne Abzug" , new Font(Font.FontFamily.HELVETICA , 8)) { Leading = 100 });
@@ -122,7 +134,6 @@ namespace BenutzerverwaltungBL.Controller
 
 
             table.AddCell(new PdfPCell() { Border = 0 });
-
             table.AddCell(new PdfPCell(new Phrase("Rechnung" , new Font(Font.FontFamily.HELVETICA , 14 , 1))) { Border = 0 });
             table.AddCell(new PdfPCell() { Border = 0 });
 
@@ -141,13 +152,17 @@ namespace BenutzerverwaltungBL.Controller
             return table;
         }
 
+        /// <summary>
+        /// generates the first line of the bill wih the last name of the customer
+        /// </summary>
+        /// <param name="d">the document to add </param>
         private static void addAnredeText( Document d )
         {
             d.Add(new Paragraph("Sehr geerte/r Frau/Herr "+r.Kunde.LastName+",") { Leading = 100 });
-            d.Add(new Paragraph("wir erlauben uns, Ihren Auftrag wiefolgt in Rechnung zu stellen:") { SpacingAfter = 50 });
+            d.Add(new Paragraph("wir erlauben uns, folgende Leistungen in Rechnung zu stellen:") { SpacingAfter = 50 });
 
         }
-
+        #endregion
 
     }
 }

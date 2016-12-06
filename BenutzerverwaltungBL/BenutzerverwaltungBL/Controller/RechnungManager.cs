@@ -31,7 +31,13 @@ namespace BenutzerverwaltungBL.Controller
         private static IRepository repository = null;
         #endregion
 
-        //sollte dann nur mehr mit der rechnung gehen und das byte[] selber erzeugen
+        /// <summary>
+        /// inserts the bill as pdf in the db
+        /// the titel is genrated out of the details of the bill
+        /// throws an exception if an error occurs
+        /// </summary>
+        /// <param name="rechnungn"></param>
+        /// <returns>true or throws an exception</returns>
         public static bool InsertRechnungAsDoc(Rechnung rechnungn)
         {
             try
@@ -43,8 +49,8 @@ namespace BenutzerverwaltungBL.Controller
                     ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Title,Text) values (?,?,?)");
                     query.SetInt32(0, id);
                     query.SetString(1, GenerateTitel(rechnungn));
-                    query.SetParameter(2, GenerateDoc(rechnungn),NHibernateUtil.BinaryBlob);                  
-                    //query.SetParameter(2, doc, NHibernateUtil.BinaryBlob);
+                    query.SetParameter(2, GeneratePDF(rechnungn),NHibernateUtil.BinaryBlob);                  
+                   
                     query.ExecuteUpdate();
                 }
                 return ret;
@@ -74,7 +80,6 @@ namespace BenutzerverwaltungBL.Controller
                 {
                     ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS +" r where r.title like ?");
                     query.SetString(0, "%" + customerID+"%");
-                    //query.AddScalar("title", NHibernateUtil.String);
                     query.AddScalar("text",NHibernateUtil.BinaryBlob);
                     var all = query.List();
                    
@@ -96,7 +101,14 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
-        private static byte[] GenerateDoc(Rechnung rechnungn)
+        /// <summary>
+        /// calls the PdfGenerator to Generate a pdf out of the 
+        /// given bill.
+        /// returns the pdf as byte[]
+        /// </summary>
+        /// <param name="rechnungn"></param>
+        /// <returns>a pdf as byte[]</returns>
+        private static byte[] GeneratePDF(Rechnung rechnungn)
         {
             return PdfGenerator.GeneratePDF(rechnungn);
         }
@@ -109,7 +121,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <returns>a generated titel</returns>
         private static string GenerateTitel(Rechnung rechnungn)
         {            
-            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.FirstName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
+            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.LastName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
         }
     }
 }

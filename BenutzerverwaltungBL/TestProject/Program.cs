@@ -48,19 +48,6 @@ namespace TestProject
             }
         }
 
-        public static byte[] GetFile( )
-        {
-            using (var fs = new FileStream(testpath, FileMode.Open, FileAccess.Read))
-            {
-                using (var bf = new BinaryReader(fs))
-                {
-                    byte[] buffer = new byte[fs.Length];
-                    buffer = bf.ReadBytes((int)fs.Length);
-
-                    byte[] imageBytes = buffer;
-                    return imageBytes;                   
-                }
-            }
-        }
+       
     }
 }

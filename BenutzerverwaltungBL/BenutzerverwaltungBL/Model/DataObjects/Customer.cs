@@ -21,8 +21,8 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column = "Vorname",Name = "FirstName")]
         public virtual string FirstName { get; set; }
 
-        // [Property(Column = "Nachname", Name = "LastName")]
-        public virtual string LastName { get; set; } = "test";
+        [Property(Column = "Nachname", Name = "LastName")]
+        public virtual string LastName { get; set; } 
 
         [Property(Column = "GebDate",Name ="BirthDate",TypeType =typeof(DateTime))]
         public virtual DateTime BirthDate { get; set; }

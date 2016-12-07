@@ -158,7 +158,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <param name="d">the document to add </param>
         private static void addAnredeText( Document d )
         {
-            d.Add(new Paragraph("Sehr geerte/r Frau/Herr "+r.Kunde.LastName+",") { Leading = 100 });
+            d.Add(new Paragraph("Sehr geehrte/r Frau/Herr "+r.Kunde.LastName+",") { Leading = 100 });
             d.Add(new Paragraph("wir erlauben uns, folgende Leistungen in Rechnung zu stellen:") { SpacingAfter = 50 });
 
         }

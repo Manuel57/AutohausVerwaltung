@@ -38,20 +38,21 @@ namespace BenutzerverwaltungBL.Controller
         /// <param name="birthDate">the birth date of the customer</param>
         /// <param name="adresse">the adresse of the customer e.g. 9500 Villach Italienerstraße 3</param>
         /// <returns>a copie of the customer</returns>
-        public static Customer CreateCustomer(string werkstattKonzern,string fullName, DateTime birthDate,
+        public static Customer CreateCustomer(string werkstattKonzern,string vorname,string nachname, DateTime birthDate,
                                         string adresse)
         {
             try
             {
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                    UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(fullName, birthDate);
+                    UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(vorname+nachname, birthDate);
                     Customer customer = new Customer()
                     {
                         CustomerId = repository.Max<Customer, int>("CustomerId")+1,
                         Adress = adresse,
                         WerkstattKonzern = DEFAULTWERKSTATTKONZERN,
-                        FirstName = fullName,
+                        FirstName = vorname,
+                        LastName = nachname,
                         BirthDate = birthDate,
                         Username = user.Username,
                         Password = user.Password

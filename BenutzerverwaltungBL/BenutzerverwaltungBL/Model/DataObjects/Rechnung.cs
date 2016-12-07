@@ -17,9 +17,6 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Name = "Rechnungsdatum",Column ="Rdatum",TypeType= typeof(DateTime))]
         public virtual DateTime Rechnungsdatum { get; set; }
 
-       [Property(Name = "Gesamtpreis",Column ="Gesamtpreis",NotNull =false)]
-        public virtual long Gesamtpreis { get; set; }
-
         [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "none")]
         public virtual Customer Kunde { get; set; }
 
@@ -39,5 +36,12 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         
 
         public  Rechnung() { }
+
+        public override string ToString()
+        {
+            return "Rechnungnummer: "+Rechnungsnummer+"\n"+
+                     this.Kunde.FirstName + " " + this.Kunde.LastName + "\n"+
+                    " vom " + Rechnungsdatum;
+        }
     }
 }

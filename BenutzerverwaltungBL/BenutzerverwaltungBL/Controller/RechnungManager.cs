@@ -101,16 +101,38 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
+        /// <summary>
+        /// selects the certain bill of the customer given 
+        /// by checking the date
+        /// </summary>
+        /// <param name="customerID">the customer whos bill to select</param>
+        /// <param name="rechnungsDatum">the date of which the bill is</param>
+        /// <returns> a byte [] or null or throws an exception </returns>
         public static byte[] GetCertainRechnungForKunde(int customerID, DateTime rechnungsDatum)
         {
-            byte[] ret = null;
-
-            using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+            try
             {
-                ISQLQuery query = repository.GetQuery("select text from "+TABLERECHNUNGDOCS+)
+                byte[] ret = null;
+
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS + " r where r.title like ?");
+                    query.SetString(0, customerID + "%" + rechnungsDatum.ToShortDateString());
+                    query.AddScalar("text", NHibernateUtil.BinaryBlob);
+                    ret = query.UniqueResult() as byte[];
+                }
+
+                return ret;
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
             }
 
-            return ret;
         }
 
         /// <summary>

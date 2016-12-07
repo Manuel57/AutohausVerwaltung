@@ -70,6 +70,15 @@ namespace Benutzerverwaltung.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sind Sie sicher?.
+        /// </summary>
+        public static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geburtsdatum.
         /// </summary>
         public static string Birthdate {

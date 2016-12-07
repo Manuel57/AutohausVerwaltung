@@ -34,6 +34,7 @@ namespace Benutzerverwaltung.View
         public ReparaturenView(string customerId ):this()
         {
             this.listView.ItemsSource = CustomerManager.GetSingleCustomerById(int.Parse(customerId)).Rechnungen;
+                 
         }
     }
 }

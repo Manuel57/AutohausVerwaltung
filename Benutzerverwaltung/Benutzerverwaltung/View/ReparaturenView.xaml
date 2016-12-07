@@ -5,12 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benutzerverwaltung.View"
         mc:Ignorable="d"
-        Title="ReparaturenView" Height="300" Width="300">
+        Title="ReparaturenView" Height="500" Width="800" ResizeMode="NoResize">
     <Grid>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="249" Margin="10,10,0,0" VerticalAlignment="Top" Width="272">
+        
+        <ListView x:Name="listView" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+
+                    <GridViewColumn  
+                        Header="Rechnung"/>
+                    <GridViewColumn Header="Ausgestellt">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel  Width="50">
+                                    <CheckBox IsChecked="{Binding IsAlreadyPdf}">
+                                        
+                                    </CheckBox>
+                                    
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

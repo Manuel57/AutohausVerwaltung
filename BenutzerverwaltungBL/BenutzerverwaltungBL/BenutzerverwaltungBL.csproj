@@ -61,7 +61,6 @@
     <Compile Include="Controller\PdfGenerator.cs" />
     <Compile Include="Controller\RechnungManager.cs" />
     <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
-    <Compile Include="Model\DataObjects\AutoTeile.cs" />
     <Compile Include="Model\DataObjects\Customer.cs" />
     <Compile Include="Model\DataObjects\Rechnung.cs" />
     <Compile Include="Model\DataObjects\Reparatur.cs" />

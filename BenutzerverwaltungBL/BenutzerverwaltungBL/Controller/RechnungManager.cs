@@ -45,11 +45,9 @@ namespace BenutzerverwaltungBL.Controller
                 bool ret = true;
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
-                    int id = rechnungn.Rechnungsdatum.Millisecond + Convert.ToInt32(rechnungn.Gesamtpreis);
-                    ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(ID,Title,Text) values (?,?,?)");
-                    query.SetInt32(0, id);
-                    query.SetString(1, GenerateTitel(rechnungn));
-                    query.SetParameter(2, GeneratePDF(rechnungn),NHibernateUtil.BinaryBlob);                  
+                    ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(Title,Text) values (?,?)");
+                    query.SetString(0, GenerateTitel(rechnungn));
+                    query.SetParameter(1, GeneratePDF(rechnungn),NHibernateUtil.BinaryBlob);                  
                    
                     query.ExecuteUpdate();
                 }
@@ -102,8 +100,8 @@ namespace BenutzerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// selects the certain bill of the customer given 
-        /// by checking the date
+        /// selects a certain bill of the customer given 
+        /// by checking the date given
         /// </summary>
         /// <param name="customerID">the customer whos bill to select</param>
         /// <param name="rechnungsDatum">the date of which the bill is</param>
@@ -120,6 +118,7 @@ namespace BenutzerverwaltungBL.Controller
                     query.SetString(0, customerID + "%" + rechnungsDatum.ToShortDateString());
                     query.AddScalar("text", NHibernateUtil.BinaryBlob);
                     ret = query.UniqueResult() as byte[];
+                   
                 }
 
                 return ret;
@@ -130,7 +129,7 @@ namespace BenutzerverwaltungBL.Controller
             }
             catch (Exception ex)
             {
-                throw (new DatabaseException(ex, ""));
+                throw (new DatabaseException(ex, "Keine Rechnung vorhanden!"));
             }
 
         }

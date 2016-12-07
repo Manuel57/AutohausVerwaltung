@@ -43,13 +43,12 @@ namespace Benutzerverwaltung.ViewModel
         }
 
         private void deleteCustomer( ) {
-            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete);
+            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete,this.Emp.Last());
             cdv.Show();
         }
         private void showCustomerDetails( )
         {
-            MessageBox.Show("TEST");
-            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details);
+            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details, this.Emp.First());
             cdv.Show();
         }
         private void createCustomer( )

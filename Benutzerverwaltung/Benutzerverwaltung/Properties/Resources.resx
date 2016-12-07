@@ -126,6 +126,9 @@
   <data name="Create" xml:space="preserve">
     <value>Ersellen</value>
   </data>
+  <data name="CustomerId" xml:space="preserve">
+    <value>Kundennummer</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Entfernen</value>
+  </data>
+  <data name="Reparaturen" xml:space="preserve">
+    <value>Reparaturen</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Suche</value>

@@ -88,6 +88,15 @@ namespace Benutzerverwaltung.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kundennummer.
+        /// </summary>
+        public static string CustomerId {
+            get {
+                return ResourceManager.GetString("CustomerId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string Details {
@@ -156,6 +165,15 @@ namespace Benutzerverwaltung.Properties {
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reparaturen.
+        /// </summary>
+        public static string Reparaturen {
+            get {
+                return ResourceManager.GetString("Reparaturen", resourceCulture);
             }
         }
         

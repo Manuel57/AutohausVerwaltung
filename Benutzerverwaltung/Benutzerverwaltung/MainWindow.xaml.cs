@@ -46,21 +46,9 @@ namespace Benutzerverwaltung
         {
         }
 
-        /// <summary>
-        /// test values
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void lvCustomer_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
-            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete);
-            cdv.Show();
-        }
-
-        private void Button_Click_1( object sender , RoutedEventArgs e )
-        {
-            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details);
-            cdv.Show();
+            MessageBox.Show("");
         }
     }
 }

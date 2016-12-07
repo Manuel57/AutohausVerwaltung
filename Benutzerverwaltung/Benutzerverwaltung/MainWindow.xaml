@@ -26,14 +26,16 @@
 
 
         <ListView ItemContainerStyle="{StaticResource HighlightingOff}" x:Name="lvCustomer" Grid.Row="1" BorderThickness="0" 
-     ItemsSource="{Binding Path=Emp, UpdateSourceTrigger=PropertyChanged}">
+     ItemsSource="{Binding Path=Emp, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="lvCustomer_SelectionChanged">
             
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Line Items">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerId }" 
                         Header="Id"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=FullName}" 
-                        Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}" 
+                        Header="Vorame" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" 
+                        Header="Nachname" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=BirthDate }" 
                         Header="Geburtsdatum" Width="80"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Adress }" 
@@ -44,12 +46,12 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel  Width="50">
-                                    <Button Style="{StaticResource ImageButton}" Click="Button_Click_1">
+                                    <Button DataContext="{StaticResource mainViewmodel}" Style="{StaticResource ImageButton}" Command="{Binding DetailsCustomerCommand}">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/Lupe.png" Width="16" Height="16" Margin="0,0,10,0"/>
                                         </StackPanel>
                                     </Button>
-                                    <Button Style="{StaticResource ImageButton}" Click="button_Click">
+                                    <Button DataContext="{StaticResource mainViewmodel}" Style="{StaticResource ImageButton}" Command="{Binding DeleteCustomerCommand}">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/DelSymbol.png" Width="16" Height="16" Margin="0,0,10,0"/>
                                         </StackPanel>

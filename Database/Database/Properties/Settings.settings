@@ -18,7 +18,7 @@
       <Value Profile="(Default)">ora11g</Value>
     </Setting>
     <Setting Name="IpCurrent" Type="System.String" Scope="User">
-      <Value Profile="(Default)">212.152.179.117</Value>
+      <Value Profile="(Default)">192.168.128.152</Value>
     </Setting>
   </Settings>
 </SettingsFile>

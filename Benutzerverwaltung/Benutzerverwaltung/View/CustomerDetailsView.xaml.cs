@@ -66,12 +66,13 @@ namespace Benutzerverwaltung.View
         }
         private void initVm(Customer c)
         {
-            ( this.root.DataContext as DetailsViewModel ).Address = c.Adress;
-            ( this.root.DataContext as DetailsViewModel ).BirthDate = c.BirthDate.ToShortDateString();
-            ( this.root.DataContext as DetailsViewModel ).CustomerId = c.CustomerId.ToString();
-            ( this.root.DataContext as DetailsViewModel ).FirstName = c.FirstName;
-            ( this.root.DataContext as DetailsViewModel ).LastName = c.LastName;
-            ( this.root.DataContext as DetailsViewModel ).Username = c.Username;
+            //( this.root.DataContext as DetailsViewModel ).Address = c.Adress;
+            //( this.root.DataContext as DetailsViewModel ).BirthDate = c.BirthDate.ToShortDateString();
+            //( this.root.DataContext as DetailsViewModel ).CustomerId = c.CustomerId.ToString();
+            //( this.root.DataContext as DetailsViewModel ).FirstName = c.FirstName;
+            //( this.root.DataContext as DetailsViewModel ).LastName = c.LastName;
+            //( this.root.DataContext as DetailsViewModel ).Username = c.Username;
+            ( this.root.DataContext as DetailsViewModel ).Kunde = c;
             ( this.root.DataContext as DetailsViewModel ).ChangedAll();
 
         }

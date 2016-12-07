@@ -30,7 +30,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Column = "Adresse",Name ="Adress")]
         public virtual string Adress { get; set; }
 
-        [Property(Column ="Username", Unique =true,Name ="Username")]
+        [Property(Column ="Username", Unique = true,Name ="Username")]
         public virtual string Username { get; set; }
 
         [Property(Column ="Password", Name ="Password")]

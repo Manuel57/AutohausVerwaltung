@@ -17,10 +17,10 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [Property(Name = "Rechnungsdatum",Column ="Rdatum",TypeType= typeof(DateTime))]
         public virtual DateTime Rechnungsdatum { get; set; }
 
-        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "none")]
+        [ManyToOne(Class = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", Name ="Kunde",Column ="KundenId",NotNull = true,Cascade = "delete")]
         public virtual Customer Kunde { get; set; }
 
-        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch = CollectionFetchMode.Join,Cascade ="all")]
+        [Set(1,Name ="Reparaturen",Table = "Reparatur",Lazy = CollectionLazy.False,Fetch = CollectionFetchMode.Join,Cascade ="save-update")]
         [Key(2,Column ="RNR")] 
         [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL", ClassType =typeof(Reparatur))]
         public virtual ISet<Reparatur> Reparaturen { get; set; }
@@ -41,7 +41,7 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         {
             return "Rechnungnummer: "+Rechnungsnummer+"\n"+
                      this.Kunde.FirstName + " " + this.Kunde.LastName + "\n"+
-                    " vom " + Rechnungsdatum;
+                    " vom " + Rechnungsdatum.ToShortDateString();
         }
     }
 }

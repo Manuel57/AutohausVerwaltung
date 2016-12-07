@@ -25,7 +25,7 @@ namespace TestProject
                 {
                     allCustomer.Add(c);
                 }
-                Customer manuel = allCustomer.Find(item => item.CustomerId == 1);
+                Customer manuel = allCustomer.Find(item => item.CustomerId == 5);
                 CustomerManager.DeleteCustomer(manuel);
                 // RechnungManager.InsertRechnungAsDoc(manuel.Rechnungen.ElementAt(1));
                 //List<byte[]> docs = RechnungManager.GetAllRechnungenForKunde(manuel.CustomerId);

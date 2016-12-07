@@ -256,9 +256,9 @@ namespace BenutzerverwaltungBL.Controller
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     customerToDelete.Rechnungen.ToList()
-                        .ForEach(item => item.Reparaturen.ToList()
-                        .ForEach(i => repository.Delete(i)
-                        ));
+                       .ForEach(item => item.Reparaturen.ToList()
+                       .ForEach(i => repository.Delete(i)
+                       ));
 
                     repository.Delete(customerToDelete);
                 }

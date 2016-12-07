@@ -101,6 +101,18 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
+        public static byte[] GetCertainRechnungForKunde(int customerID, DateTime rechnungsDatum)
+        {
+            byte[] ret = null;
+
+            using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+            {
+                ISQLQuery query = repository.GetQuery("select text from "+TABLERECHNUNGDOCS+)
+            }
+
+            return ret;
+        }
+
         /// <summary>
         /// calls the PdfGenerator to Generate a pdf out of the 
         /// given bill.

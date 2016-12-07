@@ -28,6 +28,16 @@ namespace BenutzerverwaltungBL.Model.DataObjects
         [OneToMany(3,Class = "BenutzerverwaltungBL.Model.DataObjects.Reparatur,BenutzerverwaltungBL", ClassType =typeof(Reparatur))]
         public virtual ISet<Reparatur> Reparaturen { get; set; }
 
-       public  Rechnung() { }
+        [Property(Name = "isPdf", Column = "ausgestellt")]
+        protected internal virtual int isPdf { get; set; }
+        
+        public virtual bool IsAlreadyPdf
+        {
+            get { return isPdf == 1; }
+            set { isPdf = value? 1 : 0; }
+        }
+        
+
+        public  Rechnung() { }
     }
 }

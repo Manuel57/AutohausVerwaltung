@@ -33,14 +33,14 @@ namespace Benutzerverwaltung
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow( )
         {
             InitializeComponent();
-            //This is my first comment
-            
+
+
         }
 
-       
+
 
         private void listboxFolder1_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
@@ -49,6 +49,24 @@ namespace Benutzerverwaltung
         private void lvCustomer_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
             MessageBox.Show("");
+        }
+
+        private void tbSearch_TextChanged( object sender , TextChangedEventArgs e )
+        {
+            IEnumerable<Customer> cs = this.lvCustomer.ItemsSource as IEnumerable<Customer>;
+            this.lvCustomer.ItemsSource = null;
+            this.lvCustomer.ItemsSource = cs.Take(1);
+        }
+
+        private void Window_Loaded( object sender , RoutedEventArgs e )
+        {
+
+            if ( Environment.GetCommandLineArgs()?.Any(item =>
+              item != null && ( bool ) item?.Equals("--configure")) == true )
+            {
+                SettingsManager.ShowDialog();
+            }
+            ( this.root.DataContext as MainWindowViewModel ).Init();
         }
     }
 }

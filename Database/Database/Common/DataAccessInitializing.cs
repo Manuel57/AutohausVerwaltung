@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Verwaltung.Settings;
 
 namespace Database.Common
 {
@@ -62,6 +63,18 @@ namespace Database.Common
 
         }
 
-
+        public static void UpdateSettings(DatabaseSettings settings)
+        {
+            switch ( settings.IpAddress )
+            {
+                case DatabaseSettings.Ip.Extern:
+                    Properties.Settings.Default.IpCurrent = Properties.Settings.Default.IpAdresseExtern;
+                    break;
+                case DatabaseSettings.Ip.Intern:
+                    Properties.Settings.Default.IpCurrent = Properties.Settings.Default.IpAdresseIntern;
+                    break;
+            }
+            Properties.Settings.Default.Save();
+        }
     }
 }

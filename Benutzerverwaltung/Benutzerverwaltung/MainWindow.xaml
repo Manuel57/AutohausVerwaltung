@@ -7,7 +7,7 @@
           xmlns:p="clr-namespace:Benutzerverwaltung.Properties"
        xmlns:viewmodel="clr-namespace:Benutzerverwaltung.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" >
     <Window.Resources>
         
         
@@ -19,7 +19,7 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label x:Name="lblSearch" Content="{x:Static p:Resources.Search}" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="39,39,0,35"/>
-        <TextBox x:Name="tbSearch" HorizontalAlignment="Left" Height="23" Margin="99,43,0,0" TextWrapping="Wrap" Text="{Binding Path=TextSearchField}" VerticalAlignment="Top" Width="120">
+        <TextBox x:Name="tbSearch" HorizontalAlignment="Left" Height="23" Margin="99,43,0,0" TextWrapping="Wrap" Text="{Binding Path=TextSearchField}" VerticalAlignment="Top" Width="120" TextChanged="tbSearch_TextChanged">
             
         </TextBox>
         <Button x:Name="btnCreateCustomer" Content="{x:Static p:Resources.Create}" HorizontalAlignment="Left" Margin="263,45,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CreateCustomerCommand}"/>

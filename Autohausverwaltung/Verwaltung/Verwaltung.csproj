@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1599BC0C-7340-4D68-8F78-46379CBE4025}</ProjectGuid>
+    <ProjectGuid>{1C0A5B27-62F2-42AB-9D89-1AC239E3774C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BenutzerverwaltungBL</RootNamespace>
-    <AssemblyName>BenutzerverwaltungBL</AssemblyName>
+    <RootNamespace>Verwaltung</RootNamespace>
+    <AssemblyName>Verwaltung</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,20 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Database">
-      <HintPath>..\..\Database\Database\bin\Debug\Database.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\..\Database\Database\bin\Debug\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Mapping.Attributes, Version=4.0.0.1, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.Mapping.Attributes.4.0.0.1\lib\net40\NHibernate.Mapping.Attributes.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,27 +38,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Verwaltung">
-      <HintPath>..\..\Autohausverwaltung\Verwaltung\bin\Debug\Verwaltung.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\MD5Hash.cs" />
-    <Compile Include="Common\UserdataGenerator.cs" />
-    <Compile Include="Configuration\ConfigureBl.cs" />
-    <Compile Include="Controller\CustomerManager.cs" />
-    <Compile Include="Controller\PdfGenerator.cs" />
-    <Compile Include="Controller\RechnungManager.cs" />
-    <Compile Include="Model\BusinesObjects\UserAuthenticationData.cs" />
-    <Compile Include="Model\DataObjects\Customer.cs" />
-    <Compile Include="Model\DataObjects\Rechnung.cs" />
-    <Compile Include="Model\DataObjects\Reparatur.cs" />
-    <Compile Include="Model\DataObjects\ReparaturArt.cs" />
+    <Compile Include="DatabaseSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BenutzerverwaltungBL3.licenseheader" />
-    <None Include="packages.config" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

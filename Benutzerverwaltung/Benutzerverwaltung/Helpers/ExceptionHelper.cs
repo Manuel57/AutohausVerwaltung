@@ -25,7 +25,9 @@ namespace Benutzerverwaltung.Helpers
             StringBuilder sb = new StringBuilder();
             if ( e is DatabaseException )
             {
-                sb.Append((e as DatabaseException).CustomMessage);
+                sb.AppendLine((e as DatabaseException).CustomMessage);
+                sb.AppendLine("Additional information:");
+                ( e as DatabaseException ).Information.ToList<object>().ForEach(i => sb.AppendLine(i.ToString()));
             }
             sb.AppendLine(e.Message);
             sb.AppendLine(e.InnerException?.Message);

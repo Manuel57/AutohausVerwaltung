@@ -32,41 +32,83 @@ namespace Benutzerverwaltung.ViewModel
 
         public MainWindowViewModel( )
         {
-            ConfigureBl.Initialize();
-            this.Emp = new ObservableCollection<Customer>();
-            this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
-            this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
-            this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
-            this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
+
            
-            updateView();
+
+        }
+        public void Init( )
+        {
+            try
+            {
+                ConfigureBl.Initialize();
+                this.Emp = new ObservableCollection<Customer>();
+                this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
+                this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
+                this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
+                this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
+
+                updateView();
+            }
+            catch ( Exception ex )
+            {
+                ExceptionHelper.Handle(ex);
+            }
         }
 
-        private void deleteCustomer( ) {
-            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete,this.Emp.Last());
-            cdv.Show();
+        private void deleteCustomer( )
+        {
+            try
+            {
+                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete , this.Emp.Last());
+                cdv.Show();
+            }
+            catch ( Exception ex )
+            {
+                ExceptionHelper.Handle(ex);
+            }
         }
         private void showCustomerDetails( )
         {
-            CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details, this.Emp.First());
-            cdv.Show();
+            try
+            {
+                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details , this.Emp.First());
+                cdv.Show();
+            }
+            catch ( Exception ex )
+            {
+                ExceptionHelper.Handle(ex);
+            }
         }
         private void createCustomer( )
         {
-            CreateCustomerView ccv = new CreateCustomerView();
-            ccv.ShowDialog();
-            updateView();
+            try
+            {
+                CreateCustomerView ccv = new CreateCustomerView();
+                ccv.ShowDialog();
+                updateView();
+            }
+            catch ( Exception ex )
+            {
+                ExceptionHelper.Handle(ex);
+            }
         }
 
-        private void updateView()
+        private void updateView( )
         {
-            this.Emp = new ObservableCollection<Customer>();
-            foreach ( Customer c in CustomerManager.GetAllCustomers() )
+            try
             {
-                this.Emp.Add(c);
+                this.Emp = new ObservableCollection<Customer>();
+                foreach ( Customer c in CustomerManager.GetAllCustomers() )
+                {
+                    this.Emp.Add(c);
+                }
+                this.OnPropertyChanged("Emp");
+                this.OnPropertyChanged();
             }
-            this.OnPropertyChanged("Emp");
-            this.OnPropertyChanged();
+            catch ( Exception )
+            {
+                throw;
+            }
         }
     }
 }

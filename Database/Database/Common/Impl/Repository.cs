@@ -16,6 +16,7 @@ using NHibernate.Criterion;
 using System.Linq.Expressions;
 using NHibernate.Linq;
 using System.Reflection;
+using Verwaltung.Exception;
 
 namespace Database.Common.Impl
 {

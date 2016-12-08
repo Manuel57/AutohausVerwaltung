@@ -18,6 +18,7 @@ using NHibernate.Dialect;
 using System.Reflection;
 using System.Net;
 using Database.Common.ObserverPattern;
+using Verwaltung.Exception;
 
 namespace Database.Configuration
 {

@@ -69,7 +69,7 @@ namespace Benutzerverwaltung.View
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
 
         }

@@ -45,13 +45,13 @@
                         Header="" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel  Width="50">
-                                    <Button DataContext="{StaticResource mainViewmodel}" Style="{StaticResource ImageButton}" Command="{Binding DetailsCustomerCommand}">
+                                <StackPanel  DataContext="{StaticResource mainViewmodel}" Width="50">
+                                    <Button  Style="{StaticResource ImageButton}" Command="{Binding DetailsCustomerCommand}">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/Lupe.png" Width="16" Height="16" Margin="0,0,10,0"/>
                                         </StackPanel>
                                     </Button>
-                                    <Button DataContext="{StaticResource mainViewmodel}" Style="{StaticResource ImageButton}" Command="{Binding DeleteCustomerCommand}">
+                                    <Button Style="{StaticResource ImageButton}" Command="{Binding DeleteCustomerCommand}">
                                         <StackPanel Orientation="Horizontal" Margin="10">
                                             <Image Source="Images/DelSymbol.png" Width="16" Height="16" Margin="0,0,10,0"/>
                                         </StackPanel>

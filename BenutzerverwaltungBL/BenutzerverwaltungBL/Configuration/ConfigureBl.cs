@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Verwaltung.Exception;
 using Verwaltung.Settings;
 
 namespace BenutzerverwaltungBL.Configuration

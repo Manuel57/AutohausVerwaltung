@@ -55,7 +55,12 @@ namespace Benutzerverwaltung
         {
             IEnumerable<Customer> cs = this.lvCustomer.ItemsSource as IEnumerable<Customer>;
             this.lvCustomer.ItemsSource = null;
-            this.lvCustomer.ItemsSource = cs.Take(1);
+            this.lvCustomer.ItemsSource = cs.Where(item => item.Adress.Contains(this.tbSearch.Text) ||
+                item.BirthDate.ToShortDateString().Contains(this.tbSearch.Text) ||
+                item.CustomerId.ToString().Contains(this.tbSearch.Text) ||
+                item.FirstName.Contains(this.tbSearch.Text) ||
+                item.LastName.Contains(this.tbSearch.Text) ||
+                item.Username.Contains(this.tbSearch.Text));
         }
 
         private void Window_Loaded( object sender , RoutedEventArgs e )
@@ -67,6 +72,11 @@ namespace Benutzerverwaltung
                 SettingsManager.ShowDialog();
             }
             ( this.root.DataContext as MainWindowViewModel ).Init();
+        }
+
+        private void Button_Click( object sender , RoutedEventArgs e )
+        {
+            MessageBox.Show(( (sender as Button ).Parent as StackPanel).Parent.ToString());
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
 
         }
@@ -54,7 +54,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
 
         }

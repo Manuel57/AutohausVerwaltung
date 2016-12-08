@@ -1,40 +1,28 @@
-﻿// <copyright file="Database.databaseexception.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
-// <author>Thomas Huber</author>
-// <date>2016-11-11</date>
-// </copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace Verwaltung.Exception
 {
-    /// <summary>
-    /// DatabaseExcption class 
-    /// own excetpion to throw
-    /// </summary>
-    
-    public class DatabaseException : Exception
+    public class DatabaseException : System.Exception
     {
-        
-        private Exception exceptionThrown = null;
+
+        private System.Exception exceptionThrown = null;
         private string customMessage = string.Empty;
         private object[] information = null;
 
-        public Exception ExceptionThrown
+        public System.Exception ExceptionThrown
         {
-            
+
             private set
             {
-                if(value is Exception)
+                if ( value is System.Exception )
                 {
                     exceptionThrown = value;
                 }
-                
+
             }
             get
             {
@@ -48,15 +36,15 @@ namespace Database
         {
             set
             {
-                if(value != null)
+                if ( value != null )
                 {
                     information = value;
                 }
             }
             get { return information; }
         }
-        
-        public DatabaseException(Exception exThrown, string customMessage, params object[] information)
+
+        public DatabaseException( System.Exception exThrown , string customMessage , params object[] information )
         {
             this.ExceptionThrown = exThrown;
             this.CustomMessage = customMessage;

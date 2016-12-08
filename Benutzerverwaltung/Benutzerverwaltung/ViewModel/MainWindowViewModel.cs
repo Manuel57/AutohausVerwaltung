@@ -33,7 +33,12 @@ namespace Benutzerverwaltung.ViewModel
         public MainWindowViewModel( )
         {
 
-           
+
+            this.Emp = new ObservableCollection<Customer>();
+            this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
+            this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
+            this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
+            this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
 
         }
         public void Init( )
@@ -41,17 +46,12 @@ namespace Benutzerverwaltung.ViewModel
             try
             {
                 ConfigureBl.Initialize();
-                this.Emp = new ObservableCollection<Customer>();
-                this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
-                this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
-                this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
-                this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
 
                 updateView();
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
         }
 
@@ -64,10 +64,10 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
         }
-        private void showCustomerDetails( )
+        private void showCustomerDetails()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
         }
         private void createCustomer( )
@@ -89,7 +89,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionHelper.Handle(ex);
+                ExceptionManager.Instance.Handle(ex);
             }
         }
 

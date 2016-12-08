@@ -33,14 +33,14 @@ namespace Benutzerverwaltung
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow( )
         {
             InitializeComponent();
-            //This is my first comment
-            
+
+
         }
 
-       
+
 
         private void listboxFolder1_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
@@ -49,6 +49,34 @@ namespace Benutzerverwaltung
         private void lvCustomer_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
             MessageBox.Show("");
+        }
+
+        private void tbSearch_TextChanged( object sender , TextChangedEventArgs e )
+        {
+            IEnumerable<Customer> cs = this.lvCustomer.ItemsSource as IEnumerable<Customer>;
+            this.lvCustomer.ItemsSource = null;
+            this.lvCustomer.ItemsSource = cs.Where(item => item.Adress.Contains(this.tbSearch.Text) ||
+                item.BirthDate.ToShortDateString().Contains(this.tbSearch.Text) ||
+                item.CustomerId.ToString().Contains(this.tbSearch.Text) ||
+                item.FirstName.Contains(this.tbSearch.Text) ||
+                item.LastName.Contains(this.tbSearch.Text) ||
+                item.Username.Contains(this.tbSearch.Text));
+        }
+
+        private void Window_Loaded( object sender , RoutedEventArgs e )
+        {
+
+            if ( Environment.GetCommandLineArgs()?.Any(item =>
+              item != null && ( bool ) item?.Equals("--configure")) == true )
+            {
+                SettingsManager.ShowDialog();
+            }
+            ( this.root.DataContext as MainWindowViewModel ).Init();
+        }
+
+        private void Button_Click( object sender , RoutedEventArgs e )
+        {
+            MessageBox.Show(( (sender as Button ).Parent as StackPanel).Parent.ToString());
         }
     }
 }

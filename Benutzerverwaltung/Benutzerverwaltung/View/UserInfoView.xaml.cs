@@ -5,6 +5,7 @@
 // <date>2016-11-12</date>
 // </copyright>
 
+using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.ViewModel;
 using BenutzerverwaltungBL.Model.DataObjects;
 using System;
@@ -31,16 +32,22 @@ namespace Benutzerverwaltung.View
         public UserInfoView( )
         {
             InitializeComponent();
-            //UserInfoViewModel uivm = new UserInfoViewModel();
-            //uivm.CloseAction += ( ) => { this.Close(); };
-            //this.DataContext = uivm;
         }
         public UserInfoView(Customer c )
         {
             InitializeComponent();
-            UserInfoViewModel uivm = new UserInfoViewModel(c);
-            uivm.CloseAction += ( ) => { this.Close(); };
-            this.DataContext = uivm;
+
+            try
+            {
+                UserInfoViewModel uivm = new UserInfoViewModel(c);
+                uivm.CloseAction += ( ) => { this.Close(); };
+                this.DataContext = uivm;
+            }
+            catch ( Exception ex )
+            {
+                ExceptionManager.Instance.Handle(ex);
+            }
+
         }
     }
 }

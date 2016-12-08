@@ -18,6 +18,7 @@ using Database.Common;
 using Database.Common.Impl;
 using BenutzerverwaltungBL.Model.BusinesObjects;
 using BenutzerverwaltungBL.Common;
+using Verwaltung.Exception;
 
 namespace BenutzerverwaltungBL.Controller
 {

@@ -5,6 +5,7 @@
 // <date>2016-12-6</date>
 // </copyright>
 
+using Benutzerverwaltung.Helpers;
 using BenutzerverwaltungBL.Controller;
 using System;
 using System.Collections.Generic;
@@ -33,8 +34,15 @@ namespace Benutzerverwaltung.View
         }
         public ReparaturenView(string customerId ):this()
         {
-            this.listView.ItemsSource = CustomerManager.GetSingleCustomerById(int.Parse(customerId)).Rechnungen;
-                 
+            try
+            {
+                this.listView.ItemsSource = CustomerManager.GetSingleCustomerById(int.Parse(customerId)).Rechnungen;
+            }
+            catch ( Exception ex )
+            {
+                ExceptionManager.Instance.Handle(ex);
+            }
+
         }
     }
 }

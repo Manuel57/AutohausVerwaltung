@@ -36,55 +36,75 @@ namespace Benutzerverwaltung.View
         public CustomerDetailsView( CustomerDetailsMode mode, Customer c )
         {
             InitializeComponent();
-            initVm(c);
-            Button btn = new Button();
-            switch ( mode )
-            {
-                case CustomerDetailsMode.Delete:
-                    btn.Content = "Delete";
-                    btn.Command = ( this.root.DataContext as DetailsViewModel ).DeleteCommand;
-                    this.readonlyTextBoxes();
-                    break;
-                case CustomerDetailsMode.Details:
-                    btn.Content = "Save changes";
-                    btn.Command = ( this.root.DataContext as DetailsViewModel ).ChangeCommand;
-                    
-                    break;
-                default:
-                    break;
-            }
-            Grid.SetRow(btn , 6);
-            Grid.SetColumn(btn , 1);
 
-            Button btnReparatur = new Button();
-            btnReparatur.Content = Properties.Resources.Reparaturen;
-            btnReparatur.Command = ( this.root.DataContext as DetailsViewModel ).ReparaturenCommand;
-            Grid.SetRow(btnReparatur , 6);
-            Grid.SetColumn(btnReparatur , 0);
-            this.root.Children.Add(btnReparatur);
-            this.root.Children.Add(btn);
+            try
+            {
+                initVm(c);
+                Button btn = new Button();
+                switch ( mode )
+                {
+                    case CustomerDetailsMode.Delete:
+                        btn.Content = "Delete";
+                        btn.Command = ( this.root.DataContext as DetailsViewModel ).DeleteCommand;
+                        this.readonlyTextBoxes();
+                        break;
+                    case CustomerDetailsMode.Details:
+                        btn.Content = "Save changes";
+                        btn.Command = ( this.root.DataContext as DetailsViewModel ).ChangeCommand;
+
+                        break;
+                    default:
+                        break;
+                }
+                Grid.SetRow(btn , 6);
+                Grid.SetColumn(btn , 1);
+
+                Button btnReparatur = new Button();
+                btnReparatur.Content = Properties.Resources.Reparaturen;
+                btnReparatur.Command = ( this.root.DataContext as DetailsViewModel ).ReparaturenCommand;
+                Grid.SetRow(btnReparatur , 6);
+                Grid.SetColumn(btnReparatur , 0);
+                this.root.Children.Add(btnReparatur);
+                this.root.Children.Add(btn);
+            }
+            catch ( Exception ex )
+            {
+                ExceptionManager.Instance.Handle(ex);
+            }
+
         }
         private void initVm(Customer c)
         {
-            //( this.root.DataContext as DetailsViewModel ).Address = c.Adress;
-            //( this.root.DataContext as DetailsViewModel ).BirthDate = c.BirthDate.ToShortDateString();
-            //( this.root.DataContext as DetailsViewModel ).CustomerId = c.CustomerId.ToString();
-            //( this.root.DataContext as DetailsViewModel ).FirstName = c.FirstName;
-            //( this.root.DataContext as DetailsViewModel ).LastName = c.LastName;
-            //( this.root.DataContext as DetailsViewModel ).Username = c.Username;
-            ( this.root.DataContext as DetailsViewModel ).Kunde = c;
-            ( this.root.DataContext as DetailsViewModel ).ChangedAll();
+            try
+            {
+                ( this.root.DataContext as DetailsViewModel ).Kunde = c;
+                ( this.root.DataContext as DetailsViewModel ).ChangedAll();
+            }
+            catch ( Exception)
+            {
+                throw;
+            }
+
 
         }
 
         private void readonlyTextBoxes( )
         {
-            this.txtAddress.ReadOnly();
-            this.txtBirthDate.ReadOnly();
-            this.txtCustomerId.ReadOnly();
-            this.txtFirstName.ReadOnly();
-            this.txtLastName.ReadOnly();
-            this.txtUsername.ReadOnly();
+
+            try
+            {
+                this.txtAddress.ReadOnly();
+                this.txtBirthDate.ReadOnly();
+                this.txtCustomerId.ReadOnly();
+                this.txtFirstName.ReadOnly();
+                this.txtLastName.ReadOnly();
+                this.txtUsername.ReadOnly();
+            }
+            catch ( Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

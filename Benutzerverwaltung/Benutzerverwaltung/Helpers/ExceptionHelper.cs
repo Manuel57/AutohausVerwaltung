@@ -12,27 +12,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.Helpers
 {
-    public class ExceptionHelper
+    public class ExceptionManager : Verwaltung.Exception.ExceptionHelper
     {
-       
+        private static ExceptionManager instance;
 
-        public static void Handle(Exception e)
+        public static ExceptionManager Instance
         {
-            string msg = string.Empty;
-            StringBuilder sb = new StringBuilder();
-            if ( e is DatabaseException )
+            get
             {
-                sb.Append((e as DatabaseException).CustomMessage);
+                if ( instance == null )
+                    instance = new ExceptionManager();
+                return instance;
             }
-            sb.AppendLine(e.Message);
-            sb.AppendLine(e.InnerException?.Message);
-
-            MessageBox.Show(sb.ToString() , "Error" , MessageBoxButton.OK , MessageBoxImage.Error,MessageBoxResult.None);
-            
         }
-        
+        private ExceptionManager( ) { }
+
+        public override void Handle( Exception e )
+        {
+            MessageBox.Show(this.CreateMessage(e) , "Error" , MessageBoxButton.OK , MessageBoxImage.Error , MessageBoxResult.None);
+
+        }
+
+
     }
 }

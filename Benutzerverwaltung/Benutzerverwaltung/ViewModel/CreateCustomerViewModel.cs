@@ -31,28 +31,30 @@ namespace Benutzerverwaltung.ViewModel
 
         public CreateCustomerViewModel( )
         {
-            this.BackCommand = new RelayCommand(( ) => { });
-            this.CreateCommand = new RelayCommand(create);
+
+            try
+            {
+                this.BackCommand = new RelayCommand(( ) => { });
+                this.CreateCommand = new RelayCommand(create);
+            }
+            catch ( Exception ex )
+            {
+                ExceptionManager.Instance.Handle(ex);
+            }
+
         }
 
         private void create( )
         {
-
-            
             try
             {
-                Customer c = CustomerManager.CreateCustomer("" , string.Format("{0} {1}" , this.FirstName , this.LastName) , DateTime.Parse(BirthDate), this.Address);
+                Customer c = CustomerManager.CreateCustomer("" , this.FirstName , this.LastName , DateTime.Parse(BirthDate) , this.Address);
                 UserInfoView uiv = new UserInfoView(c);
                 uiv.ShowDialog();
             }
-            catch ( DatabaseException ex )
-            {
-                MessageBox.Show(ex.CustomMessage);
-            }
             catch ( Exception ex )
             {
-                MessageBox.Show(ex.Message);
-
+                ExceptionManager.Instance.Handle(ex);
             }
 
         }

@@ -67,6 +67,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\Autoteile.cs" />
+    <Compile Include="Helpers\Message.cs" />
+    <Compile Include="ViewModel\BestellenViewModel.cs" />
+    <Compile Include="ViewModel\ChangeTeilViewModel.cs" />
+    <Compile Include="ViewModel\CreateTeilViewModel.cs" />
+    <Compile Include="ViewModel\ImportantMessageViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\BestellenView.xaml.cs">
+      <DependentUpon>BestellenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChangeTeilView.xaml.cs">
+      <DependentUpon>ChangeTeilView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CreateTeilView.xaml.cs">
+      <DependentUpon>CreateTeilView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ImportantMessageDetailView.xaml.cs">
+      <DependentUpon>ImportantMessageDetailView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,12 +94,30 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\BestellenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChangeTeilView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateTeilView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ImportantMessageDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,6 +145,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

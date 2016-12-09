@@ -9,8 +9,7 @@ namespace LagerVerwaltung.Helpers
     public class Message
     {
         public string Short { get; set; }
-        public string WholeMessage { get; set; }
-        
+             
         public Message() { }
     }
 }

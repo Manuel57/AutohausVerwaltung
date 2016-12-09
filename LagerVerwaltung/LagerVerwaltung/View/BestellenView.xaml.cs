@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LagerVerwaltung.Helpers;
 
 namespace LagerVerwaltung.View
 {
@@ -19,8 +20,16 @@ namespace LagerVerwaltung.View
     /// </summary>
     public partial class BestellenView : Window
     {
+        private Autoteile autoteile = new Autoteile() { Bezeichnung ="default",Preis=0};
+
         public BestellenView()
         {
+            InitializeComponent();
+        }
+
+        public BestellenView(Autoteile autoteile)
+        {
+            this.autoteile = autoteile;
             InitializeComponent();
         }
     }

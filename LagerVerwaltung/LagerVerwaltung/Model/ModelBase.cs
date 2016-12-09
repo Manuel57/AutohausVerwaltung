@@ -21,9 +21,12 @@ namespace LagerVerwaltung.Model
         /// <param name="propName">Name of the changed property</param>
         protected virtual void OnPropertyChanged([CallerMemberName]String propName = "")
         {
-            if (this.PropertyChanged != null)
+            lock(this)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+                }
             }
         }
     }

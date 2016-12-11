@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.ViewModel
 {
@@ -29,6 +30,7 @@ namespace Benutzerverwaltung.ViewModel
         public RelayCommand DeleteCustomerCommand { get; set; }
         public RelayCommand CreateCustomerCommand { get; set; }
         public RelayCommand SearchFieldChanged { get; set; }
+        public Window MainWindow { get; set; }
 
         public MainWindowViewModel( )
         {
@@ -51,7 +53,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
 
@@ -64,7 +66,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
         private void showCustomerDetails()
@@ -76,7 +78,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
         private void createCustomer( )
@@ -89,7 +91,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
 

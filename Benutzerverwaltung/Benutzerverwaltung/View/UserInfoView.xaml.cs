@@ -21,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.View
 {
@@ -45,7 +46,7 @@ namespace Benutzerverwaltung.View
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
 
         }

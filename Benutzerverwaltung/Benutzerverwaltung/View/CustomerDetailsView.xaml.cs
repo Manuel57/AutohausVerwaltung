@@ -16,11 +16,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Verwaltung;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.View
 {
@@ -69,7 +71,7 @@ namespace Benutzerverwaltung.View
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
 
         }
@@ -90,7 +92,7 @@ namespace Benutzerverwaltung.View
 
         private void readonlyTextBoxes( )
         {
-
+            
             try
             {
                 this.txtAddress.ReadOnly();

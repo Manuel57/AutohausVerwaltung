@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.ViewModel
 {
@@ -48,7 +49,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
 
         }
@@ -63,7 +64,7 @@ namespace Benutzerverwaltung.ViewModel
            
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
 
         }
@@ -83,7 +84,7 @@ namespace Benutzerverwaltung.ViewModel
             }
             catch ( Exception ex )
             {
-                ExceptionManager.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
 
         }

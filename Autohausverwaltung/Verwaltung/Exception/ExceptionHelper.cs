@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace Verwaltung.Exception
 {
-    public abstract class ExceptionHelper
+    public sealed class ExceptionHelper
     {
-        public string CreateMessage( System.Exception e )
+        public static string CreateMessage( System.Exception e )
         {
             string msg = string.Empty;
             StringBuilder sb = new StringBuilder();
@@ -24,6 +24,12 @@ namespace Verwaltung.Exception
 
             return sb.ToString();
         }
-        public abstract void Handle(System.Exception e );
+        public static void Handle( System.Exception e )
+        {
+            lock ( typeof(ExceptionHelper) )
+            {
+                MessageBox.Show(CreateMessage(e) , "Error" , MessageBoxButton.OK , MessageBoxImage.Error , MessageBoxResult.None);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Verwaltung.Settings
 {
+    [Serializable]
     public class DatabaseSettings : Settings
     {
         public enum Ip { Intern, Extern }
@@ -21,11 +22,6 @@ namespace Verwaltung.Settings
             set;
         }
 
-        public override void Build( Settings setting )
-        {
-            base.Build(setting);
-            DatabaseSettings dbs = setting as DatabaseSettings;
-            this.IpAddress = dbs.IpAddress;
-        }
+     
     }
 }

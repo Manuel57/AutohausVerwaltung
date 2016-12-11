@@ -5,6 +5,7 @@
 // <date>2016-11-07</date>
 // </copyright>
 
+using Benutzerverwaltung.Controls;
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.View;
 using Benutzerverwaltung.ViewModel;
@@ -25,6 +26,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Verwaltung.Settings;
 
 namespace Benutzerverwaltung
 {
@@ -55,7 +57,9 @@ namespace Benutzerverwaltung
         {
             IEnumerable<Customer> cs = this.lvCustomer.ItemsSource as IEnumerable<Customer>;
             this.lvCustomer.ItemsSource = null;
-            this.lvCustomer.ItemsSource = cs.Where(item => item.Adress.Contains(this.tbSearch.Text) ||
+
+            this.lvCustomer.ItemsSource = cs.Where(item => 
+            item.Adress.Contains(this.tbSearch.Text) ||
                 item.BirthDate.ToShortDateString().Contains(this.tbSearch.Text) ||
                 item.CustomerId.ToString().Contains(this.tbSearch.Text) ||
                 item.FirstName.Contains(this.tbSearch.Text) ||
@@ -69,14 +73,22 @@ namespace Benutzerverwaltung
             if ( Environment.GetCommandLineArgs()?.Any(item =>
               item != null && ( bool ) item?.Equals("--configure")) == true )
             {
-                SettingsManager.ShowDialog();
+                SettingsManager.Instance.ShowEditor();
             }
+            ( this.root.DataContext as MainWindowViewModel ).MainWindow = this;
+           
             ( this.root.DataContext as MainWindowViewModel ).Init();
+
         }
 
         private void Button_Click( object sender , RoutedEventArgs e )
         {
             MessageBox.Show(( (sender as Button ).Parent as StackPanel).Parent.ToString());
+        }
+
+        private void CustomerButton_Click( object sender , RoutedEventArgs e )
+        {
+            MessageBox.Show(((int)sender).ToString());
         }
     }
 }

@@ -1,12 +1,6 @@
-﻿// <copyright file="Benutzerverwaltung.Helpers.SettingsDialog.xaml.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
-// <author>Thomas Huber</author>
-// <date>2016-12-8</date>
-// </copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,27 +14,43 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Verwaltung.Settings;
 
-namespace Benutzerverwaltung.Helpers
+namespace Verwaltung.Dialogs
 {
     /// <summary>
     /// Interaction logic for SettingsDialog.xaml
     /// </summary>
     public partial class SettingsDialog : Window
     {
-        public DatabaseSettings Settings { get; set; }
+        private DatabaseSettings settings;
+        public Settings.DatabaseSettings Settings
+        {
+            get { return settings; }
+            set
+            {
+                this.settings = value;
+                this.wpgMyControl.Instance = settings;
+            }
+        }
         public SettingsDialog( )
         {
             InitializeComponent();
-            DatabaseSettings testGrid = new DatabaseSettings();
-            testGrid.Load();
-            wpgMyControl.Instance = testGrid;
+
         }
 
         private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
         {
             this.DialogResult = true;
-            this.Settings= ( DatabaseSettings ) wpgMyControl.Instance;
-            this.Settings.Save();
+            this.Settings = ( Settings.DatabaseSettings ) wpgMyControl.Instance;
+        }
+
+        private void Grid_Initialized( object sender , EventArgs e )
+        {
+
+        }
+
+        private void Window_Initialized( object sender , EventArgs e )
+        {
+            wpgMyControl.Instance = this.Settings;
         }
     }
 }

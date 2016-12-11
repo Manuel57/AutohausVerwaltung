@@ -47,21 +47,21 @@ namespace Benutzerverwaltung.Controls
         public static readonly DependencyProperty TextProperty =
           DependencyProperty.Register("Text", typeof(string), typeof(CustomerButton), new UIPropertyMetadata(""));
 
-        //public ImageSource Image
-        //{
-        //    get { return ( ImageSource ) GetValue(ImageProperty); }
-        //    set { SetValue(ImageProperty , value); }
-        //}
+        public ImageSource ImageBtn
+        {
+            get { return ( ImageSource ) GetValue(ImageProperty); }
+            set { SetValue(ImageProperty , value); }
+        }
 
         public static readonly DependencyProperty ImageProperty =
-           DependencyProperty.Register("Image", typeof(ImageSource), typeof(CustomerButton), new UIPropertyMetadata(null));
+           DependencyProperty.Register("ImageBtn", typeof(ImageSource), typeof(CustomerButton), new UIPropertyMetadata(null));
 
         public static DependencyProperty CommandProperty = DependencyProperty.Register("ButtonVisibility", typeof(ICommand), typeof(CustomerButton));
 
         public ICommand ButtonVisibility
         {
             get { return ( ICommand ) GetValue(CommandProperty); }
-            set { SetValue(CommandProperty , value); }
+            set {  SetValue(CommandProperty , value); }
         }
 
         public static DependencyProperty CustomerID = DependencyProperty.Register("CustId",typeof(int),typeof(CustomerButton));

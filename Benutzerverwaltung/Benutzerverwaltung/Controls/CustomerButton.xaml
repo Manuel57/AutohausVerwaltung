@@ -9,7 +9,7 @@
     <Grid>
         <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ButtonVisibility}" x:Name="btn" Style="{StaticResource ImageButton}" VerticalAlignment="Top" Width="20" Height="20" Click="button_Click" >
             <StackPanel Orientation="Horizontal">
-                <Image Source="./../Images/Lupe.png"  Height="16" Width="16" >
+                <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ImageBtn}"  Height="16" Width="16" >
                 </Image>
             </StackPanel>
         </Button>

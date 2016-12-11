@@ -30,16 +30,15 @@ namespace Benutzerverwaltung.ViewModel
         public RelayCommand DeleteCustomerCommand { get; set; }
         public RelayCommand CreateCustomerCommand { get; set; }
         public RelayCommand SearchFieldChanged { get; set; }
-        public Window MainWindow { get; set; }
 
         public MainWindowViewModel( )
         {
 
 
             this.Emp = new ObservableCollection<Customer>();
-            this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
+            //this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
             this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
-            this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
+            //this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
             this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
 
         }
@@ -57,11 +56,11 @@ namespace Benutzerverwaltung.ViewModel
             }
         }
 
-        private void deleteCustomer( )
+        public void DeleteCustomer(int CustId )
         {
             try
             {
-                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete , this.Emp.Last());
+                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete , this.Emp.DefaultIfEmpty(null).FirstOrDefault(item => item.CustomerId.Equals(CustId)));
                 cdv.Show();
             }
             catch ( Exception ex )
@@ -69,11 +68,11 @@ namespace Benutzerverwaltung.ViewModel
                 ExceptionHelper.Handle(ex);
             }
         }
-        private void showCustomerDetails()
+        public void ShowCustomerDetails(int CustId)
         {
             try
             {
-                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details , this.Emp.First());
+                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details , this.Emp.DefaultIfEmpty(null).FirstOrDefault(item=>item.CustomerId.Equals(CustId)));
                 cdv.Show();
             }
             catch ( Exception ex )

@@ -75,8 +75,6 @@ namespace Benutzerverwaltung
             {
                 SettingsManager.Instance.ShowEditor();
             }
-            ( this.root.DataContext as MainWindowViewModel ).MainWindow = this;
-           
             ( this.root.DataContext as MainWindowViewModel ).Init();
 
         }
@@ -88,7 +86,13 @@ namespace Benutzerverwaltung
 
         private void CustomerButton_Click( object sender , RoutedEventArgs e )
         {
-            MessageBox.Show(((int)sender).ToString());
+            ( this.root.DataContext as MainWindowViewModel ).ShowCustomerDetails(( int ) sender);
+        }
+
+        private void CustomerButtonDel_Click( object sender , RoutedEventArgs e )
+        {
+
+            ( this.root.DataContext as MainWindowViewModel ).DeleteCustomer(( int ) sender);
         }
     }
 }

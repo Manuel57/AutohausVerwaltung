@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LagerVerwaltung"
         xmlns:viewmodel="clr-namespace:LagerVerwaltung.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow"  WindowState="Maximized" WindowStartupLocation="CenterScreen">
+        Title="MainWindow"  WindowState="Maximized" WindowStartupLocation="CenterScreen" Closing="OnWindowClosing" Width="946.5">
     <Window.Resources>
         <viewmodel:MainWindowViewModel x:Key="mainViewModel"/>
     </Window.Resources>
@@ -19,10 +19,10 @@
         <Label x:Name="lblSelected" Content="gewähltes Teil" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,47,0,0" VerticalAlignment="Top" Width="124"/>
         <Label x:Name="lblPreis" Content="Preis:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10,113,0,0" VerticalAlignment="Top" Width="124"/>
         <Label x:Name="lblLagerbestand" Content="Lagerbestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10,182,0,0" VerticalAlignment="Top" Width="124"/>
-        <TextBox x:Name="txtSelected" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="169,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" IsEnabled="False"/>
-        <TextBox x:Name="txtPreis" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"/>
-        <TextBox x:Name="txtBestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,182,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"/>
-        <Button x:Name="btnChange" Content="Change Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,274,0,0" VerticalAlignment="Top" Width="154" Command="{Binding ChangeTeilCommand}"/>
+        <TextBox x:Name="txtSelected" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="169,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" IsEnabled="True"/>
+        <TextBox x:Name="txtPreis" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
+        <TextBox x:Name="txtBestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,182,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
+        <Button x:Name="btnChange" Visibility="Hidden" Content="Change Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,274,0,0" VerticalAlignment="Top" Width="154" Command="{Binding ChangeTeilCommand}"/>
         <Button x:Name="btnCreate" Content="Create New Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,333,0,0" VerticalAlignment="Top" Width="154" Command="{Binding CreateTeilCommand}"/>
         <Button x:Name="btnOrder" Content="Order Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,392,0,0" VerticalAlignment="Top" Width="154"  Command="{Binding OrderTeilCommand}"/>
        
@@ -35,13 +35,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="lvMessage" Grid.Column="2" HorizontalAlignment="Left" Height="211" Margin="30,45,0,0" VerticalAlignment="Top" Width="160" ItemsSource="{Binding Path=importantMessages, UpdateSourceTrigger=PropertyChanged}">
+        <ListView x:Name="lvMessage" Grid.Column="2" HorizontalAlignment="Left" Height="211" Margin="30,45,0,0" VerticalAlignment="Top" Width="207" ItemsSource="{Binding Path=importantMessages, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Short}" Header="Message"/>
-                    <GridViewColumn>
-                        <Button  DataContext="{StaticResource mainViewModel}" Content="Show Details" Command="{Binding DetailMessageCommand}"></Button>
-                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

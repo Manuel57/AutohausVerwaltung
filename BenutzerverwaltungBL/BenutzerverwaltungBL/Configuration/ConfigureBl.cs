@@ -28,7 +28,7 @@ namespace BenutzerverwaltungBL.Configuration
                 DataAccessInitializing.Initialize(Assembly.GetExecutingAssembly());
                 
             }
-            catch (DatabaseException )
+            catch (DatabaseException)
             {
                 throw;
             }

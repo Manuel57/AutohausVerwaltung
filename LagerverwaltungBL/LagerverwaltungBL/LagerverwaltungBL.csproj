@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CongifManager.cs" />
+    <Compile Include="Model\Autoteile.cs" />
+    <Compile Include="Model\AutoteilLager.cs" />
+    <Compile Include="Model\Zentrallager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

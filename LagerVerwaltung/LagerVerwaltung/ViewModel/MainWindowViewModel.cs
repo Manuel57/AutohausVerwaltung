@@ -59,15 +59,20 @@ namespace LagerVerwaltung.ViewModel
                 ExceptionHelper.Handle(ex);
             }
         }
-
+        private void propertyChanged(params string[] properties)
+        {
+            foreach ( var prop in properties )
+            {
+                this.OnPropertyChanged(prop);
+            }
+            this.OnPropertyChanged();
+        }
         public void SetTeilInTxt(Autoteile a)
         {
             this.PartToOrder = a.Bezeichnung;
             this.Preis = a.Preis.ToString();
             this.Bestand = GetBestandForTeil(a);
-            this.OnPropertyChanged("Preis");
-            this.OnPropertyChanged("PartToOrder");
-            this.OnPropertyChanged("Bestand");
+            this.propertyChanged("Preis" , "PartToOrder" , "Bestand");
         }
 
         private void CreateTeil( )
@@ -120,8 +125,7 @@ namespace LagerVerwaltung.ViewModel
                             {
                                 this.importantMessages.Add(new Message() { Short = "Lagerbestand von Reifen  kritisch!\nBestand: " + DateTime.Now.Minute + 100 });
                             }
-                            this.OnPropertyChanged("importantMessages");
-                            this.OnPropertyChanged();
+                            this.propertyChanged("importantMessages");
                         });
                         Kritisch(this , null);
                     }

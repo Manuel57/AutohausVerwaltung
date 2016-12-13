@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:LagerVerwaltung"
         xmlns:viewmodel="clr-namespace:LagerVerwaltung.ViewModel"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="MainWindow"  WindowState="Maximized" WindowStartupLocation="CenterScreen" Closing="OnWindowClosing" Width="946.5" Initialized="Window_Initialized">
     <Window.Resources>
         <viewmodel:MainWindowViewModel x:Key="mainViewModel"/>
@@ -19,9 +20,9 @@
         <Label x:Name="lblSelected" Content="gewähltes Teil" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,47,0,0" VerticalAlignment="Top" Width="124"/>
         <Label x:Name="lblPreis" Content="Preis:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10,113,0,0" VerticalAlignment="Top" Width="124"/>
         <Label x:Name="lblLagerbestand" Content="Lagerbestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10,182,0,0" VerticalAlignment="Top" Width="124"/>
-        <TextBox x:Name="txtSelected" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="169,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" IsEnabled="True"/>
-        <TextBox x:Name="txtPreis" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
-        <TextBox x:Name="txtBestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,182,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
+        <TextBox x:Name="txtSelected" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="169,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" IsEnabled="True" Text="{Binding Path=PartToOrder}"/>
+        <TextBox x:Name="txtPreis" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,113,0,0" TextWrapping="Wrap" Text="{Binding Path=Preis}" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
+        <TextBox x:Name="txtBestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,182,0,0" TextWrapping="Wrap" Text="{Binding Path=Bestand}" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
         <Button x:Name="btnChange" Visibility="Hidden" Content="Change Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,274,0,0" VerticalAlignment="Top" Width="154" Command="{Binding ChangeTeilCommand}"/>
         <Button x:Name="btnCreate" Content="Create New Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,333,0,0" VerticalAlignment="Top" Width="154" Command="{Binding CreateTeilCommand}"/>
         <Button x:Name="btnOrder" Content="Order Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,392,0,0" VerticalAlignment="Top" Width="154"  Command="{Binding OrderTeilCommand}"/>

@@ -39,7 +39,7 @@ namespace Benutzerverwaltung.ViewModel
                 this.CreateCommand = new RelayCommand(create);
             }
             catch ( Exception ex )
-            {
+            {              
                 ExceptionHelper.Handle(ex);
             }
 

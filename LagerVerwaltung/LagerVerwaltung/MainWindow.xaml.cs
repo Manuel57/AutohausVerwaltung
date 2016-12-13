@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Verwaltung.Exception;
+using Verwaltung.Settings;
 
 namespace LagerVerwaltung
 {
@@ -37,9 +38,8 @@ namespace LagerVerwaltung
                 if (e.AddedItems.Count > 0)
                 {
                     Autoteile selected = ((sender as ListView).SelectedItem as Autoteile);
-                    this.txtSelected.Text = selected.Bezeichnung;
-                    this.txtPreis.Text = selected.Preis.ToString();
-                    this.txtBestand.Text = (this.root.DataContext as MainWindowViewModel).GetBestandForTeil(selected);
+                    (this.root.DataContext as MainWindowViewModel).SetTeilInTxt(selected);
+
                 }
                 else
                 {
@@ -60,7 +60,17 @@ namespace LagerVerwaltung
 
         private void Window_Initialized( object sender , EventArgs e )
         {
-            ( this.root.DataContext as MainWindowViewModel ).Mw = this;
+            ( this.root.DataContext as MainWindowViewModel ).MainWindow = this;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Environment.GetCommandLineArgs()?.Any(item =>
+             item != null && (bool)item?.Equals("--configure")) == true)
+            {
+                SettingsManager.Instance.ShowEditor();
+            }
+            (this.root.DataContext as MainWindowViewModel).Init();
         }
     }
 }

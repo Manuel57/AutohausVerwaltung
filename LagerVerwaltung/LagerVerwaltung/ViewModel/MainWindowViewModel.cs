@@ -10,26 +10,28 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-
+using Verwaltung.Exception;
 
 namespace LagerVerwaltung.ViewModel
 {
-    public class MainWindowViewModel:ModelBase
+    public class MainWindowViewModel : ModelBase
     {
         private List<Autoteile> stattController = null;
         private Thread messageThread = null;
         private bool shutDownThread = false;
-        private static double threadSlepp = 2;
+        private static double threadSlepp = 1;
         public ObservableCollection<Autoteile> allTeile { get; set; }
         //sollt iwi mit an Thread upgedated werden
         public ObservableCollection<Message> importantMessages { get; set; }
-       // public RelayCommand ListViewSeletionChanged { get; set; }
+        // public RelayCommand ListViewSeletionChanged { get; set; }
         public RelayCommand ChangeTeilCommand { get; set; }
         public RelayCommand CreateTeilCommand { get; set; }
         public RelayCommand OrderTeilCommand { get; set; }
-    
+        public Window Mw;
+        public event EventHandler<EventArgs> Kritisch;
 
-        public MainWindowViewModel()
+
+        public MainWindowViewModel( )
         {
             this.allTeile = new ObservableCollection<Autoteile>();
             this.importantMessages = new ObservableCollection<Message>();
@@ -37,13 +39,14 @@ namespace LagerVerwaltung.ViewModel
             this.CreateTeilCommand = new RelayCommand(this.CreateTeil);
             this.OrderTeilCommand = new RelayCommand(this.OrderTeil);
             this.messageThread = new Thread(GetMessages);
+            this.Kritisch += test;
             messageThread.Start();
             FillView();
         }
 
-     
 
-        private void CreateTeil ()
+
+        private void CreateTeil( )
         {
             try
             {
@@ -51,83 +54,109 @@ namespace LagerVerwaltung.ViewModel
                 cv.ShowDialog();
                 FillView();
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                ExceptionManger.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
 
-        private void OrderTeil()
+        private void OrderTeil( )
         {
             try
             {
                 string selected = null;
-                foreach(Window w in Application.Current.Windows)
+                foreach ( Window w in Application.Current.Windows )
                 {
-                    if(w.GetType() == typeof(MainWindow))
+                    if ( w.GetType() == typeof(MainWindow) )
                     {
-                        selected = (w as MainWindow).txtSelected.Text;
+                        selected = ( w as MainWindow ).txtSelected.Text;
                     }
                 }
-                if (string.IsNullOrEmpty(selected))
+                if ( string.IsNullOrEmpty(selected) )
                 {
                     throw new Exception("Nothing selected to order!");
                 }
-            
+
                 BestellenView bv = new BestellenView(allTeile.ToList().Find(item => item.Bezeichnung == selected));
                 bv.ShowDialog();
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                ExceptionManger.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
 
         //i glab des brauch ma gar nit oda?
-        private void ChangeTeil()
+        private void ChangeTeil( )
         {
             try
             {
                 throw new NotImplementedException();
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                ExceptionManger.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
-        private void GetMessages()
+        private void GetMessages( )
         {
             try
             {
-                while (!shutDownThread)
+                while ( !shutDownThread )
                 {
                     this.importantMessages.Clear();
                     //get alle teile wo der lager bestand kritisch is vom controller
-                    for(int i = 0; i <2; i++)
+                    for ( int i = 0; i < 2; i++ )
                     {
-                        this.importantMessages.Add(new Message() { Short = "Lagerbestand von Reifen  kritisch!\nBestand: " + DateTime.Now.Minute+100 });
+
+                        //this.importantMessages.Add(new Message() { Short = "Lagerbestand von Reifen  kritisch!\nBestand: " + DateTime.Now.Minute + 100 });
+                    }
+                    if (this.Mw!=null)
+                    {
+                        this.Mw.Dispatcher.Invoke(( ) =>
+                        {
+                            MessageBox.Show("IN invoke");
+                            ObservableCollection<Message> m = new ObservableCollection<Message>();
+                            m.Add(new Message() { Short = "TEEEEST MEEE" + DateTime.Now.Second });
+                            this.importantMessages = m;
+                        });
+                        Kritisch(this , null);
                     }
                     //geht nicht
-                    this.OnPropertyChanged("importantMessages");
-                    this.OnPropertyChanged();
+                    //if ( Mw != null )
+                    //{
+                    //    this.Mw.Dispatcher.Invoke(( ) =>
+                    //    {
+                    //        this.OnPropertyChanged("importantMessages");
+                    //        this.OnPropertyChanged();
+                    //    });
+                    //    MessageBox.Show("IN");
+                    //}
                     Thread.Sleep(TimeSpan.FromMinutes(threadSlepp));
                 }
             }
-            catch(Exception ex)
+
+            catch ( Exception ex )
             {
-                ExceptionManger.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
             }
         }
-        internal string GetBestandForTeil(Autoteile selected)
+        private void test( object s , EventArgs e )
+        {
+            this.OnPropertyChanged("importantMessages");
+            this.OnPropertyChanged();
+            MessageBox.Show(this.importantMessages.Count.ToString());
+        }
+        internal string GetBestandForTeil( Autoteile selected )
         {
             //controller. getbestand(selected) ....
             return 2000.ToString();
         }
-        
-        private void FillView()
+
+        private void FillView( )
         {
             createTeile();
-            foreach(Autoteile a in stattController)
+            foreach ( Autoteile a in stattController )
             {
                 this.allTeile.Add(a);
             }
@@ -135,30 +164,30 @@ namespace LagerVerwaltung.ViewModel
             this.OnPropertyChanged();
         }
 
-        private void createTeile()
+        private void createTeile( )
         {
             this.stattController = new List<Autoteile>();
-            Autoteile reifen = new Autoteile() { Bezeichnung = "Reifen", Preis = 400 };
-            Autoteile vergaser = new Autoteile() { Bezeichnung = "Vergaser", Preis = 310 };
-            Autoteile schraube = new Autoteile() { Bezeichnung = "Schraube12x10", Preis = 1 };
+            Autoteile reifen = new Autoteile() { Bezeichnung = "Reifen" , Preis = 400 };
+            Autoteile vergaser = new Autoteile() { Bezeichnung = "Vergaser" , Preis = 310 };
+            Autoteile schraube = new Autoteile() { Bezeichnung = "Schraube12x10" , Preis = 1 };
             stattController.Add(reifen);
             stattController.Add(vergaser);
             stattController.Add(schraube);
         }
 
-        public void shutThread()
+        public void shutThread( )
         {
             try
             {
-                if (this.messageThread.IsAlive)
+                if ( this.messageThread.IsAlive )
                 {
                     this.shutDownThread = true;
-                   // this.messageThread.Abort();
+                    // this.messageThread.Abort();
                 }
             }
-            catch(Exception e)
+            catch ( Exception e )
             {
-                ExceptionManger.Instance.Handle(e);
+                ExceptionHelper.Handle(e);
             }
         }
     }

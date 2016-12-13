@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LagerVerwaltung"
         xmlns:viewmodel="clr-namespace:LagerVerwaltung.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow"  WindowState="Maximized" WindowStartupLocation="CenterScreen" Closing="OnWindowClosing" Width="946.5">
+        Title="MainWindow"  WindowState="Maximized" WindowStartupLocation="CenterScreen" Closing="OnWindowClosing" Width="946.5" Initialized="Window_Initialized">
     <Window.Resources>
         <viewmodel:MainWindowViewModel x:Key="mainViewModel"/>
     </Window.Resources>

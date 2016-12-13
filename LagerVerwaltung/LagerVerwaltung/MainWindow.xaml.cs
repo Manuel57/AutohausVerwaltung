@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Verwaltung.Exception;
 
 namespace LagerVerwaltung
 {
@@ -47,13 +48,19 @@ namespace LagerVerwaltung
             }
             catch(Exception ex)
             {
-                ExceptionManger.Instance.Handle(ex);
+                ExceptionHelper.Handle(ex);
+                
             }
         }
         
         private void OnWindowClosing(object sender, CancelEventArgs e)
         {
             (this.root.DataContext as MainWindowViewModel).shutThread();
+        }
+
+        private void Window_Initialized( object sender , EventArgs e )
+        {
+            ( this.root.DataContext as MainWindowViewModel ).Mw = this;
         }
     }
 }

@@ -21,22 +21,33 @@ namespace Verwaltung.Dialogs
     /// </summary>
     public partial class SettingsDialog : Window
     {
+        /// <summary>
+        /// The settings (soöter vlt collection)
+        /// </summary>
         private DatabaseSettings settings;
+        /// <summary>
+        /// gets or sets the settings
+        /// </summary>
         public Settings.DatabaseSettings Settings
         {
             get { return settings; }
             set
             {
                 this.settings = value;
-                this.wpgMyControl.Instance = settings;
+                //sets the instance of the property grid
+                this.wpgMyControl.Instance = settings; 
             }
         }
         public SettingsDialog( )
         {
             InitializeComponent();
-
         }
 
+        /// <summary>
+        /// assigns the settings of the propertygrid to the settings property when the window is closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
         {
             this.DialogResult = true;

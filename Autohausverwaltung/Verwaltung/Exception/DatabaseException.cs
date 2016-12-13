@@ -6,13 +6,27 @@ using System.Threading.Tasks;
 
 namespace Verwaltung.Exception
 {
+    /// <summary>
+    /// Custom exception class for database exceptions
+    /// </summary>
     public class DatabaseException : System.Exception
     {
-
+        /// <summary>
+        /// the original exception
+        /// </summary>
         private System.Exception exceptionThrown = null;
+        /// <summary>
+        /// a custom messsage
+        /// </summary>
         private string customMessage = string.Empty;
+        /// <summary>
+        /// additional information
+        /// </summary>
         private object[] information = null;
 
+        /// <summary>
+        /// gets or sets the original exception
+        /// </summary>
         public System.Exception ExceptionThrown
         {
 
@@ -30,8 +44,18 @@ namespace Verwaltung.Exception
             }
         }
 
-        public string CustomMessage { set { customMessage = value; } get { return customMessage; } }
+        /// <summary>
+        /// gets or sets the custom message
+        /// </summary>
+        public string CustomMessage
+        {
+            set { customMessage = value; }
+            get { return customMessage; }
+        }
 
+        /// <summary>
+        /// gets or sets the information
+        /// </summary>
         public object[] Information
         {
             set

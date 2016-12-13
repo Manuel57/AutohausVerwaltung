@@ -7,8 +7,16 @@ using System.Windows;
 
 namespace Verwaltung.Exception
 {
+    /// <summary>
+    /// class responsible for handling exceptions
+    /// </summary>
     public sealed class ExceptionHelper
     {
+        /// <summary>
+        /// creates a message string representing the given exception
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public static string CreateMessage( System.Exception e )
         {
             string msg = string.Empty;
@@ -24,6 +32,10 @@ namespace Verwaltung.Exception
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Handles the exception
+        /// </summary>
+        /// <param name="e"></param>
         public static void Handle( System.Exception e )
         {
             lock ( typeof(ExceptionHelper) )

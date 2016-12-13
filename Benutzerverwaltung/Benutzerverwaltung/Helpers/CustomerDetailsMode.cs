@@ -13,9 +13,19 @@ using System.Threading.Tasks;
 
 namespace Benutzerverwaltung.Helpers
 {
+    /// <summary>
+    /// Mode of the customerdetails view
+    /// </summary>
     public enum CustomerDetailsMode
     {
+        /// <summary>
+        /// view for deleting a customer
+        /// </summary>
         Delete,
+
+        /// <summary>
+        /// view for editing a customer
+        /// </summary>
         Details
     }
 }

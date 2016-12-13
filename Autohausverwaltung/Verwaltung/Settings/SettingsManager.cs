@@ -11,12 +11,33 @@ using Verwaltung.Dialogs;
 
 namespace Verwaltung.Settings
 {
+    /// <summary>
+    /// class for managing settings
+    /// </summary>
     public class SettingsManager
     {
+        /// <summary>
+        /// the settings filename
+        /// </summary>
         private static string settingsFile = null;
+
+        /// <summary>
+        /// the instance
+        /// </summary>
         private static volatile SettingsManager instance = null;
+
+        /// <summary>
+        /// the object for locking
+        /// </summary>
         private static object sync = new object();
+        /// <summary>
+        /// the settings (später vlt collection)
+        /// </summary>
         private DatabaseSettings settings = new DatabaseSettings();
+
+        /// <summary>
+        /// gets or sets the filename
+        /// </summary>
         public static string SettingsFileName
         {
             get
@@ -40,6 +61,9 @@ namespace Verwaltung.Settings
                 settingsFile = value;
             }
         }
+        /// <summary>
+        /// gets the instance
+        /// </summary>
         public static SettingsManager Instance
         {
             get
@@ -58,6 +82,10 @@ namespace Verwaltung.Settings
                 return instance;
             }
         }
+
+        /// <summary>
+        /// shows a settingsdialog 
+        /// </summary>
         public void ShowEditor( )
         {
             SettingsDialog dialog = new SettingsDialog()
@@ -76,6 +104,10 @@ namespace Verwaltung.Settings
         {
             this.Load();
         }
+
+        /// <summary>
+        /// saves the settings to a file
+        /// </summary>
         private void Save( )
         {
 
@@ -85,6 +117,10 @@ namespace Verwaltung.Settings
             sw.Close();
 
         }
+
+        /// <summary>
+        /// loads the settings from the file
+        /// </summary>
         private void Load( )
         {
             if ( File.Exists(SettingsFileName) )

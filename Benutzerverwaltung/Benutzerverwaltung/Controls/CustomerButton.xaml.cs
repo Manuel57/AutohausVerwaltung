@@ -37,16 +37,6 @@ namespace Benutzerverwaltung.Controls
 
         }
 
-        //public string Text
-        //{
-        //    get { return ( string ) GetValue(TextProperty); }
-        //    set { SetValue(TextProperty , value); }
-        //}
-
-
-        public static readonly DependencyProperty TextProperty =
-          DependencyProperty.Register("Text", typeof(string), typeof(CustomerButton), new UIPropertyMetadata(""));
-
         public ImageSource ImageBtn
         {
             get { return ( ImageSource ) GetValue(ImageProperty); }

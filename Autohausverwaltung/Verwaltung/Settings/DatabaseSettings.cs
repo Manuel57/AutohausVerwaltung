@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace Verwaltung.Settings
 {
+    /// <summary>
+    /// database settings
+    /// </summary>
     [Serializable]
     public class DatabaseSettings : Settings
     {
-        public enum Ip { Intern, Extern }
-
-
+        
         [CategoryAttribute("Connection"),
         DisplayName("Ip Address"),
         DescriptionAttribute("Which ip adress to use")]
-        public Ip IpAddress
+        public IpAddress IpAddress
         {
             get;
             set;

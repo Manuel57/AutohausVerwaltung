@@ -18,42 +18,42 @@ namespace LagerVerwaltung.ViewModel
 {
     public class MainWindowViewModel : ModelBase
     {
+        #region private fields
         private static double threadSlepp = 1;
-
         private List<Autoteile> stattController = null;
         private Thread messageThread = null;
         private bool shutDownThread = false;
-
+        #endregion
+        #region public fields
         public ObservableCollection<Autoteile> allTeile { get; set; }
-        //sollt iwi mit an Thread upgedated werden
         public ObservableCollection<Message> importantMessages { get; set; }
         public RelayCommand CreateTeilCommand { get; set; }
         public RelayCommand OrderTeilCommand { get; set; }
-        public Window MainWindow;
-        public event EventHandler<EventArgs> Kritisch;
+        public Window MainWindow { set; private get; }
+        public event EventHandler<EventArgs> BestandKrititsch;
         public string PartToOrder { get; set; }
         public string Preis { get; set; }
         public string Bestand { get; set; }
-
+        #endregion
         public MainWindowViewModel()
         {
             this.allTeile = new ObservableCollection<Autoteile>();
             this.importantMessages = new ObservableCollection<Message>();
-            this.importantMessages.CollectionChanged += changed;
-            this.CreateTeilCommand = new RelayCommand(this.CreateTeil);
-            this.OrderTeilCommand = new RelayCommand(this.OrderTeil);
-            this.messageThread = new Thread(GetMessages);
-            this.Kritisch += test;
+            this.importantMessages.CollectionChanged += messagesChanged;
+            this.CreateTeilCommand = new RelayCommand(this.createTeil);
+            this.OrderTeilCommand = new RelayCommand(this.orderTeil);
+            this.messageThread = new Thread(getMessages);
+            this.BestandKrititsch += test;
             messageThread.Start();
 
         }
-
+        #region public methods
         public void Init()
         {
             try
             {
                 //CongifManager.Initialize();
-                FillView();
+                fillView();
             }
             catch (Exception ex)
             {
@@ -65,19 +65,39 @@ namespace LagerVerwaltung.ViewModel
         {
             this.PartToOrder = a.Bezeichnung;
             this.Preis = a.Preis.ToString();
-            this.Bestand = GetBestandForTeil(a);
+            this.Bestand = getBestandForTeil(a);
             this.propertyChanged("Preis", "PartToOrder", "Bestand");
         }
-        private void changed(object sender, NotifyCollectionChangedEventArgs e)
+
+        public void ShutThread()
+        {
+            try
+            {
+                if (this.messageThread.IsAlive)
+                {
+                    this.shutDownThread = true;
+                    Thread.Sleep(500);
+                    this.messageThread.Abort();
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionHelper.Handle(e);
+            }
+        }
+        #endregion
+
+        #region private methods
+        private void messagesChanged(object sender, NotifyCollectionChangedEventArgs e)
         { this.OnPropertyChanged("importantMessages"); this.OnPropertyChanged(); }
 
-        private void CreateTeil()
+        private void createTeil()
         {
             try
             {
                 CreateTeilView cv = new CreateTeilView();
                 cv.ShowDialog();
-                FillView();
+                fillView();
             }
             catch (Exception ex)
             {
@@ -85,7 +105,7 @@ namespace LagerVerwaltung.ViewModel
             }
         }
 
-        private void OrderTeil()
+        private void orderTeil()
         {
             try
             {
@@ -103,7 +123,7 @@ namespace LagerVerwaltung.ViewModel
             }
         }
 
-        private void GetMessages()
+        private void getMessages()
         {
             try
             {
@@ -123,7 +143,7 @@ namespace LagerVerwaltung.ViewModel
                             }
 
                         });
-                        Kritisch(this, null);
+                        BestandKrititsch(this, null);
                     }
 
                     Thread.Sleep(TimeSpan.FromMinutes(threadSlepp));
@@ -137,8 +157,7 @@ namespace LagerVerwaltung.ViewModel
         }
         private void test(object s, EventArgs e)
         {
-            //this.OnPropertyChanged("importantMessages");
-            //this.OnPropertyChanged();
+            //rot färben vom Rand
         }
 
         private void propertyChanged(params string[] properties)
@@ -150,14 +169,15 @@ namespace LagerVerwaltung.ViewModel
             this.OnPropertyChanged();
         }
 
-        private string GetBestandForTeil(Autoteile selected)
+        private string getBestandForTeil(Autoteile selected)
         {
             //controller. getbestand(selected) ....
             return 2000.ToString();
         }
 
-        private void FillView()
+        private void fillView()
         {
+            allTeile.Clear();
             createTeile();
             foreach (Autoteile a in stattController)
             {
@@ -178,21 +198,6 @@ namespace LagerVerwaltung.ViewModel
             stattController.Add(vergaser);
 
         }
-
-        public void shutThread()
-        {
-            try
-            {
-                if (this.messageThread.IsAlive)
-                {
-                    this.shutDownThread = true;
-                    // this.messageThread.Abort();
-                }
-            }
-            catch (Exception e)
-            {
-                ExceptionHelper.Handle(e);
-            }
-        }
+        #endregion
     }
 }

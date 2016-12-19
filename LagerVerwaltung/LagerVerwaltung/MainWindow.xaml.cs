@@ -55,7 +55,7 @@ namespace LagerVerwaltung
         
         private void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            (this.root.DataContext as MainWindowViewModel).shutThread();
+            (this.root.DataContext as MainWindowViewModel).ShutThread();
         }
 
         private void Window_Initialized( object sender , EventArgs e )

@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LagerVerwaltung.View"
+          xmlns:res="clr-namespace:LagerVerwaltung.Properties"
+         xmlns:viewmodel="clr-namespace:LagerVerwaltung.ViewModel"
         mc:Ignorable="d"
-        Title="CreateTeil" Height="300" Width="300">
-    <Grid>
-        
+        Title="CreateTeil" Height="450" Width="450">
+    <Window.Resources>
+        <viewmodel:CreateTeilViewModel x:Key="createViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource createViewModel}" x:Name="root">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Content="{x:Static res:Resources.NameOfPart}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Content="{x:Static res:Resources.Price}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+
+        <TextBox x:Name="txtBez" Grid.Column="1" Grid.Row="0" Margin="20" Text="{Binding Path=Bezeichnung}"/>
+        <TextBox x:Name="txtPrice" Grid.Column="1" Grid.Row="1" Margin="20" Text="{Binding Path=Preis}"/>
+
+        <Button Grid.Column="0" Grid.Row="2" Content="{x:Static res:Resources.CreateNewPart}" Command="{Binding CreateTeilCommand}"></Button>
+
     </Grid>
 </Window>

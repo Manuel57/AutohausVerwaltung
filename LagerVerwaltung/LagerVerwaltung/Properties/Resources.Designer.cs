@@ -22,7 +22,7 @@ namespace LagerVerwaltung.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace LagerVerwaltung.Properties {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LagerVerwaltung.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace LagerVerwaltung.Properties {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Neues Teil erstellen ähnelt.
         /// </summary>
-        internal static string CreateNewPart {
+        public static string CreateNewPart {
             get {
                 return ResourceManager.GetString("CreateNewPart", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bezeichnung ähnelt.
         /// </summary>
-        internal static string NameOfPart {
+        public static string NameOfPart {
             get {
                 return ResourceManager.GetString("NameOfPart", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bestellmenge ähnelt.
         /// </summary>
-        internal static string OrderAmount {
+        public static string OrderAmount {
             get {
                 return ResourceManager.GetString("OrderAmount", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Teil bestellen ähnelt.
         /// </summary>
-        internal static string OrderPart {
+        public static string OrderPart {
             get {
                 return ResourceManager.GetString("OrderPart", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Preis per Stück ähnelt.
         /// </summary>
-        internal static string Price {
+        public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die gewähltes Teil ähnelt.
         /// </summary>
-        internal static string SelectedPart {
+        public static string SelectedPart {
             get {
                 return ResourceManager.GetString("SelectedPart", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace LagerVerwaltung.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Lagerbestand ähnelt.
         /// </summary>
-        internal static string StorageAmount {
+        public static string StorageAmount {
             get {
                 return ResourceManager.GetString("StorageAmount", resourceCulture);
             }

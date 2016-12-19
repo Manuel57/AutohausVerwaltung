@@ -143,6 +143,7 @@ namespace LagerVerwaltung.ViewModel
                             }
 
                         });
+                        //foreach teil in importantan  Message
                         BestandKrititsch(this, null);
                     }
 

@@ -4,6 +4,7 @@ using LagerverwaltungBL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Verwaltung.Exception;
@@ -21,6 +22,28 @@ namespace LagerverwaltungBL.Controller
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     return new List<Autoteile>(repository.SelectMany<Autoteile>().AsEnumerable());
+                }
+            }
+            catch ( DatabaseException )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+            }
+
+        }
+
+
+        public static IEnumerable<Werkstattlager> GetAutoteileWerkstatt(string standort)
+        {
+            try
+            {
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                {
+                    List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
+                    return wl.Where<Werkstattlager>(item=>item.Lager.Standort.Equals(standort));
                 }
             }
             catch ( DatabaseException )
@@ -60,5 +83,7 @@ namespace LagerverwaltungBL.Controller
             }
 
         }
+
+
     }
 }

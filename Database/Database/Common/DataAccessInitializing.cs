@@ -68,10 +68,10 @@ namespace Database.Common
         {
             switch ( settings.IpAddress )
             {
-                case DatabaseSettings.Ip.Extern:
+                case IpAddress.Extern:
                     Properties.Settings.Default.IpCurrent = Properties.Settings.Default.IpAdresseExtern;
                     break;
-                case DatabaseSettings.Ip.Intern:
+                case IpAddress.Intern:
                     Properties.Settings.Default.IpCurrent = Properties.Settings.Default.IpAdresseIntern;
                     break;
             }

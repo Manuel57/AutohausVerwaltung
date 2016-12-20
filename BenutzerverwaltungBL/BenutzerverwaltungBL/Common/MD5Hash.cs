@@ -1,9 +1,7 @@
-﻿// <copyright file="BenutzerverwaltungBL.Common.md5hash.cs">
-// Copyright (c) 2016 All Rights Reserved
+﻿// file="BenutzerverwaltungBL.Common.md5hash.cs">
 // <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-13</date>
-// </copyright>
 
 using System;
 using System.Collections.Generic;

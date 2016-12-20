@@ -1,0 +1,14 @@
+body {
+}
+
+section {
+    border-style: solid;
+    border-bottom-width: thin;
+    float: left;
+    width: 49.5%;
+}
+
+#mapPlaceholder {
+    height: 400px;
+    width: 49.5%;
+}

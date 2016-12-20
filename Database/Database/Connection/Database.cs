@@ -105,7 +105,8 @@ namespace Database.Connection
             });
                 var serializer = new HbmSerializer() { Validate = true };
 
-                using ( var stream = serializer.Serialize(DatabaseConfiguration.Instance.GetAssembly()) )
+                using ( var stream = serializer.Serialize(DatabaseConfiguration.
+                    Instance.GetAssembly()) )
                 {
                     cfg.AddInputStream(stream);
                 }

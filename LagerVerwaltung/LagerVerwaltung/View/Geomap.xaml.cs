@@ -11,31 +11,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using LagerVerwaltung.Helpers;
 
 namespace LagerVerwaltung.View
 {
     /// <summary>
-    /// Interaktionslogik für BestellenView.xaml
+    /// Interaction logic for Geomap.xaml
     /// </summary>
-    public partial class BestellenView : Window
+    public partial class Geomap : Window
     {
-        private Autoteile autoteile = new Autoteile() { Bezeichnung ="default",Preis=0};
-
-        public BestellenView()
+        public Geomap( )
         {
             InitializeComponent();
         }
 
-        public BestellenView(Autoteile autoteile)
+        private void Window_Initialized( object sender , EventArgs e )
         {
-            this.autoteile = autoteile;
-            InitializeComponent();
-        }
-
-        private void ShowGeomap( object sender , RoutedEventArgs e )
-        {
-            new Geomap().Show();
+            string path = System.IO.Path.GetFullPath("./../../ScriptAndPages/Map.html");
+            MessageBox.Show(path);
+            this.browser.Navigate(new Uri( path, UriKind.Absolute));
         }
     }
 }

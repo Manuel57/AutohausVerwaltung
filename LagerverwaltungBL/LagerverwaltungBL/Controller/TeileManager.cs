@@ -20,7 +20,7 @@ namespace LagerverwaltungBL.Controller
             {
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    return repository.SelectMany<Autoteile>();
+                    return new List<Autoteile>(repository.SelectMany<Autoteile>().AsEnumerable());
                 }
             }
             catch ( DatabaseException )

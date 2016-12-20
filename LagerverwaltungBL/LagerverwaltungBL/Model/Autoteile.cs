@@ -25,6 +25,8 @@ namespace LagerverwaltungBL.Model
         [ManyToMany(Class = "LagerverwaltungBL.Model.Werkstatt" , Column = "standort")]
         public virtual IEnumerable<Werkstatt> Werkstattlager { get; set; }
 
+        
+        //public virtual Werkstattlager WerkstattLager { get; set; }
         public object Clone( )
         {
             return new Autoteile() { Bezeichnung = this.Bezeichnung , Lager = this.Lager , Preis = this.Preis , Werkstattlager = this.Werkstattlager };

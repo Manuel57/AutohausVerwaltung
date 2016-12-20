@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LagerVerwaltung.Helpers;
+using LagerVerwaltung.ViewModel;
+using Verwaltung.Exception;
 
 namespace LagerVerwaltung.View
 {
@@ -20,17 +22,43 @@ namespace LagerVerwaltung.View
     /// </summary>
     public partial class BestellenView : Window
     {
-        private Autoteile autoteile = new Autoteile() { Bezeichnung ="default",Preis=0};
+        //auf der karte ghörn dann de Standorte der Lager eingezeichnet
+        private Autoteile autoteil = new Autoteile() { Bezeichnung ="default",Preis=0};
+        private Uri browserUri = new Uri("https://www.google.com/maps/@46.953771,14.0898729,9.25z", UriKind.Absolute);
 
-        public BestellenView()
+        private BestellenView()
         {
             InitializeComponent();
         }
 
         public BestellenView(Autoteile autoteile)
         {
-            this.autoteile = autoteile;
+            this.autoteil = autoteile;
             InitializeComponent();
+            try
+            {
+                this.browser.Navigate(browserUri);
+            }
+            catch(Exception e)
+            {
+                ExceptionHelper.Handle(e);
+            }
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            try
+            {
+
+                (this.root.DataContext as BestellenViewModel).selected = this.autoteil;
+                (this.root.DataContext as BestellenViewModel).TeilChanged();
+            }
+            
+            catch (Exception ex)
+            {
+                ExceptionHelper.Handle(ex);
+            }
+
         }
 
         private void ShowGeomap( object sender , RoutedEventArgs e )

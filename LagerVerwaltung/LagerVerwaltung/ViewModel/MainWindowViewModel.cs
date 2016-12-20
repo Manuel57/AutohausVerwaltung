@@ -26,6 +26,7 @@ namespace LagerVerwaltung.ViewModel
         private Thread messageThread = null;
         private bool shutDownThread = false;
         #endregion
+
         #region public fields
         public ObservableCollection<Autoteile> allTeile { get; set; }
         public ObservableCollection<Message> importantMessages { get; set; }
@@ -47,8 +48,7 @@ namespace LagerVerwaltung.ViewModel
             this.OrderTeilCommand = new RelayCommand(this.orderTeil);
             this.messageThread = new Thread(getMessages);
             this.BestandKrititsch += test;
-            messageThread.Start();
-
+         
         }
         #region public methods
         public void Init()
@@ -57,6 +57,8 @@ namespace LagerVerwaltung.ViewModel
             {
                 CongifManager.Initialize();
                 fillView();
+                messageThread.Start();
+
             }
             catch (Exception ex)
             {

@@ -57,14 +57,14 @@ namespace LagerverwaltungBL.Controller
 
         }
 
-        public static int GetBestand( string standort, string bezeichnung )
+        public static int? GetBestand( string standort, string bezeichnung )
         {
             try
             {
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl.FirstOrDefault<Werkstattlager>(item => item.Lager.Standort.Equals(standort) && item.Teil.Bezeichnung.Equals(bezeichnung)).Bestand;
+                    return wl?.FirstOrDefault<Werkstattlager>(item => item.Lager.Standort.Equals(standort) && item.Teil.Bezeichnung.Equals(bezeichnung))?.Bestand;
                 }
             }
             catch ( DatabaseException )

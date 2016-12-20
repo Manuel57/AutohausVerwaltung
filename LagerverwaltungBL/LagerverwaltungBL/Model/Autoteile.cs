@@ -15,21 +15,22 @@ namespace LagerverwaltungBL.Model
         public virtual string Bezeichnung { get; set; }
         [Property(Name = "Preis" , Column = "Preis")]
         public virtual double Preis { get; set; }
-        [Set(Name = "Lager" , Table = "zentrallagerbestand" , Cascade = "all")]
-        [Key(Column = "bezeichnung")]
-        [ManyToMany(Class = "LagerverwaltungBL.Model.Zentrallager" , Column = "standort")]
-        public virtual IEnumerable<Zentrallager> Lager { get; set; }
 
-        [Set(Name = "Werkstattlager" , Table = "werkstattlager" , Cascade = "all")]
+        [Set(Name = "Lager" , Table = "werkstattlager" , Cascade = "all")]
         [Key(Column = "bezeichnung")]
-        [ManyToMany(Class = "LagerverwaltungBL.Model.Werkstatt" , Column = "standort")]
-        public virtual IEnumerable<Werkstatt> Werkstattlager { get; set; }
+        [OneToMany(Class = "LagerverwaltungBL.Model.Werkstattlager")]
+        public virtual IEnumerable<Werkstattlager> Lager { get; set; }
 
-        
+        //[Set(Name = "Werkstattlager" , Table = "werkstattlager" , Cascade = "all")]
+        [Set(Name = "Zentrallager" , Table = "zentrallagerbestand" , Cascade = "all")]
+        [Key(Column = "standort")]
+        [ManyToMany(Class = "LagerverwaltungBL.Model.Zentrallager" , Column = "bezeichnung")]
+        public virtual IEnumerable<Zentrallager> Zentrallager { get; set; }
+
         //public virtual Werkstattlager WerkstattLager { get; set; }
-        public object Clone( )
+        public virtual object Clone( )
         {
-            return new Autoteile() { Bezeichnung = this.Bezeichnung , Lager = this.Lager , Preis = this.Preis , Werkstattlager = this.Werkstattlager };
+            return new Autoteile() { Bezeichnung = this.Bezeichnung , Lager = this.Lager , Preis = this.Preis};
         }
     }
 }

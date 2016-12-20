@@ -1,6 +1,5 @@
-﻿using Database.Common;
-using Database.Common.Impl;
-using LagerverwaltungBL.Configuration;
+﻿using LagerverwaltungBL.Configuration;
+using LagerverwaltungBL.Controller;
 using LagerverwaltungBL.Model;
 using System;
 using System.Collections.Generic;
@@ -18,19 +17,12 @@ namespace TestProject
             try
             {
                 CongifManager.Initialize();
-                IEnumerable<Autoteile> ret = null;
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                IEnumerable<Autoteile> ret = TeileManager.GetAutoteile();
+                foreach ( var item in ret )
                 {
-                    var x = repository.GetById<Autoteile>("Blinker");
-                    //foreach (var u in ret)
-                    //{
-                    //    foreach ( var item in u.Werkstattlager )
-                    //    {
-                    //        Console.WriteLine(item);
-                    //    }
-                    Console.WriteLine(x);
+                    Console.WriteLine(item.Bezeichnung);
                 }
-
+              
             }
             catch ( Exception e )
             {

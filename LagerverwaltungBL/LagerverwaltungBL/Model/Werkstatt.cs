@@ -14,10 +14,9 @@ namespace LagerverwaltungBL.Model
         [Id(Name = "Standort" , Column = "standort")]
         public virtual string Standort { get; set; }
 
-        [Set(Name = "Werkstattlager" , Table = "werkstattlager" , Cascade = "all")]
+        [Set(Name = "Lager" , Table = "werkstattlager" , Cascade = "all")]
         [Key(Column = "standort")]
-
-        [ManyToMany(Class = "LagerverwaltungBL.Model.Autoteile" , Column = "bezeichnung")]
-        public virtual IEnumerable<Autoteile> Werkstattlager { get; set; }
+        [OneToMany(Class = "LagerverwaltungBL.Model.Werkstattlager")]
+        public virtual IEnumerable<Werkstattlager> Lager { get; set; }
     }
 }

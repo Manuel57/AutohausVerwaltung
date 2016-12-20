@@ -17,12 +17,13 @@ namespace TestProject
             try
             {
                 CongifManager.Initialize();
-                IEnumerable<Werkstattlager> ret = TeileManager.GetAutoteileWerkstatt("Villach");
+                IEnumerable<Autoteile> ret = TeileManager.GetAutoteileWerkstatt("Villach");
                 foreach ( var item in ret )
                 {
-                    Console.WriteLine(item.Teil.Bezeichnung + " " 
-                        + item.Teil.Preis + " " + item.Bestand);
+                    Console.WriteLine(item.Bezeichnung);
                 }
+
+                Console.WriteLine(TeileManager.GetBestand("Villach", "Blinker"));
               
             }
             catch ( Exception e )

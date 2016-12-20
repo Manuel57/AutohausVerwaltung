@@ -36,14 +36,35 @@ namespace LagerverwaltungBL.Controller
         }
 
 
-        public static IEnumerable<Werkstattlager> GetAutoteileWerkstatt(string standort)
+        public static IEnumerable<Autoteile> GetAutoteileWerkstatt(string standort)
         {
             try
             {
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl.Where<Werkstattlager>(item=>item.Lager.Standort.Equals(standort));
+                    return wl.Where<Werkstattlager>(item=>item.Lager.Standort.Equals(standort)).Select<Werkstattlager,Autoteile>(item=>item.Teil);
+                }
+            }
+            catch ( DatabaseException )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+            }
+
+        }
+
+        public static int GetBestand( string standort, string bezeichnung )
+        {
+            try
+            {
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                {
+                    List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
+                    return wl.FirstOrDefault<Werkstattlager>(item => item.Lager.Standort.Equals(standort) && item.Teil.Bezeichnung.Equals(bezeichnung)).Bestand;
                 }
             }
             catch ( DatabaseException )

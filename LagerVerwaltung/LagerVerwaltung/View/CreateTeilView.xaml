@@ -25,8 +25,8 @@
         <Label Content="{x:Static res:Resources.NameOfPart}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Label Content="{x:Static res:Resources.Price}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"  />
 
-        <TextBox x:Name="txtBez" Grid.Column="1" Grid.Row="0" Margin="20" Text="{Binding Path=Bezeichnung}"/>
-        <TextBox x:Name="txtPrice" Grid.Column="1" Grid.Row="1" Margin="20" Text="{Binding Path=Preis}"/>
+        <TextBox x:Name="txtBez" Grid.Column="1" Grid.Row="0" Margin="20,39,20,57" Text="{Binding Path=Bezeichnung}"/>
+        <TextBox x:Name="txtPrice" Grid.Column="1" Grid.Row="1" Margin="20,41,20,57" Text="{Binding Path=Preis}"/>
 
         <Button Grid.Column="0" Grid.Row="2" Content="{x:Static res:Resources.CreateNewPart}" Command="{Binding CreateTeilCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
 

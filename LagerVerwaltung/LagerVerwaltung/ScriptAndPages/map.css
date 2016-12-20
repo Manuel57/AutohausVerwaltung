@@ -5,10 +5,11 @@ section {
     border-style: solid;
     border-bottom-width: thin;
     float: left;
-    width: 49.5%;
+    width: 95%;
+   
 }
 
 #mapPlaceholder {
-    height: 400px;
-    width: 49.5%;
+    height: 200px;
+    width: 90%;
 }

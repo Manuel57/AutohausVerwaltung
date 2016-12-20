@@ -2,6 +2,8 @@
 using LagerVerwaltung.Model;
 using LagerVerwaltung.View;
 using LagerverwaltungBL.Configuration;
+using LagerverwaltungBL.Controller;
+using LagerverwaltungBL.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,12 +26,14 @@ namespace LagerVerwaltung.ViewModel
         private Thread messageThread = null;
         private bool shutDownThread = false;
         #endregion
+
         #region public fields
         public ObservableCollection<Autoteile> allTeile { get; set; }
         public ObservableCollection<Message> importantMessages { get; set; }
         public RelayCommand CreateTeilCommand { get; set; }
         public RelayCommand OrderTeilCommand { get; set; }
         public Window MainWindow { set; private get; }
+
         public event EventHandler<EventArgs> BestandKrititsch;
         public string PartToOrder { get; set; }
         public string Preis { get; set; }
@@ -44,16 +48,17 @@ namespace LagerVerwaltung.ViewModel
             this.OrderTeilCommand = new RelayCommand(this.orderTeil);
             this.messageThread = new Thread(getMessages);
             this.BestandKrititsch += test;
-            messageThread.Start();
-
+         
         }
         #region public methods
         public void Init()
         {
             try
             {
-                //CongifManager.Initialize();
+                CongifManager.Initialize();
                 fillView();
+                messageThread.Start();
+
             }
             catch (Exception ex)
             {
@@ -178,13 +183,23 @@ namespace LagerVerwaltung.ViewModel
 
         private void fillView()
         {
-            allTeile.Clear();
-            createTeile();
-            foreach (Autoteile a in stattController)
+            try
             {
-                this.allTeile.Add(a);
+
+                allTeile.Clear();
+                foreach(Autoteile a in TeileManager.GetAutoteile())
+                {
+                    this.allTeile.Add(a);
+                }
+              
+                this.propertyChanged("allTeile");
             }
-            this.propertyChanged("allTeile");
+            
+            catch (Exception ex)
+            {
+                ExceptionHelper.Handle(ex);
+            }
+
         }
 
         private void createTeile()

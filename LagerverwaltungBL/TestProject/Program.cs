@@ -28,7 +28,7 @@ namespace TestProject
                     //    {
                     //        Console.WriteLine(item);
                     //    }
-                    Console.WriteLine(x.Bestand);
+                    Console.WriteLine(x);
                 }
 
             }

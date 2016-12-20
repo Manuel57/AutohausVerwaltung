@@ -1,4 +1,5 @@
 ﻿using Database.Common;
+using Database.Common.Impl;
 using LagerverwaltungBL.Model;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,14 @@ namespace LagerverwaltungBL.Controller
     {
         private static IRepository repository = null;
 
-        public static IEnumerable<Autoteile> GetAutoteile( int id )
+        public static IEnumerable<Autoteile> GetAutoteile( )
         {
             try
             {
-                return null;
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                {
+                    return repository.SelectMany<Autoteile>();
+                }
             }
             catch ( DatabaseException )
             {
@@ -25,7 +29,34 @@ namespace LagerverwaltungBL.Controller
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Error in selecting singel customer by id " + id) );
+                throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+            }
+
+        }
+        public static Autoteile CreateAutoteil( string bezeichnung , double preis )
+        {
+            {
+                try
+                {
+                    using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                    {
+                        Autoteile autoteil = new Autoteile() { Bezeichnung = bezeichnung , Preis = preis };
+
+                        repository.SaveOrUpdate(autoteil);
+
+                        return autoteil.Clone() as Autoteile;
+                    }
+
+                }
+                catch ( DatabaseException )
+                {
+                    throw;
+                }
+                catch ( Exception ex )
+                {
+                    throw ( new DatabaseException(ex , "Error in creating autoteil!") );
+                }
+
             }
 
         }

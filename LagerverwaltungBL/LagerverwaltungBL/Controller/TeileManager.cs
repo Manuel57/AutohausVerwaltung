@@ -64,7 +64,7 @@ namespace LagerverwaltungBL.Controller
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl?.FirstOrDefault<Werkstattlager>(item => item.Lager.Standort.Equals(standort) && item.Teil.Bezeichnung.Equals(bezeichnung))?.Bestand;
+                    return wl?.FirstOrDefault<Werkstattlager>(item => item.Lager.Standort.Equals(standort) && item.Teil.Bezeichnung.Equals(bezeichnung))?.Bestand ?? default(int);
                 }
             }
             catch ( DatabaseException )

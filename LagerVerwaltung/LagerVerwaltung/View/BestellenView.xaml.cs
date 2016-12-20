@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using LagerVerwaltung.Helpers;
 using LagerVerwaltung.ViewModel;
 using Verwaltung.Exception;
+using LagerverwaltungBL.Model;
 
 namespace LagerVerwaltung.View
 {
@@ -37,7 +38,10 @@ namespace LagerVerwaltung.View
             InitializeComponent();
             try
             {
-                this.browser.Navigate(browserUri);
+                string path = System.IO.Path.GetFullPath("./../../ScriptAndPages/Map.html");
+             
+                this.browser.Navigate(new Uri(path, UriKind.Absolute));
+               
             }
             catch(Exception e)
             {

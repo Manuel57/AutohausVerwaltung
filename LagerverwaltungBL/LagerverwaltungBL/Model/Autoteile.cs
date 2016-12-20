@@ -27,7 +27,7 @@ namespace LagerverwaltungBL.Model
 
         
         //public virtual Werkstattlager WerkstattLager { get; set; }
-        public object Clone( )
+        public virtual object Clone( )
         {
             return new Autoteile() { Bezeichnung = this.Bezeichnung , Lager = this.Lager , Preis = this.Preis , Werkstattlager = this.Werkstattlager };
         }

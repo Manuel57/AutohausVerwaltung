@@ -1,5 +1,6 @@
 ﻿using LagerVerwaltung.Helpers;
 using LagerVerwaltung.Model;
+using LagerverwaltungBL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

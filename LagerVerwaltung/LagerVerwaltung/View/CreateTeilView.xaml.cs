@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LagerVerwaltung.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace LagerVerwaltung.View
         public CreateTeilView()
         {
             InitializeComponent();
+            (this.root.DataContext as CreateTeilViewModel).close = () => { this.Close(); };
         }
     }
 }

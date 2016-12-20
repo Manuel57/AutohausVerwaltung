@@ -77,7 +77,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\Autoteile.cs" />
     <Compile Include="Helpers\Message.cs" />
     <Compile Include="ViewModel\BestellenViewModel.cs" />
     <Compile Include="ViewModel\ChangeTeilViewModel.cs" />
@@ -155,10 +154,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ScriptAndPages\map.css" />
     <Content Include="ScriptAndPages\Map.html" />
     <Content Include="ScriptAndPages\map.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

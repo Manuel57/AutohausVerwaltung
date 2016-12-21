@@ -21,28 +21,30 @@ namespace Database.Common
     /// </summary>
     public interface IRepository : IDisposable
     {
-        //Criteria methods
-        IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria ) where T : IEntity;
-        IEnumerable<T> SelectManyWhere<T>(DetachedCriteria criteria, params Order[] orders) where T : IEntity;
-        IEnumerable<T> SelectCertainNumberWhere<T>(DetachedCriteria criteria, int firstResult, int numberOfResults, params Order[] orders) where T : IEntity;
-        T SelectSingle<T>(DetachedCriteria criteria) where T : IEntity;
-        T SelectFirstOfMany<T>(DetachedCriteria criteria) where T : IEntity;
-        T SelectFirstOfManyOrdered<T>(DetachedCriteria creteria,  Order order) where T : IEntity;
-        long CountWhere<T>(DetachedCriteria criteria) where T : IEntity;
 
+        //Criteria methods
+        #region criteria methods
+        IEnumerable<T> SelectManyWhere<T>( DetachedCriteria criteria ) where T : IEntity;
+        IEnumerable<T> SelectManyWhere<T>( DetachedCriteria criteria , params Order[] orders ) where T : IEntity;
+        IEnumerable<T> SelectCertainNumberWhere<T>( DetachedCriteria criteria , int firstResult , int numberOfResults , params Order[] orders ) where T : IEntity;
+        T SelectSingle<T>( DetachedCriteria criteria ) where T : IEntity;
+        T SelectFirstOfMany<T>( DetachedCriteria criteria ) where T : IEntity;
+        T SelectFirstOfManyOrdered<T>( DetachedCriteria creteria , Order order ) where T : IEntity;
+        long CountWhere<T>( DetachedCriteria criteria ) where T : IEntity;
+        #endregion
         //Linq methods
-        IQueryable<T> SelectMany<T>();
-        T SelectSingleWhere<T>(Expression<Func<T, bool>> expression) where T : IEntity;
-        IQueryable<T> SelectManyWhere<T>(Expression<Func<T, bool>> expression) where T : IEntity;
+        IQueryable<T> SelectMany<T>( );
+        T SelectSingleWhere<T>( Expression<Func<T , bool>> expression ) where T : IEntity;
+        IQueryable<T> SelectManyWhere<T>( Expression<Func<T , bool>> expression ) where T : IEntity;
 
         //Other mehods like save/update delete usw
-        void SaveOrUpdate<T>(T entity ) where T : IEntity;
-        void SaveOrUpdateMore<T>(IEnumerable<T> items) where T : IEntity;
+        void SaveOrUpdate<T>( T entity ) where T : IEntity;
+        void SaveOrUpdateMore<T>( IEnumerable<T> items ) where T : IEntity;
         void Delete<T>( T entity ) where T : IEntity;
-        void DeleteWhere<T>(DetachedCriteria criteria) where T : IEntity;
+        void DeleteWhere<T>( DetachedCriteria criteria ) where T : IEntity;
         T GetById<T>( object objId ) where T : IEntity;
-        E Max<T, E>(string propname) where T : IEntity;
-        ISQLQuery GetQuery(string query);
-       
+        E Max<T, E>( string propname ) where T : IEntity;
+        ISQLQuery GetQuery( string query );
+
     }
 }

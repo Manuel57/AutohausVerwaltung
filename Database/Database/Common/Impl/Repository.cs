@@ -17,9 +17,15 @@ using System.Linq.Expressions;
 using NHibernate.Linq;
 using System.Reflection;
 using Verwaltung.Exception;
+using System.Data.SqlClient;
 
 namespace Database.Common.Impl
 {
+
+
+
+
+
     /// <summary>
     /// Repository class
     /// </summary>
@@ -36,7 +42,7 @@ namespace Database.Common.Impl
         #endregion fields
 
         #region constructors
-        public  Repository( ISession _session ) { session = _session; }
+        public Repository( ISession _session ) { session = _session; }
         public Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
         #endregion constructors
 
@@ -47,6 +53,7 @@ namespace Database.Common.Impl
         /// </summary>
         public void CommitTransaction( )
         {
+
 
             try
             {
@@ -102,7 +109,7 @@ namespace Database.Common.Impl
                 Transaction.Dispose();
                 Transaction = null;
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
@@ -111,7 +118,10 @@ namespace Database.Common.Impl
                 throw ( new DatabaseException(ex , "Error at closing the transaction") );
             }
 
+
         }
+
+        
 
         private void CloseSession( )
         {
@@ -122,7 +132,7 @@ namespace Database.Common.Impl
                 session.Dispose();
                 session = null;
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
@@ -133,7 +143,7 @@ namespace Database.Common.Impl
 
         }
         #endregion
-        
+
         #region other methods like save/update delete ...
 
         /// <summary>
@@ -146,7 +156,7 @@ namespace Database.Common.Impl
             return this.session.CreateSQLQuery(query);
         }
 
-       
+
 
         /// <summary>
         /// Returns the number of entities matching the given criteria
@@ -209,7 +219,7 @@ namespace Database.Common.Impl
         public void DeleteWhere<T>( DetachedCriteria criteria ) where T : IEntity
         {
             try
-            {               
+            {
                 SelectManyWhere<T>(criteria).ToList<T>().
                     ForEach(item => Delete(item));
             }
@@ -230,18 +240,19 @@ namespace Database.Common.Impl
         /// <typeparam name="E">The type of the column</typeparam>
         /// <param name="propertyName">The property name</param>
         /// <returns></returns>
-        public E Max<T,E>(string propertyName) where T : IEntity
+        public E Max<T, E>( string propertyName ) where T : IEntity
         {
-            try {
+            try
+            {
                 return DetachedCriteria.For<T>().SetProjection(
                    Projections.Max(propertyName))
                    .GetExecutableCriteria(session).UniqueResult<E>();
             }
-            catch(Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in selecting max"));
+                throw ( new DatabaseException(ex , "Error in selecting max") );
             }
-          
+
         }
 
         /// <summary>
@@ -257,7 +268,7 @@ namespace Database.Common.Impl
             {
                 return Connection.Database.Instance.OpenSession().Get<T>(objId);
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
@@ -283,7 +294,7 @@ namespace Database.Common.Impl
                 session.SaveOrUpdate(entity);
                 CommitTransaction();
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
@@ -397,7 +408,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Could not select first entity orderd!",null) );
+                throw ( new DatabaseException(ex , "Could not select first entity orderd!" , null) );
             }
         }
 
@@ -437,13 +448,14 @@ namespace Database.Common.Impl
         /// <param name="criteria"></param>
         /// <param name="orders"></param>
         /// <returns></returns>
-        public IEnumerable<T> SelectManyWhere<T>( DetachedCriteria criteria , params Order[] orders ) where T : IEntity
+        public IEnumerable<T> SelectManyWhere<T>(
+            DetachedCriteria criteria , params Order[] orders ) where T : IEntity
         {
             try
             {
 
                 orders?.ToList().ForEach(item => criteria.AddOrder(item));
-              
+
                 return SelectManyWhere<T>(criteria);
             }
             catch ( DatabaseException dex )
@@ -478,7 +490,7 @@ namespace Database.Common.Impl
         #endregion
 
         #region Linq methods
-        
+
         /// <summary>
         /// returns a linq queryable list of all entities.
         /// Throws an exception if an error occurs.
@@ -507,7 +519,8 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="expression">the linq expression you want to query the results</param>
         /// <returns>a IQueryable of the entíty T</returns>
-        public IQueryable<T> SelectManyWhere<T>( Expression<Func<T , bool>> expression ) where T : IEntity
+        public IQueryable<T> SelectManyWhere<T>(
+            Expression<Func<T , bool>> expression ) where T : IEntity
         {
             try
             {
@@ -532,7 +545,8 @@ namespace Database.Common.Impl
         /// <typeparam name="T"></typeparam>
         /// <param name="expression"></param>
         /// <returns>a singel entity or an exception if more entities matching the expression</returns>
-        public T SelectSingleWhere<T>( Expression<Func<T , bool>> expression ) where T : IEntity
+        public T SelectSingleWhere<T>(
+            Expression<Func<T , bool>> expression ) where T : IEntity
         {
             try
             {
@@ -549,7 +563,7 @@ namespace Database.Common.Impl
         }
         #endregion
 
-        
+
         /// <summary>
         /// commits open transactions if there are any.
         /// flushes the session and closes it.

@@ -15,6 +15,7 @@ namespace LagerverwaltungBL.Controller
     {
         private static IRepository repository = null;
 
+
         public static IEnumerable<Autoteile> GetAutoteile( )
         {
             try

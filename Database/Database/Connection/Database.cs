@@ -93,7 +93,11 @@ namespace Database.Connection
             {
                 cfg.DataBaseIntegration(x =>
             {
-                x.ConnectionString = DatabaseConfiguration.Instance.GetConnectionString();
+                x.ConnectionString = DatabaseConfiguration.Instance
+                 .GetConnectionString();
+                x.Driver<OleDbDriver>();
+                x.Dialect<Oracle10gDialect>();
+
                 x.GetType()
                     .GetMethod("Driver")
                     .MakeGenericMethod(DatabaseConfiguration.Instance.Driver)
@@ -102,6 +106,7 @@ namespace Database.Connection
                     .GetMethod("Dialect")
                     .MakeGenericMethod(DatabaseConfiguration.Instance.Dialect)
                     .Invoke(x , null);
+
             });
                 var serializer = new HbmSerializer() { Validate = true };
 
@@ -111,28 +116,28 @@ namespace Database.Connection
                     cfg.AddInputStream(stream);
                 }
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Updating the configuration failed!" ) );
+                throw ( new DatabaseException(ex , "Updating the configuration failed!") );
             }
 
         }
-      
+
         public void Update( object sender )
         {
             try
             {
                 updateConfuguration();
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
-           
+
 
         }
     }

@@ -25,6 +25,7 @@ namespace LagerVerwaltung.ViewModel
         private List<Autoteile> stattController = null;
         private Thread messageThread = null;
         private bool shutDownThread = false;
+        private static string WERKSTATT = "Villach";
         #endregion
 
         #region public fields
@@ -68,10 +69,20 @@ namespace LagerVerwaltung.ViewModel
 
         public void SetTeilInTxt(Autoteile a)
         {
-            this.PartToOrder = a.Bezeichnung;
-            this.Preis = a.Preis.ToString();
-            this.Bestand = getBestandForTeil(a);
-            this.propertyChanged("Preis", "PartToOrder", "Bestand");
+
+            try
+            {
+                this.PartToOrder = a.Bezeichnung;
+                this.Preis = a.Preis.ToString();
+                this.Bestand = getBestandForTeil(a);
+                this.propertyChanged("Preis", "PartToOrder", "Bestand");
+            }
+           
+            catch (Exception )
+            {
+                throw;
+            }
+
         }
 
         public void ShutThread()
@@ -140,7 +151,7 @@ namespace LagerVerwaltung.ViewModel
                     {
                        this.MainWindow.Dispatcher.Invoke(()=> {
                            this.importantMessages.Clear();
-                           MessageBox.Show("IN invoke");
+                          
                             //get alle teile wo der lager bestand kritisch is vom controller
                             for (int i = 0; i < 2; i++)
                             {
@@ -177,8 +188,14 @@ namespace LagerVerwaltung.ViewModel
 
         private string getBestandForTeil(Autoteile selected)
         {
-            //controller. getbestand(selected) ....
-            return 2000.ToString();
+            try
+            {
+                return TeileManager.GetBestand(WERKSTATT, selected.Bezeichnung).ToString();
+            }
+            catch(Exception )
+            {
+                throw ;
+            }
         }
 
         private void fillView()

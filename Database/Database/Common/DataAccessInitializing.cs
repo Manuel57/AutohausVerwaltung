@@ -64,7 +64,7 @@ namespace Database.Common
 
         }
 
-        public static void UpdateSettings(DatabaseSettings settings)
+        public static void UpdateSettings( DatabaseSettings settings )
         {
             switch ( settings.IpAddress )
             {

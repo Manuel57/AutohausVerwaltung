@@ -21,13 +21,11 @@ namespace LagerverwaltungBL.Model
         [OneToMany(Class = "LagerverwaltungBL.Model.Werkstattlager")]
         public virtual IEnumerable<Werkstattlager> Lager { get; set; }
 
-        //[Set(Name = "Werkstattlager" , Table = "werkstattlager" , Cascade = "all")]
         [Set(Name = "Zentrallager" , Table = "zentrallagerbestand" , Cascade = "all")]
         [Key(Column = "standort")]
         [ManyToMany(Class = "LagerverwaltungBL.Model.Zentrallager" , Column = "bezeichnung")]
         public virtual IEnumerable<Zentrallager> Zentrallager { get; set; }
 
-        //public virtual Werkstattlager WerkstattLager { get; set; }
         public virtual object Clone( )
         {
             return new Autoteile() { Bezeichnung = this.Bezeichnung , Lager = this.Lager , Preis = this.Preis };

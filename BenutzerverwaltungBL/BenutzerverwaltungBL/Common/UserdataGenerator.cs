@@ -1,20 +1,9 @@
-﻿// <copyright file="BenutzerverwaltungBL.Common.userdatagenerator.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-13</date>
-// </copyright>
 
 using BenutzerverwaltungBL.Model.BusinesObjects;
-using BenutzerverwaltungBL.Model.DataObjects;
-using Database.Common;
-using Database.Common.Impl;
-using NHibernate.Criterion;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Common
 {

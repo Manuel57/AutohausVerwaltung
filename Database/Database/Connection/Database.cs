@@ -1,9 +1,6 @@
-﻿// <copyright file="Database.Connection.database.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-11</date>
-// </copyright>
 
 using Database.Common.ObserverPattern;
 using Database.Configuration;
@@ -13,10 +10,6 @@ using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Mapping.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verwaltung.Exception;
 
 namespace Database.Connection

@@ -129,9 +129,17 @@ namespace Verwaltung.Settings
                 StreamReader sr = new StreamReader(SettingsFileName);
                 DatabaseSettings s = ser.Deserialize(sr) as DatabaseSettings;
                 this.settings = s;
-                File.WriteAllText("log.txt" , this.settings.IpAddress.ToString());
                 sr.Close();
             }
+        }
+
+        /// <summary>
+        /// Returns the Settings
+        /// </summary>
+        /// <returns></returns>
+        public DatabaseSettings GetSettings()
+        {
+            return this.settings;
         }
     }
 }

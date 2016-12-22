@@ -1,5 +1,6 @@
 ﻿using LagerVerwaltung.Helpers;
 using LagerVerwaltung.ViewModel;
+using LagerverwaltungBL.Configuration;
 using LagerverwaltungBL.Model;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,7 @@ namespace LagerVerwaltung
              item != null && (bool)item?.Equals("--configure")) == true)
             {
                 SettingsManager.Instance.ShowEditor();
+                CongifManager.UpdateSettings(SettingsManager.Instance.GetSettings());
             }
             (this.root.DataContext as MainWindowViewModel).Init();
         }

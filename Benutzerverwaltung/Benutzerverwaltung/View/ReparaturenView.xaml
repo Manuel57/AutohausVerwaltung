@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:custom="clr-namespace:Benutzerverwaltung.Controls"
         xmlns:local="clr-namespace:Benutzerverwaltung.View"
         mc:Ignorable="d"
         Title="ReparaturenView" Height="500" Width="800" ResizeMode="NoResize">
     <Grid>
-        
+
         <ListView x:Name="listView" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
@@ -18,10 +19,10 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel  Width="50">
-                                    <CheckBox IsChecked="{Binding IsAlreadyPdf}">
-                                        
+                                    <CheckBox IsChecked="{Binding IsAlreadyPdf}" >
+                                        <custom:RechnungAusstellenButton RechnungsNummer="{Binding Rechnungsnummer}" CustomerId="{Binding Kunde.CustomerId}"  Click="CreateRechnung"></custom:RechnungAusstellenButton>
                                     </CheckBox>
-                                    
+
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

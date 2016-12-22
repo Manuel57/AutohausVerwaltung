@@ -7,9 +7,11 @@ using System.Windows.Controls;
 
 namespace Verwaltung
 {
+    /// <summary>
+    /// Extensions
+    /// </summary>
     public static class Extensions
     {
-
         public static void ReadOnly( this TextBox tb )
         {
             tb.IsReadOnly = true;

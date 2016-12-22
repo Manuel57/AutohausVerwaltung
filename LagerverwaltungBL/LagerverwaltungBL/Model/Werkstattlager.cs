@@ -21,7 +21,7 @@ namespace LagerverwaltungBL.Model
         public virtual Autoteile Teil { get; set; }
 
         [Column(Name ="standort")]
-        public virtual Werkstatt Lager { get; set; }
+        public virtual Werkstatt Werkstatt { get; set; }
 
         public override bool Equals( object obj )
         {
@@ -30,7 +30,7 @@ namespace LagerverwaltungBL.Model
             var t = obj as Werkstattlager;
             if ( t == null )
                 return false;
-            if ( Teil == t.Teil && Lager == t.Lager )
+            if ( Teil.Bezeichnung.Equals(t.Teil.Bezeichnung) && Werkstatt.Standort.Equals(t.Werkstatt.Standort))
                 return true;
             return false;
         }

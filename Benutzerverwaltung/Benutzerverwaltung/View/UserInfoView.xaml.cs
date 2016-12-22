@@ -1,9 +1,6 @@
-﻿// <copyright file="Benutzerverwaltung.View.UserInfoView.xaml.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-12</date>
-// </copyright>
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.ViewModel;

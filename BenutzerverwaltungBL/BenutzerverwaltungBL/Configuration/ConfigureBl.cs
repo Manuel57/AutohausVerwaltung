@@ -1,9 +1,6 @@
-﻿// <copyright file="BenutzerverwaltungBL.Configuration.configurebl.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-13</date>
-// </copyright>
 
 using Database;
 using Database.Common;

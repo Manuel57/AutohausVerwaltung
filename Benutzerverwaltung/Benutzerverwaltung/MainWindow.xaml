@@ -24,7 +24,7 @@
         </TextBox>
         <Button x:Name="btnCreateCustomer" Content="{x:Static p:Resources.Create}" HorizontalAlignment="Left" Margin="263,45,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CreateCustomerCommand}"/>
         <ListView ItemContainerStyle="{StaticResource HighlightingOff}" x:Name="lvCustomer" Grid.Row="1" BorderThickness="0" 
-     ItemsSource="{Binding Path=Emp, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="lvCustomer_SelectionChanged">
+     ItemsSource="{Binding Path=Emp }" SelectionChanged="lvCustomer_SelectionChanged">
 
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Line Items">

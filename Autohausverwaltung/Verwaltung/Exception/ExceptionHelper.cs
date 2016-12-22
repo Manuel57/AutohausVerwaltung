@@ -38,10 +38,7 @@ namespace Verwaltung.Exception
         /// <param name="e"></param>
         public static void Handle( System.Exception e )
         {
-            lock ( typeof(ExceptionHelper) )
-            {
                 MessageBox.Show(CreateMessage(e) , "Error" , MessageBoxButton.OK , MessageBoxImage.Error , MessageBoxResult.None);
-            }
         }
     }
 }

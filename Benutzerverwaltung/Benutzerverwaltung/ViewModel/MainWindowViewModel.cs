@@ -1,9 +1,6 @@
-﻿// <copyright file="Benutzerverwaltung.ViewModel.MainWindowViewModel.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-12</date>
-// </copyright>
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.Model;
@@ -13,10 +10,7 @@ using BenutzerverwaltungBL.Controller;
 using BenutzerverwaltungBL.Model.DataObjects;
 using Remotion.Linq.Collections;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Verwaltung.Exception;
 
@@ -33,15 +27,14 @@ namespace Benutzerverwaltung.ViewModel
 
         public MainWindowViewModel( )
         {
-
-
             this.Emp = new ObservableCollection<Customer>();
-            //this.DeleteCustomerCommand = new RelayCommand(this.deleteCustomer);
             this.CreateCustomerCommand = new RelayCommand(this.createCustomer);
-            //this.DetailsCustomerCommand = new RelayCommand(this.showCustomerDetails);
             this.SearchFieldChanged = new RelayCommand(( ) => { MessageBox.Show("Changed"); });
-
         }
+
+        /// <summary>
+        /// Initializes the business logic and updates the view
+        /// </summary>
         public void Init( )
         {
             try
@@ -55,12 +48,17 @@ namespace Benutzerverwaltung.ViewModel
                 ExceptionHelper.Handle(ex);
             }
         }
-
-        public void DeleteCustomer(int CustId )
+        /// <summary>
+        /// Shows the Detals window in Delete mode
+        /// </summary>
+        /// <param name="CustId">The customer id</param>
+        public void DeleteCustomer( int CustId )
         {
             try
             {
-                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Delete , this.Emp.DefaultIfEmpty(null).FirstOrDefault(item => item.CustomerId.Equals(CustId)));
+                CustomerDetailsView cdv = new CustomerDetailsView(
+                    CustomerDetailsMode.Delete , this.Emp.DefaultIfEmpty(null).
+                    FirstOrDefault(item => item.CustomerId.Equals(CustId)));
                 cdv.Show();
             }
             catch ( Exception ex )
@@ -68,11 +66,17 @@ namespace Benutzerverwaltung.ViewModel
                 ExceptionHelper.Handle(ex);
             }
         }
-        public void ShowCustomerDetails(int CustId)
+        /// <summary>
+        /// Shows the details view in edit mode
+        /// </summary>
+        /// <param name="CustId">The customer id</param>
+        public void ShowCustomerDetails( int CustId )
         {
             try
             {
-                CustomerDetailsView cdv = new CustomerDetailsView(CustomerDetailsMode.Details , this.Emp.DefaultIfEmpty(null).FirstOrDefault(item=>item.CustomerId.Equals(CustId)));
+                CustomerDetailsView cdv = new CustomerDetailsView(
+                    CustomerDetailsMode.Details , this.Emp.DefaultIfEmpty(null)
+                    .FirstOrDefault(item => item.CustomerId.Equals(CustId)));
                 cdv.Show();
             }
             catch ( Exception ex )
@@ -80,6 +84,9 @@ namespace Benutzerverwaltung.ViewModel
                 ExceptionHelper.Handle(ex);
             }
         }
+        /// <summary>
+        /// Shows the create customer view and updates the view
+        /// </summary>
         private void createCustomer( )
         {
             try
@@ -94,6 +101,9 @@ namespace Benutzerverwaltung.ViewModel
             }
         }
 
+        /// <summary>
+        /// Updates the view
+        /// </summary>
         private void updateView( )
         {
             try

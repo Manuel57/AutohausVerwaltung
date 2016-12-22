@@ -1,25 +1,15 @@
-﻿// <copyright file="Benutzerverwaltung.View.ReparaturenView.xaml.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-12-6</date>
-// </copyright>
 
-using Benutzerverwaltung.Helpers;
+using Benutzerverwaltung.Controls;
 using BenutzerverwaltungBL.Controller;
+using BenutzerverwaltungBL.Model.DataObjects;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.View
@@ -33,7 +23,7 @@ namespace Benutzerverwaltung.View
         {
             InitializeComponent();
         }
-        public ReparaturenView(string customerId ):this()
+        public ReparaturenView( string customerId ) : this()
         {
             try
             {
@@ -44,6 +34,30 @@ namespace Benutzerverwaltung.View
                 ExceptionHelper.Handle(ex);
             }
 
+        }
+
+        /// <summary>
+        /// Create Rechnung  !!!!Verbesserungsbedürftig 
+        ///  -> BL benötigt funktion für rechnung  erstellen per Rechnungsnummer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateRechnung( object sender , RoutedEventArgs e )
+        {
+            try
+            {
+                Rechnung r = CustomerManager.GetSingleCustomerById(( sender as RechnungAusstellenButton ).CustomerId).Rechnungen.ToList<Rechnung>().Find(item => item.Rechnungsnummer.Equals(( sender as RechnungAusstellenButton ).RechnungsNummer));
+                RechnungManager.InsertRechnungAsDoc(r);
+                this.listView.ItemsSource = null;
+                this.listView.ItemsSource = CustomerManager.GetSingleCustomerById(r.Kunde.CustomerId).Rechnungen;
+
+                File.WriteAllBytes("Rechnung-" + r.Rechnungsnummer + ".pdf" , RechnungManager.GetCertainRechnungForKunde(r.Kunde.CustomerId , r.Rechnungsdatum));
+                Process.Start("Rechnung-" + r.Rechnungsnummer + ".pdf");
+            }
+            catch ( Exception ex )
+            {
+                ExceptionHelper.Handle(ex);
+            }
         }
     }
 }

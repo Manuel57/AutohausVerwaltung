@@ -1,11 +1,9 @@
-﻿
+﻿function MapInfo() {
 
-function MapInfo() {
-   
-        this._bounds = new google.maps.LatLngBounds();
-        this._id = 1;
-        this._map = null;
- 
+    this._bounds = new google.maps.LatLngBounds();
+    this._id = 1;
+    this._map = null;
+
 
     this.setMarker = function (m) {
         this._geomarker = m;
@@ -47,8 +45,12 @@ function MapInfo() {
         return this._id;
     };
 }
+
 var mapInfo = new MapInfo();
-mapInfo.constructor();
+//mapInfo.constructor();
+
+
+// draws the map to the html
 function draw() {
 
     if (!mapInfo.existsMap()) {
@@ -69,10 +71,12 @@ function draw() {
     mapInfo.addBound();
 
 }
+
 function initMap() {
     getLongLat("9500 Villach", "Werkstatt A");
     getLongLat("9800 Spittal/Drau", "Lager A");
 }
+
 function getLongLat(address, m) {
     var lonnlat = { lat: 0, lng: 0 };
     var geocoder = new google.maps.Geocoder();

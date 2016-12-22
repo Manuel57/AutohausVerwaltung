@@ -208,7 +208,7 @@ namespace LagerVerwaltung.ViewModel
                 {
                     this.allTeile.Add(a);
                 }
-              
+                 
                 this.propertyChanged("allTeile");
             }
             

@@ -1,7 +1,5 @@
 ﻿extensions: .cs
-// <copyright file="%Namespace%.%FileName%">
-// Copyright (c) 2016 All Rights Reserved
 // <author>%UserDisplayName%</author>
 // <author>Thomas Huber</author>
 // <date>%CurrentYear%-%CurrentMonth%-%CurrentDay%</date>
-// </copyright>
+

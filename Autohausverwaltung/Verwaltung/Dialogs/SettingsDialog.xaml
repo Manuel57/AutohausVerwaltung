@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Verwaltung.Dialogs"
          xmlns:wpg="clr-namespace:WPG;assembly=WPG"
         mc:Ignorable="d"
-        Title="SettingsDialog" Height="300" Width="300" Closing="Window_Closing" Initialized="Window_Initialized">
+        Title="SettingsDialog" Height="300" Width="441.549" Closing="Window_Closing" Initialized="Window_Initialized">
     <Grid Initialized="Grid_Initialized">
         <wpg:PropertyGrid AutomaticlyExpandObjects="False"  Width="320" Foreground="BlanchedAlmond" Instance="{Binding ElementName=myGrid}" x:Name="wpgMyControl" ShowDescription="False" ShowPreview="false"  />
     </Grid>

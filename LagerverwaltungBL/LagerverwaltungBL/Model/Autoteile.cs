@@ -13,6 +13,7 @@ namespace LagerverwaltungBL.Model
     {
         [Id(Name = "Bezeichnung" , Column = "Bezeichnung")]
         public virtual string Bezeichnung { get; set; }
+
         [Property(Name = "Preis" , Column = "Preis")]
         public virtual double Preis { get; set; }
 

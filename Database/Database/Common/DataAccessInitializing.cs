@@ -15,6 +15,13 @@ namespace Database.Common
 {
     public static class DataAccessInitializing
     {
+        /// <summary>
+        /// Method for initializing setting for the Database connection
+        /// </summary>
+        /// <param name="Ipadress">The IP address</param>
+        /// <param name="username">The username</param>
+        /// <param name="password">The password</param>
+        /// <returns></returns>
         public static bool Initialize( string Ipadress , string username , string password )
         {
             try
@@ -50,6 +57,7 @@ namespace Database.Common
                 new DbUser(Properties.Settings.Default.User , Properties.Settings.Default.Password) ,
                 DefaultConfig.ORACLE_DIALECT , DefaultConfig.ORACLE_DRIVER ,
               assembbly);
+
 
                 return true;
             }

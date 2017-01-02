@@ -2,6 +2,7 @@
 using NHibernate.Mapping.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,5 +18,6 @@ namespace LagerverwaltungBL.Model
         [Key(Column = "standort")]
         [ManyToMany(Class = "LagerverwaltungBL.Model.Autoteile" , Column = "bezeichnung")]
         public virtual IEnumerable<Autoteile> Teile { get; set; }
+        public virtual Point Coordinates { get; set; }
     }
 }

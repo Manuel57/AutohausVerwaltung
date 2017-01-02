@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Column.cs" />
     <Compile Include="Common\DataAccessInitializing.cs" />
     <Compile Include="Common\IEntity.cs" />
     <Compile Include="Common\Impl\Repository.cs" />

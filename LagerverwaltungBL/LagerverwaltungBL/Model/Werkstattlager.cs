@@ -16,7 +16,7 @@ namespace LagerverwaltungBL.Model
 
         [CompositeId(1)]
         [KeyManyToOne(2, Column ="bezeichnung", Name ="Teil", Lazy = RestrictedLaziness.False , Class = "LagerverwaltungBL.Model.Autoteile,LagerverwaltungBL" , ClassType = typeof(Autoteile))]
-        [KeyManyToOne(3 , Column = "standort" , Name ="Lager" , Lazy = RestrictedLaziness.False , Class = "LagerverwaltungBL.Model.Werkstatt,LagerverwaltungBL" , ClassType = typeof(Werkstatt))]
+        [KeyManyToOne(3 , Column = "standort" , Name ="Werkstatt" , Lazy = RestrictedLaziness.False , Class = "LagerverwaltungBL.Model.Werkstatt,LagerverwaltungBL" , ClassType = typeof(Werkstatt))]
         [Column(Name = "bezeichnung")]
         public virtual Autoteile Teil { get; set; }
 

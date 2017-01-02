@@ -1,15 +1,15 @@
+html { height: 100%;}
 body {
+height:100%;
 }
 
 section {
-    border-style: solid;
-    border-bottom-width: thin;
     float: left;
     width: 95%;
-   
+   height:95%;
 }
 
 #mapPlaceholder {
-    height: 200px;
+    height: 90%;
     width: 90%;
 }

@@ -19,9 +19,11 @@ using System.IO;
 using LagerverwaltungBL.Controller;
 using System.Windows.Navigation;
 using System.Threading;
+using System.Security.Permissions;
 
 namespace LagerVerwaltung.View
 {
+
     /// <summary>
     /// Interaktionslogik für BestellenView.xaml
     /// </summary>
@@ -31,7 +33,7 @@ namespace LagerVerwaltung.View
         private Autoteile autoteil = new Autoteile() { Bezeichnung ="default",Preis=0};
         private Uri browserUri = new Uri("https://www.google.com/maps/@46.953771,14.0898729,9.25z", UriKind.Absolute);
 
-        private BestellenView()
+        private BestellenView( )
         {
             InitializeComponent();
             this.browser.LoadCompleted += BrowserLoadCompleted;
@@ -46,38 +48,53 @@ namespace LagerVerwaltung.View
                 this.Dispatcher.Invoke(( ) =>
                 {
                     this.browser.InvokeScript("initMap");
+
+
+
                 });
             }).Start();
+            
+        }
+        public void FinishedCalculating(string msg )
+        {
+            this.txtTime.Text = msg;
         }
 
-        public BestellenView(Autoteile autoteile) : this()
+        public BestellenView( Autoteile autoteile ) : this()
         {
-            
-            
+
+
             this.autoteil = autoteile;
             try
             {
-                File.WriteAllText("./../../ScriptAndPages/data.js",SdoManager.GetJsonCoordinates(autoteil, "Villach"));
+                File.WriteAllText("./../../ScriptAndPages/data.js" , SdoManager.GetJsonCoordinates(autoteil , "Villach"));
                 string path = System.IO.Path.GetFullPath("./../../ScriptAndPages/Map.html");
-             
-                this.browser.Navigate(new Uri(path, UriKind.Absolute));
+
+                this.browser.Navigate(new Uri(path , UriKind.Absolute));
             }
-            catch(Exception e)
+            catch ( Exception e )
             {
                 ExceptionHelper.Handle(e);
             }
         }
 
-        private void Window_Initialized(object sender, EventArgs e)
+        private void JsFinishedCallback(string msg)
+        {
+            this.txtTime.Text = msg;
+        }
+
+        private void Window_Initialized( object sender , EventArgs e )
         {
             try
             {
 
-                (this.root.DataContext as BestellenViewModel).selected = this.autoteil;
-                (this.root.DataContext as BestellenViewModel).TeilChanged();
+                ( this.root.DataContext as BestellenViewModel ).selected = this.autoteil;
+                ( this.root.DataContext as BestellenViewModel ).TeilChanged();
+                this.browser.ObjectForScripting = new JsCommunication(JsFinishedCallback);
+
             }
-            
-            catch (Exception ex)
+
+            catch ( Exception ex )
             {
                 ExceptionHelper.Handle(ex);
             }

@@ -138,4 +138,7 @@
   <data name="StorageAmount" xml:space="preserve">
     <value>Lagerbestand</value>
   </data>
+  <data name="TimeNeeded" xml:space="preserve">
+    <value>Zeit zum Zentrallager</value>
+  </data>
 </root>

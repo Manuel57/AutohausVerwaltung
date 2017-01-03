@@ -73,9 +73,12 @@ function initMap() {
             }
         }
         calcRoute(werkstatt.coordinates, response.destinationAddresses[cnt]);
-
+        mapInfo.setTime(shortest.duration.text);
+        window.external.FinishedCalculating(shortest.duration.text);
     }
-
+}
+function getTime() {
+    return mapInfo.getTime();
 }
 
 

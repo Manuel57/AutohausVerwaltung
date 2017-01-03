@@ -41,6 +41,12 @@ function MapInfo() {
     this.existsMap = function () {
         return this._map != null;
     };
+    this.getTime = function () {
+        return this._timeTo;
+    }
+    this.setTime = function (t) {
+        this._timeTo = t;
+    }
     this.createMap = function (ph, o) {
         o.center = this._lonituteLatitute;
         this.directionsService = new google.maps.DirectionsService();

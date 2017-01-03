@@ -85,6 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\JsCommunication.cs" />
     <Compile Include="Helpers\Message.cs" />
     <Compile Include="ViewModel\BestellenViewModel.cs" />
     <Compile Include="ViewModel\ChangeTeilViewModel.cs" />

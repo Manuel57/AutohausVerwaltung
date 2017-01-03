@@ -24,6 +24,8 @@
         <TextBox x:Name="txtMenge" HorizontalAlignment="Left" Height="26" Margin="190,140,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Text="{Binding Menge}" IsEnabled="True" Width="145"/>
         <Button x:Name="btnOrder" Grid.Row="0" Content="{x:Static res:Resources.OrderPart}" HorizontalAlignment="Left" Height="21" Margin="408,169,0,0" VerticalAlignment="Top" Width="74" Command="{Binding OrderTeilCommand}"/>
         <WebBrowser HorizontalAlignment="Stretch"  Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Stretch" Name="browser"/>
+        <TextBox x:Name="txtTime" Grid.Row="0" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="190,171,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="145"/>
+        <Label x:Name="lblTime" Grid.Row="0" Content="{x:Static res:Resources.TimeNeeded}" HorizontalAlignment="Left" Height="27" Margin="36,169,0,0" VerticalAlignment="Top" Width="114"/>
 
 
     </Grid>

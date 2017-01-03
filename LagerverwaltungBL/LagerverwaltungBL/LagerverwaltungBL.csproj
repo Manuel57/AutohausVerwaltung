@@ -72,6 +72,7 @@
     <Compile Include="Controller\TeileManager.cs" />
     <Compile Include="Model\Autoteile.cs" />
     <Compile Include="Model\Point.cs" />
+    <Compile Include="Model\SdoObject.cs" />
     <Compile Include="Model\Werkstatt.cs" />
     <Compile Include="Model\Werkstattlager.cs" />
     <Compile Include="Model\Zentrallager.cs" />

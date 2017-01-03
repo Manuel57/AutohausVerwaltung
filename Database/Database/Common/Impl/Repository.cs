@@ -17,6 +17,8 @@ using NHibernate.Linq;
 using System.Reflection;
 using Verwaltung.Exception;
 using System.Data.SqlClient;
+using NHibernate.Metadata;
+using NHibernate.Persister.Entity;
 
 namespace Database.Common.Impl
 {
@@ -115,7 +117,7 @@ namespace Database.Common.Impl
 
         }
 
-        
+
 
         private void CloseSession( )
         {
@@ -529,6 +531,8 @@ namespace Database.Common.Impl
                 throw ( new DatabaseException(ex , "Could not select entities. Watch your linq expression!" , "selectManyWhere Linq Expression") );
             }
         }
+
+      
 
         /// <summary>
         /// Calls the SelectManyWhere method with the given linq expression.

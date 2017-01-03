@@ -57,7 +57,7 @@ namespace LagerVerwaltung.View
             this.autoteil = autoteile;
             try
             {
-                File.WriteAllText("./../../ScriptAndPages/data.js",SdoManager.GetJsonCoordinates(autoteil));
+                File.WriteAllText("./../../ScriptAndPages/data.js",SdoManager.GetJsonCoordinates(autoteil, "Villach"));
                 string path = System.IO.Path.GetFullPath("./../../ScriptAndPages/Map.html");
              
                 this.browser.Navigate(new Uri(path, UriKind.Absolute));

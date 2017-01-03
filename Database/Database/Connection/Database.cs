@@ -9,7 +9,10 @@ using NHibernate.Cfg;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Mapping.Attributes;
+using NHibernate.Metadata;
+using NHibernate.Persister.Entity;
 using System;
+using System.Collections.Generic;
 using Verwaltung.Exception;
 
 namespace Database.Connection
@@ -59,6 +62,19 @@ namespace Database.Connection
             get { return _sessionFactory ?? ( _sessionFactory = createSessionFactory() ); }
         }
 
+        public static string GetTableName<T>( )
+        {
+            IClassMetadata md = Connection.Database.Instance.SessionFactory.GetClassMetadata(typeof(T));
+            AbstractEntityPersister aep = md as AbstractEntityPersister;
+            return aep.TableName;
+            //return new NHibernate.Cfg.Configuration().GetClassMapping(typeof(T)).RootTable.Name;
+        }
+
+        public static string GetColumnName<T>( string property )
+        {
+            IClassMetadata md = Connection.Database.Instance.SessionFactory.GetClassMetadata(typeof(T));
+            return ( md as AbstractEntityPersister ).GetPropertyColumnNames(property)?[0];
+        }
         /// <summary>
         /// creates a new sessionfactory
         /// </summary>

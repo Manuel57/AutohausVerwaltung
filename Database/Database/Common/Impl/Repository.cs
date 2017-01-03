@@ -518,7 +518,7 @@ namespace Database.Common.Impl
         {
             try
             {
-                return SelectMany<T>().Where(expression).AsQueryable();
+                return session.Query<T>().Where(expression);
             }
             catch ( DatabaseException dex )
             {

@@ -30,5 +30,15 @@ namespace LagerverwaltungBL.Model
         {
             return new Autoteile() { Bezeichnung = this.Bezeichnung , Lager = this.Lager , Preis = this.Preis };
         }
+        public override bool Equals( object obj )
+        {
+            if ( obj == null )
+                return false;
+            return this.Bezeichnung.Equals(( obj as Autoteile ).Bezeichnung);
+        }
+        public override int GetHashCode( )
+        {
+            return this.Bezeichnung.GetHashCode();
+        }
     }
 }

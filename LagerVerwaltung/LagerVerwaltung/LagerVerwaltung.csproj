@@ -163,9 +163,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ScriptAndPages\data.js" />
+    <Content Include="ScriptAndPages\init.js" />
     <Content Include="ScriptAndPages\map.css" />
     <Content Include="ScriptAndPages\Map.html" />
     <Content Include="ScriptAndPages\map.js" />
+    <Content Include="ScriptAndPages\mapInfo.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

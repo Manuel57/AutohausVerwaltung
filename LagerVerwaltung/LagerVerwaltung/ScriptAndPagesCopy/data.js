@@ -1,0 +1,1 @@
+function initMap() { getLongLat(JSON.parse('{"name":"9500 Villach","coordinates":{"lat":46.6188492,"lng":13.824790000000007}}'));getLongLat(JSON.parse('{"name":"9800 Spittal/Drau","coordinates":{"lat":46.7755366,"lng":13.506566099999986}}')); }

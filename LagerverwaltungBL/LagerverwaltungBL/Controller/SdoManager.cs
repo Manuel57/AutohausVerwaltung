@@ -2,6 +2,8 @@
 using Database.Common.Impl;
 using LagerverwaltungBL.Model;
 using Newtonsoft.Json;
+using NHibernate;
+using NHibernate.Criterion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,34 +16,63 @@ namespace LagerverwaltungBL.Controller
 {
     public class SdoManager
     {
-        private const string selectString = @"select standort, name, t.X long, t.Y lat
-                                            from zentrallager, table (sdo_util.getvertices(koordinatenz)) t
-                                            where not koordinatenz is null";
         private static IRepository repository = null;
 
+
+        public static string GetJsonCoordinates(Autoteile teil)
+        {
+            string ret = string.Empty;
+            ret = GetJsonCoordinates(GetZentrallagerByTeil(teil));
+            return ret;
+        }
+
+        public static List<Zentrallager> GetZentrallagerByTeil(Autoteile teil)
+        {
+            try
+            {
+                List<Zentrallager> lager = null;
+                using ( repository = RepositoryFactory.Instance.CreateRepository<RepositoryForSpecialDataTypes>() )
+                {
+                   lager = new List<Zentrallager>(repository.SelectManyWhere<Zentrallager>(item => item.Teile.Contains(teil)));
+                }
+                AddCoordinates(lager);
+                return lager;
+            }
+            catch ( DatabaseException )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+            }
+        }
 
         public static string GetJsonCoordinates( List<Zentrallager> lager )
         {
             string ret = string.Empty;
             object[] arr = lager.Where(item => item.Coordinates != null).Select(item => new { name = item.Standort , coordinates = new { lat = item.Coordinates.X , lng = item.Coordinates.Y } }).ToArray();
 
-            List<string> l = arr.Select(item => "getLongLat(JSON.parse('" + JsonConvert.SerializeObject(item) + "'))").ToList();
-            l.Insert(l.Count , "");
-            string s = string.Format("function initMap() <| {0} |>" , string.Join(";" , l.ToArray()));
+            string s = string.Format("var lagerCoords = JSON.parse('{0}');",JsonConvert.SerializeObject(arr , Formatting.None));
+                        
 
-            s = s.Replace("<|" , "{").Replace("|>" , "}");
+            //List<string> l = arr.Select(item => "getLongLat(JSON.parse('" + JsonConvert.SerializeObject(item) + "'))").ToList();
+            //l.Insert(l.Count , "");
+            //string s = string.Format("function initMap() <| {0} |>" , string.Join(";" , l.ToArray()));
+
+            //s = s.Replace("<|" , "{").Replace("|>" , "}");
 
 
             return s;
         }
-        public static List<Zentrallager> GetZentrallager( )
+
+        private static void AddCoordinates(List<Zentrallager> lager)
         {
             try
             {
 
                 using ( repository = RepositoryFactory.Instance.CreateRepository<RepositoryForSpecialDataTypes>() )
                 {
-                    List<Zentrallager> lager = new List<Zentrallager>(repository.SelectMany<Zentrallager>().AsEnumerable());
                     HashSet<Column> cols = new HashSet<Column>();
                     cols.Add(new Column() { Alias = "lon" , Name = "t.X" , Type = NHibernate.NHibernateUtil.String });
                     cols.Add(new Column() { Alias = "lat" , Name = "t.Y" , Type = NHibernate.NHibernateUtil.String });
@@ -56,9 +87,28 @@ namespace LagerverwaltungBL.Controller
                             item.Coordinates = new Point(double.Parse(coords?[0]?.ToString()) , double.Parse(coords?[1]?.ToString()));
                         }
                     }
-                    return lager;
-
                 }
+            }
+            catch ( DatabaseException )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+            }
+        }
+        public static List<Zentrallager> GetZentrallager( )
+        {
+            try
+            {
+                List<Zentrallager> lager = null;
+                using ( repository = RepositoryFactory.Instance.CreateRepository<RepositoryForSpecialDataTypes>() )
+                {
+                   lager = new List<Zentrallager>(repository.SelectMany<Zentrallager>().AsEnumerable());
+                }
+                AddCoordinates(lager);
+                return lager;
             }
             catch ( DatabaseException )
             {

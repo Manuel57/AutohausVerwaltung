@@ -1,15 +1,1 @@
-html { height: 100%;}
-body {
-height:100%;
-}
-
-section {
-    float: left;
-    width: 95%;
-   height:95%;
-}
-
-#mapPlaceholder {
-    height: 90%;
-    width: 90%;
-}
+body {}section {    border-style: solid;    border-bottom-width: thin;    float: left;    width: 49.5%;}#draggable li ul li, ol li ul li {    width: 80px;height: auto;    float: none;    border: none;}#mapPlaceholder {    height: 400px;    width: 49.5%;}#draggable li ul {    list-style: none;}#myCanvas {    width:49.5%;    height:400px;    left:0px;    position:absolute;}#draggable {        height: 557px;}#draggable li, ol li {    border-style: solid;  border-width: thin;    border-radius: 15px;    background-color: chocolate;    width: 145px;    height: 150px;    float: left;    align-content: center;}img { width: 30px;height: 30px;}.top {  padding-bottom:65%;}table { width:100%;padding-left:5px;margin-bottom:-10%;}td {padding-top:0px;width:49%;}li {list-style: none;}ol {height: 577px;}ul {margin: 0;padding-left: 10px;}

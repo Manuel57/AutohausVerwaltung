@@ -18,6 +18,7 @@ using LagerverwaltungBL.Model;
 using System.IO;
 using LagerverwaltungBL.Controller;
 using System.Windows.Navigation;
+using System.Threading;
 
 namespace LagerVerwaltung.View
 {
@@ -38,7 +39,15 @@ namespace LagerVerwaltung.View
 
         private void BrowserLoadCompleted( object sender , NavigationEventArgs e )
         {
-            this.browser.InvokeScript("initMap");
+            //this.browser.InvokeScript("initialize");
+            new Thread(( ) =>
+            {
+                System.Threading.Thread.Sleep(1000);
+                this.Dispatcher.Invoke(( ) =>
+                {
+                    this.browser.InvokeScript("initMap");
+                });
+            }).Start();
         }
 
         public BestellenView(Autoteile autoteile) : this()
@@ -48,7 +57,7 @@ namespace LagerVerwaltung.View
             this.autoteil = autoteile;
             try
             {
-                File.WriteAllText("./../../ScriptAndPages/data.js",SdoManager.GetJsonCoordinates(SdoManager.GetZentrallager()));
+                File.WriteAllText("./../../ScriptAndPages/data.js",SdoManager.GetJsonCoordinates(autoteil));
                 string path = System.IO.Path.GetFullPath("./../../ScriptAndPages/Map.html");
              
                 this.browser.Navigate(new Uri(path, UriKind.Absolute));

@@ -1,31 +1,15 @@
-﻿// <copyright file="Benutzerverwaltung.MainWindow.xaml.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-07</date>
-// </copyright>
 
-using Benutzerverwaltung.Controls;
-using Benutzerverwaltung.Helpers;
-using Benutzerverwaltung.View;
 using Benutzerverwaltung.ViewModel;
 using BenutzerverwaltungBL.Configuration;
-using BenutzerverwaltungBL.Controller;
 using BenutzerverwaltungBL.Model.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Verwaltung.Settings;
 
 namespace Benutzerverwaltung
@@ -38,11 +22,7 @@ namespace Benutzerverwaltung
         public MainWindow( )
         {
             InitializeComponent();
-
-
         }
-
-
 
         private void listboxFolder1_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
@@ -50,7 +30,7 @@ namespace Benutzerverwaltung
 
         private void lvCustomer_SelectionChanged( object sender , SelectionChangedEventArgs e )
         {
-            MessageBox.Show("");
+
         }
 
         private void tbSearch_TextChanged( object sender , TextChangedEventArgs e )
@@ -62,9 +42,9 @@ namespace Benutzerverwaltung
             item.Adress.Contains(this.tbSearch.Text) ||
                 item.BirthDate.ToShortDateString().Contains(this.tbSearch.Text) ||
                 item.CustomerId.ToString().Contains(this.tbSearch.Text) ||
-                item.FirstName.Contains(this.tbSearch.Text) ||
-                item.LastName.Contains(this.tbSearch.Text) ||
-                item.Username.Contains(this.tbSearch.Text));
+                item.FirstName.ToLower().Contains(this.tbSearch.Text.ToLower()) ||
+                item.LastName.ToLower().Contains(this.tbSearch.Text.ToLower()) ||
+                item.Username.ToLower().Contains(this.tbSearch.Text.ToLower()));
         }
 
         private void Window_Loaded( object sender , RoutedEventArgs e )
@@ -74,6 +54,7 @@ namespace Benutzerverwaltung
               item != null && ( bool ) item?.Equals("--configure")) == true )
             {
                 SettingsManager.Instance.ShowEditor();
+                ConfigureBl.UpdateSettings(SettingsManager.Instance.GetSettings());
             }
             ( this.root.DataContext as MainWindowViewModel ).Init();
 

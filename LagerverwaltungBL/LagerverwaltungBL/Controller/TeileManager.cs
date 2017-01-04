@@ -15,6 +15,11 @@ namespace LagerverwaltungBL.Controller
     {
         private static IRepository repository = null;
 
+
+        /// <summary>
+        /// Returns all Teile
+        /// </summary>
+        /// <returns>all Teile</returns>
         public static IEnumerable<Autoteile> GetAutoteile( )
         {
             try
@@ -36,14 +41,19 @@ namespace LagerverwaltungBL.Controller
         }
 
 
-        public static IEnumerable<Autoteile> GetAutoteileWerkstatt(string standort)
+        /// <summary>
+        /// Gets all Teile of a Werkstatt
+        /// </summary>
+        /// <param name="standort">The Standort of the Werkstatt</param>
+        /// <returns></returns>
+        public static IEnumerable<Autoteile> GetAutoteileWerkstatt( string standort )
         {
             try
             {
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl.Where<Werkstattlager>(item=>item.Lager.Standort.Equals(standort)).Select<Werkstattlager,Autoteile>(item=>item.Teil);
+                    return wl.Where<Werkstattlager>(item => item.Werkstatt.Standort.Equals(standort)).Select<Werkstattlager , Autoteile>(item => item.Teil);
                 }
             }
             catch ( DatabaseException )
@@ -57,14 +67,24 @@ namespace LagerverwaltungBL.Controller
 
         }
 
-        public static int? GetBestand( string standort, string bezeichnung )
+        /// <summary>
+        /// Gets the lagerbestand of a teil in a werkstatt
+        /// </summary>
+        /// <param name="standort">The standort</param>
+        /// <param name="bezeichnung">The bezeichnung</param>
+        /// <returns>The bestand</returns>
+        public static int? GetBestand( string standort , string bezeichnung )
         {
             try
             {
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl?.FirstOrDefault<Werkstattlager>(item => item.Lager.Standort.Equals(standort) && item.Teil.Bezeichnung.Equals(bezeichnung))?.Bestand ?? default(int);
+                    List<Werkstattlager> wl = new List<Werkstattlager>(
+                        repository.SelectMany<Werkstattlager>().AsEnumerable());
+                    return wl?.FirstOrDefault<Werkstattlager>(item =>
+                      item.Werkstatt.Standort.Equals(standort) &&
+                      item.Teil.Bezeichnung.Equals(bezeichnung))?
+                      .Bestand ?? default(int);
                 }
             }
             catch ( DatabaseException )
@@ -77,6 +97,12 @@ namespace LagerverwaltungBL.Controller
             }
 
         }
+        /// <summary>
+        /// Creates a teil and returns a copy of it
+        /// </summary>
+        /// <param name="bezeichnung">The bezeichnung</param>
+        /// <param name="preis">The price</param>
+        /// <returns>Copy of created teil</returns>
         public static Autoteile CreateAutoteil( string bezeichnung , double preis )
         {
             {
@@ -104,7 +130,5 @@ namespace LagerverwaltungBL.Controller
             }
 
         }
-
-
     }
 }

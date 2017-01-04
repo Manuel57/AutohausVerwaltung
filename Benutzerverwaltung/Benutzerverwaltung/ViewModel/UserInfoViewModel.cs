@@ -1,19 +1,11 @@
-﻿// <copyright file="Benutzerverwaltung.ViewModel.UserInfoViewModel.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-13</date>
-// </copyright>
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.Model;
 using BenutzerverwaltungBL.Model.DataObjects;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.Specialized;
 
 namespace Benutzerverwaltung.ViewModel
@@ -38,9 +30,5 @@ namespace Benutzerverwaltung.ViewModel
             this.OnPropertyChanged();
         }
 
-        private void x( object sender , NotifyCollectionChangedEventArgs e )
-        {
-            throw new NotImplementedException();
-        }
     }
 }

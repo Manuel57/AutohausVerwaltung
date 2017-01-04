@@ -1,9 +1,6 @@
-﻿// <copyright file="BenutzerverwaltungBL.Controller.RechnungManager.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-14</date>
-// </copyright>
 
 using BenutzerverwaltungBL.Model.DataObjects;
 using Database;
@@ -22,8 +19,6 @@ namespace BenutzerverwaltungBL.Controller
 {
     public static class RechnungManager
     {
-        //aus der rechnung a pfd gnerieren und ins oracle docs tabelle speichern
-        // und get von rechnungen ( list von rechnungsnummern oder text durchsuchen)
 
         #region private fields
         private static string SEARCHFFORRECHNUNGEN = "SEARCHFORRECHNUNG";
@@ -39,30 +34,36 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="rechnungn"></param>
         /// <returns>true or throws an exception</returns>
-        public static bool InsertRechnungAsDoc(Rechnung rechnungn)
+        public static bool InsertRechnungAsDoc( Rechnung rechnungn )
         {
             try
             {
                 bool ret = true;
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ISQLQuery query = repository.GetQuery("insert into " + TABLERECHNUNGDOCS + "(Title,Text) values (?,?)");
-                    query.SetString(0, GenerateTitel(rechnungn));
-                    query.SetParameter(1, GeneratePDF(rechnungn),NHibernateUtil.BinaryBlob);                  
-                   
+                    query.SetString(0 , GenerateTitel(rechnungn));
+                    query.SetParameter(1 , GeneratePDF(rechnungn) , NHibernateUtil.BinaryBlob);
+
                     query.ExecuteUpdate();
+
                 }
+                //using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                //{
+                //    rechnungn.IsAlreadyPdf = true;
+                //    repository.SaveOrUpdate<Rechnung>(rechnungn);
+                //}
                 return ret;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, ""));
+                throw ( new DatabaseException(ex , "") );
             }
-            
+
         }
 
         /// <summary>
@@ -70,32 +71,32 @@ namespace BenutzerverwaltungBL.Controller
         /// docs for the given customer id
         /// </summary>
         /// <param name="customerID">the id of the customer</param>
-        public static List<byte[]> GetAllRechnungenForKunde(int customerID)
+        public static List<byte[]> GetAllRechnungenForKunde( int customerID )
         {
             try
             {
-                List<byte[]> ret = new List<byte[]>();           
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                List<byte[]> ret = new List<byte[]>();
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS +" r where r.title like ?");
-                    query.SetString(0, "%" + customerID+"%");
-                    query.AddScalar("text",NHibernateUtil.BinaryBlob);
+                    ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS + " r where r.title like ?");
+                    query.SetString(0 , "%" + customerID + "%");
+                    query.AddScalar("text" , NHibernateUtil.BinaryBlob);
                     var all = query.List();
-                   
-                    foreach (var s in all)
-                    {                        
+
+                    foreach ( var s in all )
+                    {
                         ret.Add(s as byte[]);
                     }
                 }
                 return ret;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, ""));
+                throw ( new DatabaseException(ex , "") );
             }
 
         }
@@ -107,30 +108,30 @@ namespace BenutzerverwaltungBL.Controller
         /// <param name="customerID">the customer whos bill to select</param>
         /// <param name="rechnungsDatum">the date of which the bill is</param>
         /// <returns> a byte [] or null or throws an exception </returns>
-        public static byte[] GetCertainRechnungForKunde(int customerID, DateTime rechnungsDatum)
+        public static byte[] GetCertainRechnungForKunde( int customerID , DateTime rechnungsDatum )
         {
             try
             {
                 byte[] ret = null;
 
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS + " r where r.title like ?");
-                    query.SetString(0, customerID + "%" + rechnungsDatum.ToShortDateString());
-                    query.AddScalar("text", NHibernateUtil.BinaryBlob);
+                    query.SetString(0 , customerID + "%" + rechnungsDatum.ToShortDateString());
+                    query.AddScalar("text" , NHibernateUtil.BinaryBlob);
                     ret = query.UniqueResult() as byte[];
-                   
+
                 }
 
                 return ret;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Keine Rechnung vorhanden!"));
+                throw ( new DatabaseException(ex , "Keine Rechnung vorhanden!") );
             }
 
         }
@@ -142,20 +143,20 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="rechnungn"></param>
         /// <returns>a pdf as byte[]</returns>
-        private static byte[] GeneratePDF(Rechnung rechnungn)
+        private static byte[] GeneratePDF( Rechnung rechnungn )
         {
             return PdfGenerator.GeneratePDF(rechnungn);
         }
-      
+
         /// <summary>
         /// generates the titel for storing in the database
         /// out of the given bill
         /// </summary>
         /// <param name="rechnungn"></param>
         /// <returns>a generated titel</returns>
-        private static string GenerateTitel(Rechnung rechnungn)
-        {            
-            return rechnungn.Kunde.CustomerId+rechnungn.Kunde.LastName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
+        private static string GenerateTitel( Rechnung rechnungn )
+        {
+            return rechnungn.Kunde.CustomerId + rechnungn.Kunde.LastName + "_" + rechnungn.Rechnungsdatum.ToShortDateString();
         }
     }
 }

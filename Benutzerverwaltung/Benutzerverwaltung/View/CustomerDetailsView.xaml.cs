@@ -1,9 +1,6 @@
-﻿// <copyright file="Benutzerverwaltung.View.CustomerDetailsView.xaml.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-29</date>
-// </copyright>
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.ViewModel;
@@ -35,7 +32,12 @@ namespace Benutzerverwaltung.View
         {
             InitializeComponent();
         }
-        public CustomerDetailsView( CustomerDetailsMode mode, Customer c )
+        /// <summary>
+        /// Creates the View in the given mode
+        /// </summary>
+        /// <param name="mode">The mode</param>
+        /// <param name="c">The customer</param>
+        public CustomerDetailsView( CustomerDetailsMode mode , Customer c )
         {
             InitializeComponent();
 
@@ -75,24 +77,30 @@ namespace Benutzerverwaltung.View
             }
 
         }
-        private void initVm(Customer c)
+        /// <summary>
+        /// Initializes the Viewmodel
+        /// </summary>
+        /// <param name="c">The current customer</param>
+        private void initVm( Customer c )
         {
             try
             {
                 ( this.root.DataContext as DetailsViewModel ).Kunde = c;
                 ( this.root.DataContext as DetailsViewModel ).ChangedAll();
             }
-            catch ( Exception)
+            catch ( Exception )
             {
                 throw;
             }
 
 
         }
-
+        /// <summary>
+        /// Sets all textboxes readonly
+        /// </summary>
         private void readonlyTextBoxes( )
         {
-            
+
             try
             {
                 this.txtAddress.ReadOnly();
@@ -102,7 +110,7 @@ namespace Benutzerverwaltung.View
                 this.txtLastName.ReadOnly();
                 this.txtUsername.ReadOnly();
             }
-            catch ( Exception)
+            catch ( Exception )
             {
                 throw;
             }

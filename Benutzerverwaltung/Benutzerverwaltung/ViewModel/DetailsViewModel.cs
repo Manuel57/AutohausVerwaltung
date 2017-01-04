@@ -1,20 +1,13 @@
-﻿// <copyright file="Benutzerverwaltung.ViewModel.DetailsViewModel.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-12-6</date>
-// </copyright>
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.View;
 using BenutzerverwaltungBL.Controller;
 using BenutzerverwaltungBL.Model.DataObjects;
-using Database;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Verwaltung.Exception;
 
@@ -39,35 +32,43 @@ namespace Benutzerverwaltung.ViewModel
             this.OnPropertyChanged();
         }
 
+        /// <summary>
+        /// Shows the Reparaturen view
+        /// </summary>
         private void ShowReparaturen( )
         {
-
             try
             {
-                ReparaturenView rv = new ReparaturenView(this.Kunde.CustomerId.ToString());
+                ReparaturenView rv = new ReparaturenView(
+                    this.Kunde.CustomerId.ToString());
                 rv.Show();
             }
             catch ( Exception ex )
             {
                 ExceptionHelper.Handle(ex);
             }
-
         }
 
+        /// <summary>
+        /// Updates the customer
+        /// </summary>
         private void edit( )
         {
-
             try
             {
                 CustomerManager.UpdateCustomer(this.Kunde);
             }
-           
+
             catch ( Exception ex )
             {
                 ExceptionHelper.Handle(ex);
             }
-
         }
+
+        /// <summary>
+        /// Removes the customer
+        /// Saves all the customer's bills before deleting
+        /// </summary>
         private void delete( )
         {
 
@@ -77,8 +78,8 @@ namespace Benutzerverwaltung.ViewModel
                 if ( dialogResult.Equals(MessageBoxResult.Yes) )
                 {
                     this.Kunde.Rechnungen.Where<Rechnung>(item =>
-                    !item.IsAlreadyPdf).ToList<Rechnung>().
-                    ForEach(item => RechnungManager.InsertRechnungAsDoc(item));
+                        !item.IsAlreadyPdf).ToList<Rechnung>().
+                        ForEach(item => RechnungManager.InsertRechnungAsDoc(item));
                     CustomerManager.DeleteCustomer(this.Kunde);
                 }
             }
@@ -86,7 +87,6 @@ namespace Benutzerverwaltung.ViewModel
             {
                 ExceptionHelper.Handle(ex);
             }
-
         }
     }
 }

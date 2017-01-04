@@ -1,9 +1,6 @@
-﻿// <copyright file="Database.Connection.database.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-11</date>
-// </copyright>
 
 using Database.Common.ObserverPattern;
 using Database.Configuration;
@@ -12,11 +9,10 @@ using NHibernate.Cfg;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Mapping.Attributes;
+using NHibernate.Metadata;
+using NHibernate.Persister.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verwaltung.Exception;
 
 namespace Database.Connection
@@ -66,6 +62,19 @@ namespace Database.Connection
             get { return _sessionFactory ?? ( _sessionFactory = createSessionFactory() ); }
         }
 
+        public static string GetTableName<T>( )
+        {
+            IClassMetadata md = Connection.Database.Instance.SessionFactory.GetClassMetadata(typeof(T));
+            AbstractEntityPersister aep = md as AbstractEntityPersister;
+            return aep.TableName;
+            //return new NHibernate.Cfg.Configuration().GetClassMapping(typeof(T)).RootTable.Name;
+        }
+
+        public static string GetColumnName<T>( string property )
+        {
+            IClassMetadata md = Connection.Database.Instance.SessionFactory.GetClassMetadata(typeof(T));
+            return ( md as AbstractEntityPersister ).GetPropertyColumnNames(property)?[0];
+        }
         /// <summary>
         /// creates a new sessionfactory
         /// </summary>
@@ -93,7 +102,11 @@ namespace Database.Connection
             {
                 cfg.DataBaseIntegration(x =>
             {
-                x.ConnectionString = DatabaseConfiguration.Instance.GetConnectionString();
+                x.ConnectionString = DatabaseConfiguration.Instance
+                 .GetConnectionString();
+                x.Driver<OleDbDriver>();
+                x.Dialect<Oracle10gDialect>();
+
                 x.GetType()
                     .GetMethod("Driver")
                     .MakeGenericMethod(DatabaseConfiguration.Instance.Driver)
@@ -102,6 +115,7 @@ namespace Database.Connection
                     .GetMethod("Dialect")
                     .MakeGenericMethod(DatabaseConfiguration.Instance.Dialect)
                     .Invoke(x , null);
+
             });
                 var serializer = new HbmSerializer() { Validate = true };
 
@@ -111,28 +125,28 @@ namespace Database.Connection
                     cfg.AddInputStream(stream);
                 }
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Updating the configuration failed!" ) );
+                throw ( new DatabaseException(ex , "Updating the configuration failed!") );
             }
 
         }
-      
+
         public void Update( object sender )
         {
             try
             {
                 updateConfuguration();
             }
-            catch ( DatabaseException  )
+            catch ( DatabaseException )
             {
                 throw;
             }
-           
+
 
         }
     }

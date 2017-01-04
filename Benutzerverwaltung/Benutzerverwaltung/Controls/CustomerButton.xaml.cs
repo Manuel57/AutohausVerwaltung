@@ -32,9 +32,7 @@ namespace Benutzerverwaltung.Controls
         public int CustomerId { get; set; }
         public CustomerButton( )
         {
-
             InitializeComponent();
-
         }
 
         public ImageSource ImageBtn
@@ -51,7 +49,7 @@ namespace Benutzerverwaltung.Controls
         public ICommand ButtonVisibility
         {
             get { return ( ICommand ) GetValue(CommandProperty); }
-            set {  SetValue(CommandProperty , value); }
+            set { SetValue(CommandProperty , value); }
         }
 
         public static DependencyProperty CustomerID = DependencyProperty.Register("CustId",typeof(int),typeof(CustomerButton));
@@ -64,7 +62,6 @@ namespace Benutzerverwaltung.Controls
         {
 
             if ( null != Click )
-
                 Click(CustId , e);
 
         }

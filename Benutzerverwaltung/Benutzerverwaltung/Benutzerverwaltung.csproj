@@ -87,6 +87,9 @@
     <Compile Include="Controls\CustomerButton.xaml.cs">
       <DependentUpon>CustomerButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RechnungAusstellenButton.xaml.cs">
+      <DependentUpon>RechnungAusstellenButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CustomerDetailsMode.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Model\ModelBase.cs" />
@@ -107,6 +110,10 @@
       <DependentUpon>UserInfoView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CustomerButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RechnungAusstellenButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

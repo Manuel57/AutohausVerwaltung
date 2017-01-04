@@ -39,7 +39,7 @@
         <TextBox x:Name="txtLastName" Grid.Column="1" Grid.Row="1" Margin="10,5,10,5" Text="{Binding Path=Kunde.LastName}"/>
         <TextBox x:Name="txtAddress" Grid.Column="1" Grid.Row="2"  Margin="10,5,10,5" Text="{Binding Path=Kunde.Adress}"/>
         <TextBox x:Name="txtBirthDate" Grid.Column="1" Grid.Row="3" Margin="10,5,10,5" Text="{Binding Path=Kunde.BirthDate}"/>
-        <TextBox x:Name="txtCustomerId" Grid.Column="1" Grid.Row="4" Margin="10,5,10,5" Text="{Binding Path=Kunde.CustomerId}"/>
+        <TextBox x:Name="txtCustomerId" IsReadOnly="True" Grid.Column="1" Grid.Row="4" Margin="10,5,10,5" Text="{Binding Path=Kunde.CustomerId}"/>
         <TextBox x:Name="txtUsername" Grid.Column="1" Grid.Row="5" Margin="10,5,10,5" Text="{Binding Path=Kunde.Username}"/>
 
         <!-- Buttons-->

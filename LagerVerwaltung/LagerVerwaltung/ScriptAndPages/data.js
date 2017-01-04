@@ -1,0 +1,1 @@
+var lagerCoords = JSON.parse('[{"name":"9500 Villach","coordinates":{"lat":46.6188492,"lng":13.824790000000007}},{"name":"Tschinowitsch 9500 Villach","coordinates":{"lat":46.5902727,"lng":13.8574625}}]'); var werkstatt = JSON.parse('{"name":"Villach","coordinates":{"lat":46.72974247,"lng":13.62836838}}');

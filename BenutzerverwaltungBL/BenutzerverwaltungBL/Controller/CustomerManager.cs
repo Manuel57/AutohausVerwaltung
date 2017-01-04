@@ -1,9 +1,5 @@
-﻿// <copyright file="BenutzerverwaltungBL.Controller.customermanager.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
-// <date>2016-11-13</date>
-// </copyright>
 
 using BenutzerverwaltungBL.Model.DataObjects;
 using NHibernate.Criterion;
@@ -252,7 +248,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <returns>true if succeeded or throws an exception</returns>
         public static bool DeleteCustomer(Customer customerToDelete)
         {
-            try
+            try 
             {
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {

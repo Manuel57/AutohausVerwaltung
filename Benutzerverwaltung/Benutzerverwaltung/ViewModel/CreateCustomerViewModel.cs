@@ -1,22 +1,13 @@
-﻿// <copyright file="Benutzerverwaltung.ViewModel.CreateCustomerViewModel.cs">
-// Copyright (c) 2016 All Rights Reserved
-// <author>Manuel Lackenbucher</author>
+﻿// <author>Manuel Lackenbucher</author>
 // <author>Thomas Huber</author>
 // <date>2016-11-12</date>
-// </copyright>
 
 using Benutzerverwaltung.Helpers;
 using Benutzerverwaltung.Model;
 using Benutzerverwaltung.View;
 using BenutzerverwaltungBL.Controller;
 using BenutzerverwaltungBL.Model.DataObjects;
-using Database;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using Verwaltung.Exception;
 
 namespace Benutzerverwaltung.ViewModel
@@ -30,9 +21,9 @@ namespace Benutzerverwaltung.ViewModel
         public RelayCommand CreateCommand { get; set; }
         public RelayCommand BackCommand { get; set; }
 
+
         public CreateCustomerViewModel( )
         {
-
             try
             {
                 this.BackCommand = new RelayCommand(( ) => { });
@@ -45,6 +36,9 @@ namespace Benutzerverwaltung.ViewModel
 
         }
 
+        /// <summary>
+        /// Creates a new Customer
+        /// </summary>
         private void create( )
         {
             try

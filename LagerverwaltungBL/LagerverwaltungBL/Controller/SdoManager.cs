@@ -4,6 +4,7 @@ using LagerverwaltungBL.Model;
 using Newtonsoft.Json;
 using NHibernate;
 using NHibernate.Criterion;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -105,7 +106,7 @@ namespace LagerverwaltungBL.Controller
 
                 using ( repository = RepositoryFactory.Instance.CreateRepository<RepositoryForSpecialDataTypes>() )
                 {
-                    HashSet<Column> cols = new HashSet<Column>();
+                    HashSet<Database.Common.Column> cols = new HashSet<Database.Common.Column>();
                     cols.Add(new Column() { Alias = "lon" , Name = "t.X" , Type = NHibernate.NHibernateUtil.String });
                     cols.Add(new Column() { Alias = "lat" , Name = "t.Y" , Type = NHibernate.NHibernateUtil.String });
                     foreach ( var item in lager )

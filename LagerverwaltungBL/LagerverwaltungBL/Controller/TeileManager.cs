@@ -67,13 +67,8 @@ namespace LagerverwaltungBL.Controller
 
         }
 
-        /// <summary>
-        /// Gets the lagerbestand of a teil in a werkstatt
-        /// </summary>
-        /// <param name="standort">The standort</param>
-        /// <param name="bezeichnung">The bezeichnung</param>
-        /// <returns>The bestand</returns>
-        public static int? GetBestand( string standort , string bezeichnung )
+       
+        public static IEnumerable<Autoteile> GetKritischeTeile( string standort, int minBestand)
         {
             try
             {
@@ -81,10 +76,14 @@ namespace LagerverwaltungBL.Controller
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(
                         repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl?.FirstOrDefault<Werkstattlager>(item =>
+                    List<Autoteile> ret = new List<Autoteile>();
+
+                      wl?.Where<Werkstattlager>(item =>
                       item.Werkstatt.Standort.Equals(standort) &&
-                      item.Teil.Bezeichnung.Equals(bezeichnung))?
-                      .Bestand ?? default(int);
+                      item.Bestand < minBestand).ToList<Werkstattlager>()
+                      .ForEach(item => ret.Add(item.Teil));
+
+                    return ret;
                 }
             }
             catch ( DatabaseException )
@@ -94,6 +93,33 @@ namespace LagerverwaltungBL.Controller
             catch ( Exception ex )
             {
                 throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+            }
+
+        }
+
+        public static int? GetBestand(string standort, string teil)
+        {
+            try
+            {
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    List<Werkstattlager> wl = new List<Werkstattlager>(
+                        repository.SelectMany<Werkstattlager>().AsEnumerable());
+                   
+                   return wl?.FirstOrDefault<Werkstattlager>(item =>
+                    item.Werkstatt.Standort.Equals(standort) &&
+                    item.Teil.Bezeichnung.Equals(teil))?.Bestand ?? default(int);
+
+                    
+                }
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, "Error in selecting all autoteile "));
             }
 
         }

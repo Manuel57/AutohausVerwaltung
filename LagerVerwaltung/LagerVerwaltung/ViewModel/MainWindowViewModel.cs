@@ -26,6 +26,7 @@ namespace LagerVerwaltung.ViewModel
         private Thread messageThread = null;
         private bool shutDownThread = false;
         private static string WERKSTATT = "Villach";
+        private static int MINBESTAND = 100;
         #endregion
 
         #region public fields
@@ -152,12 +153,12 @@ namespace LagerVerwaltung.ViewModel
                        this.MainWindow.Dispatcher.Invoke(()=> {
                            this.importantMessages.Clear();
                           
-                            //get alle teile wo der lager bestand kritisch is vom controller
-                            for (int i = 0; i < 2; i++)
-                            {
-                                this.importantMessages.Add(new Message() { Short = "Lagerbestand von Reifen  kritisch!\nBestand: " + DateTime.Now.Minute });
-                            }
+                           foreach(Autoteile a in TeileManager.GetKritischeTeile(WERKSTATT,MINBESTAND))
+                           {
+                               this.importantMessages.Add(new Message() { Short = "Lagerbestand von "+a.Bezeichnung+"  kritisch!\nBestand: " + TeileManager.GetBestand(WERKSTATT,a.Bezeichnung) });
 
+                           }
+                           
                         });
                         //foreach teil in importantan  Message
                         BestandKrititsch(this, null);

@@ -3,7 +3,7 @@ using Database.Common.Impl;
 using LagerverwaltungBL.Configuration;
 using LagerverwaltungBL.Controller;
 using LagerverwaltungBL.Model;
-using NHibernate;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

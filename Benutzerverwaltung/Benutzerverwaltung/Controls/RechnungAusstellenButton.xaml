@@ -7,8 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="30">
     <Grid>
-        <Button x:Name="btn"  VerticalAlignment="Top" Width="20" Height="20" Click="button_Click" >
-            Ausstellen
-        </Button>
+        <Button x:Name="btn" Content="Ausstellen" VerticalAlignment="Top" Height="20" Click="button_Click" />
     </Grid>
 </UserControl>

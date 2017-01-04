@@ -9,21 +9,21 @@
         Title="ReparaturenView" Height="500" Width="800" ResizeMode="NoResize">
     <Grid>
 
-        <ListView x:Name="listView" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
+        <ListView ItemContainerStyle="{StaticResource HighlightingOff}" Background="#FF6DA2FF" x:Name="listView" >
             <ListView.View>
                 <GridView>
 
-                    <GridViewColumn  
-                        Header="Rechnung"/>
-                    <GridViewColumn Header="Ausgestellt">
+                    <GridViewColumn Header="Rechnung"></GridViewColumn>
+                    <GridViewColumn Header="Ausgestellt" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel  Width="50">
-                                    <CheckBox IsChecked="{Binding IsAlreadyPdf}" >
-                                        <custom:RechnungAusstellenButton RechnungsNummer="{Binding Rechnungsnummer}" CustomerId="{Binding Kunde.CustomerId}"  Click="CreateRechnung"></custom:RechnungAusstellenButton>
-                                    </CheckBox>
-
-                                </StackPanel>
+                                <Border  Style="{DynamicResource lvColBorder}">
+                                    <StackPanel VerticalAlignment="Top" Orientation="Vertical" Margin="{DynamicResource ListViewColumnMargin}">
+                                            <CheckBox VerticalAlignment="Center" Grid.Row="1" IsChecked="{Binding IsAlreadyPdf}" >
+                                                <custom:RechnungAusstellenButton RechnungsNummer="{Binding Rechnungsnummer}" CustomerId="{Binding Kunde.CustomerId}"  Click="CreateRechnung"></custom:RechnungAusstellenButton>
+                                            </CheckBox>
+                                    </StackPanel>
+                                </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

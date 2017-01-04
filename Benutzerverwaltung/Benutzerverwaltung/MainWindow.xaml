@@ -15,30 +15,99 @@
         <viewmodel:MainWindowViewModel x:Key="mainViewmodel"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource mainViewmodel}" x:Name="root">
+        <Grid.Effect>
+            <DropShadowEffect/>
+        </Grid.Effect>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="#FF0052A4" Offset="1"/>
+                <GradientStop Color="#FF00356A"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="100px"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label x:Name="lblSearch" Content="{x:Static p:Resources.Search}" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="39,39,0,35"/>
-        <TextBox x:Name="tbSearch" HorizontalAlignment="Left" Height="23" Margin="99,43,0,0" TextWrapping="Wrap" Text="{Binding Path=TextSearchField}" VerticalAlignment="Top" Width="120" TextChanged="tbSearch_TextChanged">
+        <Label x:Name="lblSearch" Content="{x:Static p:Resources.Search}" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="10,42,0,32" Foreground="White" FontSize="14" FontStyle="Italic"/>
+        <TextBox x:Name="tbSearch" HorizontalAlignment="Left" Height="23" Margin="69,42,0,0" TextWrapping="Wrap" Text="{Binding Path=TextSearchField}" VerticalAlignment="Top" Width="189" TextChanged="tbSearch_TextChanged" Background="{DynamicResource MainWindowControlsBackground}" Foreground="White" FontSize="14" BorderBrush="{DynamicResource MainWindowControlsBorder}" Effect="{DynamicResource MainWindowDropShadow}">
         </TextBox>
-        <Button x:Name="btnCreateCustomer" Content="{x:Static p:Resources.Create}" HorizontalAlignment="Left" Margin="263,45,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CreateCustomerCommand}"/>
+        <Button x:Name="btnCreateCustomer" Content="{x:Static p:Resources.Create}" HorizontalAlignment="Left" Margin="290,42,0,0" VerticalAlignment="Top" Width="81" Command="{Binding CreateCustomerCommand}" Height="23" Background="{DynamicResource MainWindowControlsBackground}" Foreground="White" BorderThickness="2" BorderBrush="{DynamicResource MainWindowControlsBorder}" Effect="{DynamicResource MainWindowDropShadow}"/>
         <ListView ItemContainerStyle="{StaticResource HighlightingOff}" x:Name="lvCustomer" Grid.Row="1" BorderThickness="0" 
-     ItemsSource="{Binding Path=Emp }" SelectionChanged="lvCustomer_SelectionChanged">
+     ItemsSource="{Binding Path=Emp }" SelectionChanged="lvCustomer_SelectionChanged" Background="#FF6DA2FF" Foreground="Black">
 
             <ListView.View>
-                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Line Items">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerId }" 
+                <GridView ColumnHeaderToolTip="Line Items" AllowsColumnReorder="False">
+                  <!--  <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerId }" 
                         Header="Id"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}" 
                         Header="Vorame" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" 
                         Header="Nachname" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=BirthDate }" 
-                        Header="Geburtsdatum" Width="80"/>
+                        Header="Geburtsdatum"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Adress }" 
                         Header="Adresse" Width="100"/>
-
+-->
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" Margin="{DynamicResource ListViewColumnMargin}">
+                                    <TextBlock Text="Id" FontSize="14" Foreground="#FF6DA2FF" />
+                                    <TextBlock Text="{Binding CustomerId}" FontSize="14" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border  Style="{DynamicResource lvColBorder}">
+                                    <StackPanel Orientation="Vertical" Margin="{DynamicResource ListViewColumnMargin}">
+                                        <TextBlock Text="Vorname" FontSize="14" Foreground="#FF6DA2FF" />
+                                        <TextBlock Text="{Binding FirstName}" FontSize="14" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Style="{DynamicResource lvColBorder}">
+                                    <StackPanel Orientation="Vertical" Margin="{DynamicResource ListViewColumnMargin}">
+                                        <TextBlock Text="Nachname" FontSize="14" Foreground="#FF6DA2FF" />
+                                        <TextBlock Text="{Binding LastName}" FontSize="14" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border  Style="{DynamicResource lvColBorder}">
+                                    <StackPanel Orientation="Vertical" Margin="{DynamicResource ListViewColumnMargin}">
+                                        <TextBlock Text="Geburtsdatum" FontSize="14" Foreground="#FF6DA2FF" />
+                                        <TextBlock Text="{Binding BirthDate}" FontSize="14" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Style="{DynamicResource lvColBorder}">
+                                    <StackPanel Orientation="Vertical" Margin="{DynamicResource ListViewColumnMargin}">
+                                    <TextBlock Text="Adresse" FontSize="14" Foreground="#FF6DA2FF" />
+                                    <TextBlock Text="{Binding Adress}" FontSize="14" />
+                                    </StackPanel> 
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn
                         Header="" Width="150">
                         <GridViewColumn.CellTemplate>
@@ -55,6 +124,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <TextBlock Grid.Row="2" VerticalAlignment="Center">Benutzerverwaltung ThomasHuber/ManuelLackenbucher</TextBlock>
     </Grid>
 </Window>

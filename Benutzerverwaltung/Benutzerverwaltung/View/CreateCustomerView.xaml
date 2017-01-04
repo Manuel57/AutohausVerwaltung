@@ -7,13 +7,13 @@
         xmlns:viewmodel="clr-namespace:Benutzerverwaltung.ViewModel"
          xmlns:p="clr-namespace:Benutzerverwaltung.Properties"
         mc:Ignorable="d"
-        Title="CreateCustomerView" Height="400" Width="600">
+        Title="CreateCustomerView" Height="400" Width="600" Background="#FF6DA2FF">
     <Window.Resources>
 
 
         <viewmodel:CreateCustomerViewModel x:Key="mainViewmodel"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource mainViewmodel}" x:Name="root" Margin="20">
+    <Grid DataContext="{StaticResource mainViewmodel}" x:Name="root" Margin="20" Background="#FF6DA2FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -26,19 +26,19 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
        <!--Labels-->
-        <Label Content="{x:Static p:Resources.FirstName}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Label Content="{x:Static p:Resources.LastName}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-        <Label Content="{x:Static p:Resources.Address}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-        <Label Content="{x:Static p:Resources.Birthdate}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+        <Label Content="{x:Static p:Resources.FirstName}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource FontSize}" />
+        <Label Content="{x:Static p:Resources.LastName}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource FontSize}"  />
+        <Label Content="{x:Static p:Resources.Address}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource FontSize}"  />
+        <Label Content="{x:Static p:Resources.Birthdate}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource FontSize}"  />
         
         <!--Textboxex-->
 
-        <TextBox x:Name="txtFirstName" Grid.Column="1" Grid.Row="0" Margin="20" Text="{Binding Path=FirstName}"/>
-        <TextBox x:Name="txtLastName" Grid.Column="1" Grid.Row="1" Margin="20" Text="{Binding Path=LastName}"/>
-        <TextBox x:Name="txtAddress" Grid.Column="1" Grid.Row="2" Margin="20" Text="{Binding Path=Address}"/>
-        <TextBox x:Name="txtBirthDate" Grid.Column="1" Grid.Row="3" Margin="20" Text="{Binding Path=BirthDate}"/>
+        <TextBox x:Name="txtFirstName" Grid.Column="1" Grid.Row="0" Margin="20" Text="{Binding Path=FirstName}" Style="{DynamicResource textBoxStyle}"/>
+        <TextBox x:Name="txtLastName" Grid.Column="1" Grid.Row="1" Margin="20" Text="{Binding Path=LastName}" Style="{DynamicResource textBoxStyle}" />
+        <TextBox x:Name="txtAddress" Grid.Column="1" Grid.Row="2" Margin="20" Text="{Binding Path=Address}"  Style="{DynamicResource textBoxStyle}"/>
+        <TextBox x:Name="txtBirthDate" Grid.Column="1" Grid.Row="3" Margin="20" Text="{Binding Path=BirthDate}" Style="{DynamicResource textBoxStyle}"/>
  
         <!-- Buttons-->
-        <Button x:Name="btnCreate" Grid.Column="0" Grid.Row="4" Margin="20" Content="{x:Static p:Resources.Create}" Command="{Binding CreateCommand}" />
+        <Button x:Name="btnCreate" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="20" Content="{x:Static p:Resources.Create}" Command="{Binding CreateCommand}" Style="{DynamicResource textBoxStyle}" />
     </Grid>
 </Window>

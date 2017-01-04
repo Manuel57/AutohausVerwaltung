@@ -7,7 +7,7 @@
         xmlns:p="clr-namespace:Benutzerverwaltung.Properties"
         mc:Ignorable="d"
         Title="UserInfoView" Height="400" Width="600" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="#FF6DA2FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="76*"></ColumnDefinition>
             <ColumnDefinition Width="221*"></ColumnDefinition>
@@ -19,12 +19,12 @@
         </Grid.RowDefinitions>
 
         <!--Labels-->
-        <Label Content="{x:Static p:Resources.Username}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="26" Margin="31,49,35,49" Width="86"/>
-        <Label Content="{x:Static p:Resources.Password}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="43,50,49,48" Height="26" Width="60"/>
+        <Label Content="{x:Static p:Resources.Username}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="26" Margin="31,49,35,49" FontSize="{DynamicResource FontSize}"/>
+        <Label Content="{x:Static p:Resources.Password}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="43,50,49,48" Height="26" FontSize="{DynamicResource FontSize}" Width="60"/>
 
         <!--Textboxes-->
-        <TextBox x:Name="txtUserame" Grid.Column="1" Grid.Row="0" Margin="50" Text="{Binding Path=Username}" IsReadOnly="True"/>
-        <TextBox x:Name="txtPassword" Grid.Column="1" Grid.Row="1" Margin="50" Text="{Binding Path=Password}" IsReadOnly="True"/>
+        <TextBox x:Name="txtUserame" Grid.Column="1" Grid.Row="0" Margin="50" Text="{Binding Path=Username}" IsReadOnly="True" Style="{DynamicResource textBoxStyle}"/>
+        <TextBox x:Name="txtPassword" Grid.Column="1" Grid.Row="1" Margin="50" Text="{Binding Path=Password}" IsReadOnly="True" Style="{DynamicResource textBoxStyle}"/>
   
         <!--menu grid-->
         <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
@@ -33,8 +33,8 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!--Buttons-->
-            <Button x:Name="btnPrint" Content="{x:Static p:Resources.Print}" Command="{Binding PrintCommand}" Grid.Column="0" Margin="50"/>
-            <Button x:Name="btnOk" Content="{x:Static p:Resources.Ok}" Command="{Binding OkCommand}" Grid.Column="1" Margin="50" />
+            <Button x:Name="btnPrint" Content="{x:Static p:Resources.Print}" Command="{Binding PrintCommand}" Grid.Column="0" Margin="50" Style="{DynamicResource textBoxStyle}"/>
+            <Button x:Name="btnOk" Content="{x:Static p:Resources.Ok}" Command="{Binding OkCommand}" Grid.Column="1" Margin="50" Style="{DynamicResource textBoxStyle}" />
         </Grid>
        
     </Grid>

@@ -43,14 +43,17 @@ namespace Benutzerverwaltung.View
 
             try
             {
+                ResourceDictionary res = ( ResourceDictionary ) Application.LoadComponent(new Uri("Resources/ResourceDictionary.xaml" , UriKind.Relative));
                 initVm(c);
                 Button btn = new Button();
+                btn.Style = ( Style ) res["textBoxStyle"];
                 switch ( mode )
                 {
                     case CustomerDetailsMode.Delete:
                         btn.Content = "Delete";
                         btn.Command = ( this.root.DataContext as DetailsViewModel ).DeleteCommand;
                         this.readonlyTextBoxes();
+                        
                         break;
                     case CustomerDetailsMode.Details:
                         btn.Content = "Save changes";
@@ -64,6 +67,7 @@ namespace Benutzerverwaltung.View
                 Grid.SetColumn(btn , 1);
 
                 Button btnReparatur = new Button();
+                btnReparatur.Style = ( Style ) res["textBoxStyle"];
                 btnReparatur.Content = Properties.Resources.Reparaturen;
                 btnReparatur.Command = ( this.root.DataContext as DetailsViewModel ).ReparaturenCommand;
                 Grid.SetRow(btnReparatur , 6);

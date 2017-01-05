@@ -37,9 +37,11 @@ function getLongLat(info) {
 
 
 function initMap() {
-    for (var i in lagerCoords) {
-        getLongLat(lagerCoords[i]);
-        //calcRoute(werkstatt.coordinates, lagerCoords[i].coordinates);
+    if(!(typeof(lagerCoords == 'undefined'))) {
+        for (var i in lagerCoords) {
+            getLongLat(lagerCoords[i]);
+            //calcRoute(werkstatt.coordinates, lagerCoords[i].coordinates);
+        }
     }
     getLongLat(werkstatt);
 

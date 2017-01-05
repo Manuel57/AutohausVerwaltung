@@ -252,6 +252,7 @@ namespace BenutzerverwaltungBL.Controller
             {
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
+                    RechnungManager.InsertAllRechnungAsDoc(customerToDelete.CustomerId);
                     customerToDelete.Rechnungen.ToList()
                        .ForEach(item => item.Reparaturen.ToList()
                        .ForEach(i => repository.Delete(i)

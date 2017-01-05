@@ -186,7 +186,7 @@ namespace Database.Common.Impl
                 return Convert.ToInt64(criteria.GetExecutableCriteria(session)
                      .SetProjection(Projections.RowCountInt64()).UniqueResult());
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException  )
             {
                 this.setError();
                 throw;

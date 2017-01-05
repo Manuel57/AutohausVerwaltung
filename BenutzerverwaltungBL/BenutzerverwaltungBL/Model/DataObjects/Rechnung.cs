@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table = "Rechnung",Name = "BenutzerverwaltungBL.Model.DataObjects.Rechnung,BenutzerverwaltungBL")]
+    [Class(Table = "Rechnung",Name = "BenutzerverwaltungBL.Model.DataObjects.Rechnung,BenutzerverwaltungBL",SelectBeforeUpdate =true,DynamicUpdate =true)]
     public class Rechnung : IEntity
     {
         [Id(Name ="Rechnungsnummer",Column ="Rechnungsnummer")]

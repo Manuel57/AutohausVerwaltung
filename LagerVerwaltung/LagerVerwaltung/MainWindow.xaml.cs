@@ -1,4 +1,5 @@
 ﻿using LagerVerwaltung.Helpers;
+using LagerVerwaltung.View;
 using LagerVerwaltung.ViewModel;
 using LagerverwaltungBL.Configuration;
 using LagerverwaltungBL.Controller;
@@ -30,7 +31,7 @@ namespace LagerVerwaltung
     /// 
     public partial class MainWindow : Window
     {
-        class Test { public string Name { get; set; } = "Manuel"; public int Age { get; set; } = 18; }
+       
         public MainWindow( )
         {
             InitializeComponent();
@@ -75,22 +76,25 @@ namespace LagerVerwaltung
 
         private void Window_Loaded( object sender , RoutedEventArgs e )
         {
+            string s = string.Empty;
+            int min = default(int);
             if ( Environment.GetCommandLineArgs()?.Any(item =>
               item != null && ( bool ) item?.Equals("--configure")) == true )
             {
                 SettingsManager.Instance.ShowEditor();
                 CongifManager.UpdateSettings(SettingsManager.Instance.GetSettings());
             }
-            ( this.root.DataContext as MainWindowViewModel ).Init();
-            //MessageBox.Show(SdoManager.GetJsonCoordinates(SdoManager.GetZentrallager()));
-            //List<Zentrallager> lager = SdoManager.GetZentrallager();
-            //string ret = string.Empty;
-            //object[] arr = lager.Where(item => item.Coordinates != null).Select(item => new { Name = item.Standort , coordinates = new { lng = item.Coordinates.X , lat = item.Coordinates.Y } }).ToArray();
+            else if(Environment.GetCommandLineArgs()?.Any(item =>
+              item != null && (bool)item?.Equals("--basic")) == true)
+            {
+                BasicSettings bs = new BasicSettings();
+                bs.ShowDialog();
+                s = bs.GetName();
+                min = bs.GetMin();
+            }
 
-            //object[] a = arr.Select(item => "getLongLat(" + JsonConvert.SerializeObject(new { Name = "bla" , coordinates = new { lng = "45,12" , lat = "52,2" } })).ToArray();
-            //string s = string.Format("function initMap() <| {0} |>" , string.Join(";" , a));
-            //s = s.Replace("<|" , "{").Replace("|>" , "}");
-
+                (this.root.DataContext as MainWindowViewModel ).Init(s,min);
+           
         }
     }
 }

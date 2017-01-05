@@ -21,13 +21,13 @@ namespace TestProject
             try
             {
                 ConfigureBl.Initialize();
-                foreach(Customer c in CustomerManager.GetAllCustomers())
+                /*foreach(Customer c in CustomerManager.GetAllCustomers())
                 {
                     allCustomer.Add(c);
                 }
-                Customer manuel = allCustomer.Find(item => item.CustomerId == 5);
-                CustomerManager.DeleteCustomer(manuel);
-                // RechnungManager.InsertRechnungAsDoc(manuel.Rechnungen.ElementAt(1));
+                Customer manuel = allCustomer.Find(item => item.CustomerId == 4);*/
+               
+                RechnungManager.InsertRechnungAsDoc(2);
                 //List<byte[]> docs = RechnungManager.GetAllRechnungenForKunde(manuel.CustomerId);
             }
             catch(Exception ex)

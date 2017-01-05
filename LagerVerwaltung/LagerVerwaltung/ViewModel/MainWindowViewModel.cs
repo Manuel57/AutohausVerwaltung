@@ -21,7 +21,7 @@ namespace LagerVerwaltung.ViewModel
     public class MainWindowViewModel : ModelBase
     {
         #region private fields
-        private static double threadSlepp = 1;
+        private static double threadSlepp = 0.5;
         private List<Autoteile> stattController = null;
         private Thread messageThread = null;
         private bool shutDownThread = false;
@@ -53,11 +53,24 @@ namespace LagerVerwaltung.ViewModel
          
         }
         #region public methods
-        public void Init()
+        public void Init(string name, int min)
         {
             try
             {
-                CongifManager.Initialize();
+                if(!string.IsNullOrWhiteSpace(name))
+                {
+                    WERKSTATT = name;
+                }
+                if(min != default(int))
+                {
+                    MINBESTAND = min;
+                }
+
+                if(string.IsNullOrEmpty(name))
+                {
+                    CongifManager.Initialize();
+                }
+               
                 fillView();
                 messageThread.Start();
 
@@ -131,7 +144,7 @@ namespace LagerVerwaltung.ViewModel
                     throw new Exception("Nothing selected to order!");
                 }
 
-                BestellenView bv = new BestellenView(allTeile.ToList().Find(item => item.Bezeichnung == PartToOrder));
+                BestellenView bv = new BestellenView(allTeile.ToList().Find(item => item.Bezeichnung == PartToOrder),WERKSTATT);
                 bv.ShowDialog();
             }
             catch (Exception ex)
@@ -155,7 +168,7 @@ namespace LagerVerwaltung.ViewModel
                           
                            foreach(Autoteile a in TeileManager.GetKritischeTeile(WERKSTATT,MINBESTAND))
                            {
-                               this.importantMessages.Add(new Message() { Short = "Lagerbestand von "+a.Bezeichnung+"  kritisch!\nBestand: " + TeileManager.GetBestand(WERKSTATT,a.Bezeichnung) });
+                               this.importantMessages.Add(new Message() { Short = "Lagerbestand von "+a.Bezeichnung+"  kritisch!\nBestand: " + TeileManager.GetBestand(WERKSTATT,a.Bezeichnung),teil = a.Bezeichnung });
 
                            }
                            

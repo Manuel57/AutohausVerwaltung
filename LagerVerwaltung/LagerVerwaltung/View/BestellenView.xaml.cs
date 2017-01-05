@@ -31,6 +31,7 @@ namespace LagerVerwaltung.View
     {
         //auf der karte ghörn dann de Standorte der Lager eingezeichnet
         private Autoteile autoteil = new Autoteile() { Bezeichnung ="default",Preis=0};
+        private string Werkstatt = default(string);
         private Uri browserUri = new Uri("https://www.google.com/maps/@46.953771,14.0898729,9.25z", UriKind.Absolute);
 
         private BestellenView( )
@@ -60,11 +61,12 @@ namespace LagerVerwaltung.View
             this.txtTime.Text = msg;
         }
 
-        public BestellenView( Autoteile autoteile ) : this()
+        public BestellenView( Autoteile autoteile ,string Werkstatt) : this()
         {
 
 
             this.autoteil = autoteile;
+            this.Werkstatt = Werkstatt;
             try
             {
                 File.WriteAllText("./../../ScriptAndPages/data.js" , SdoManager.GetJsonCoordinates(autoteil , "Villach"));
@@ -88,7 +90,7 @@ namespace LagerVerwaltung.View
             try
             {
 
-                ( this.root.DataContext as BestellenViewModel ).selected = this.autoteil;
+                (this.root.DataContext as BestellenViewModel).init(this.Werkstatt, this.autoteil);
                 ( this.root.DataContext as BestellenViewModel ).TeilChanged();
                 this.browser.ObjectForScripting = new JsCommunication(JsFinishedCallback);
 

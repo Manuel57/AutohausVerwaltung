@@ -79,7 +79,7 @@ namespace Benutzerverwaltung.ViewModel
                 {
                     this.Kunde.Rechnungen.Where<Rechnung>(item =>
                         !item.IsAlreadyPdf).ToList<Rechnung>().
-                        ForEach(item => RechnungManager.InsertRechnungAsDoc(item));
+                        ForEach(item => RechnungManager.InsertRechnungAsDoc(item.Rechnungsnummer));
                     CustomerManager.DeleteCustomer(this.Kunde);
                 }
             }

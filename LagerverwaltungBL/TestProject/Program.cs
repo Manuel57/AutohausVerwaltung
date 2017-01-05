@@ -58,7 +58,7 @@ namespace TestProject
                 //}
 
                 Console.WriteLine("Start");
-                TeileManager.Order("Blinker" , "Villach" , "9500 Villach" , 5);
+                TeileManager.Order("Tür" , "Villach" , "9500 Villach" , 5);
                 Console.WriteLine("Finished");
 
 

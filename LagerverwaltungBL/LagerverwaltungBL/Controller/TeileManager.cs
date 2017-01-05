@@ -1,6 +1,7 @@
 ﻿using Database.Common;
 using Database.Common.Impl;
 using LagerverwaltungBL.Model;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -154,5 +155,82 @@ namespace LagerverwaltungBL.Controller
             }
 
         }
-    }
+
+         /// <summary>
+        /// Orders a autoteil to the given wekskstatt
+        /// updates the inventory
+        /// creates a new Werkstattlager if it has not already been existing
+        /// </summary>
+        /// <param name="bezeichnung">the bezeichnung of the autoteil</param>
+        /// <param name="werkstatt">the unique standort of the werkstatt</param>
+        /// <param name="zentrallager">the unique standort of the zentrallager</param>
+        /// <param name="quantity">the quantity</param>
+        /// <returns>true if everything has been ok</returns>
+        public static bool Order(string bezeichnung, string werkstatt, string zentrallager, int quantity)
+        {
+            Werkstattlager lager = null;
+            try
+            {
+                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                {
+                    long count = repository.CountWhere<Werkstattlager>(DetachedCriteria.For<Werkstattlager>()
+                                                        .Add(Restrictions.Where<Werkstattlager>(item => item.Werkstatt.Standort == (werkstatt)))
+                                                        .Add(Restrictions.Where<Werkstattlager>(item => item.Teil.Bezeichnung == (bezeichnung))));
+                    if (count > 0)
+                    {
+
+                        lager = repository.SelectSingleWhere<Werkstattlager>(item => item.Werkstatt.Standort.Equals(werkstatt) && item.Teil.Bezeichnung.Equals(bezeichnung));
+                        lager.Bestand += quantity;
+                    }
+                    else
+                    {
+                        Werkstatt w = repository.SelectSingleWhere<Werkstatt>(item => item.Standort.Equals(werkstatt));
+                        Autoteile a = repository.SelectSingleWhere<Autoteile>(item => item.Bezeichnung.Equals(bezeichnung));
+
+                        lager = new Werkstattlager() { Werkstatt = w, Teil = a, Bestand = quantity };
+                    }
+
+                    repository.SaveOrUpdate<Werkstattlager>(lager);
+                }
+                return true;
+            }
+            catch ( DatabaseException )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw ( new DatabaseException(ex , "Error at ordering") );
+            }
+
+        }
+
+        /// <summary>
+        /// selects the names of all Werkstätten in der DB
+        /// </summary>
+        /// <returns>a List of all names</returns>
+        public static IEnumerable<string> AllWerkstattNames()
+        {
+
+            try
+            {
+                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                    List<string> ret = new List<string>();
+                    ret = repository.SelectMany<Werkstatt>().AsEnumerable()
+                                     .Select<Werkstatt, string>(item => item.Standort).ToList();
+                    return ret;
+                }
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
+            }
+
+        }
+   }
 }

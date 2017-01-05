@@ -46,13 +46,15 @@ namespace Benutzerverwaltung.View
         {
             try
             {
-                Rechnung r = CustomerManager.GetSingleCustomerById(( sender as RechnungAusstellenButton ).CustomerId).Rechnungen.ToList<Rechnung>().Find(item => item.Rechnungsnummer.Equals(( sender as RechnungAusstellenButton ).RechnungsNummer));
-                RechnungManager.InsertRechnungAsDoc(r);
+                int rechnungsID = (sender as RechnungAusstellenButton).RechnungsNummer;
+                int customerId = (sender as RechnungAusstellenButton).CustomerId;
+              
+                RechnungManager.InsertRechnungAsDoc(rechnungsID);
                 this.listView.ItemsSource = null;
-                this.listView.ItemsSource = CustomerManager.GetSingleCustomerById(r.Kunde.CustomerId).Rechnungen;
+                this.listView.ItemsSource = CustomerManager.GetSingleCustomerById(customerId).Rechnungen;
 
-                File.WriteAllBytes("Rechnung-" + r.Rechnungsnummer + ".pdf" , RechnungManager.GetCertainRechnungForKunde(r.Kunde.CustomerId , r.Rechnungsdatum));
-                Process.Start("Rechnung-" + r.Rechnungsnummer + ".pdf");
+                File.WriteAllBytes("Rechnung-" + rechnungsID + ".pdf" , RechnungManager.GetCertainRechnungForKunde(customerId,rechnungsID));
+                Process.Start("Rechnung-" + rechnungsID+ ".pdf");
             }
             catch ( Exception ex )
             {

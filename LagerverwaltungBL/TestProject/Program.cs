@@ -22,7 +22,7 @@ namespace TestProject
             {
                 CongifManager.Initialize();
 
-                List<Zentrallager> lager = SdoManager.GetZentrallager();
+                //List<Zentrallager> lager = SdoManager.GetZentrallager();
                 //CongifManager.UpdateSettings(new DatabaseSettings() { IpAddress = IpAddress.Extern });
                 //IEnumerable<Autoteile> ret = TeileManager.GetAutoteileWerkstatt("Villach");
                 //foreach ( var item in ret )
@@ -52,10 +52,13 @@ namespace TestProject
                 //        }
                 //    }
                 //}
-                foreach ( var item in lager )
-                {
-                    Console.WriteLine(item.Coordinates?.X);
-                }
+                //foreach ( var item in lager )
+                //{
+                //    Console.WriteLine(item.Coordinates?.X);
+                //}
+
+                Console.WriteLine("Start");
+                TeileManager.Order("Blinker" , "Villach" , "9500 Villach" , 5);
                 Console.WriteLine("Finished");
 
 

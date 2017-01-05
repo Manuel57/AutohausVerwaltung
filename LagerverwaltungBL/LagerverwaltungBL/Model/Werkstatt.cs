@@ -25,7 +25,6 @@ namespace LagerverwaltungBL.Model
         [OneToMany(Class = "LagerverwaltungBL.Model.Werkstattlager")]
         public virtual IEnumerable<Werkstattlager> Lager { get; set; }
 
-        //public virtual Point Coordinates { get; set; }
 
     }
 }

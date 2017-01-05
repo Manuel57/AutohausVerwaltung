@@ -78,12 +78,10 @@ namespace LagerverwaltungBL.Controller
                         repository.SelectMany<Werkstattlager>().AsEnumerable());
                     List<Autoteile> ret = new List<Autoteile>();
 
-                      wl?.Where<Werkstattlager>(item =>
-                      item.Werkstatt.Standort.Equals(standort) &&
-                      item.Bestand < minBestand).ToList<Werkstattlager>()
-                      .ForEach(item => ret.Add(item.Teil));
-
-                    return ret;
+                    return wl?.Where<Werkstattlager>(item =>
+                    item.Werkstatt.Standort.Equals(standort) &&
+                    item.Bestand < minBestand)
+                    .Select<Werkstattlager, Autoteile>(item => item.Teil);
                 }
             }
             catch ( DatabaseException )

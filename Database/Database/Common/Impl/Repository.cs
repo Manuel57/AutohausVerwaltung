@@ -34,12 +34,15 @@ namespace Database.Common.Impl
         #region protected fields
         protected ISession session = null;
         protected ITransaction Transaction = null;
+        protected bool errorOccoured = false;
         #endregion protected fields
+
         #endregion fields
 
         #region constructors
         public Repository( ISession _session ) { session = _session; }
-        public Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); }
+        public Repository( ) { session = Database.Connection.Database.Instance.OpenSession(); Transaction = session.BeginTransaction(); errorOccoured = false; }
+
         #endregion constructors
 
         #region transaction session methods
@@ -49,8 +52,6 @@ namespace Database.Common.Impl
         /// </summary>
         public void CommitTransaction( )
         {
-
-
             try
             {
                 Transaction.Commit();
@@ -117,7 +118,10 @@ namespace Database.Common.Impl
 
         }
 
-
+        private void setError( )
+        {
+            this.errorOccoured = true;
+        }
 
         private void CloseSession( )
         {
@@ -149,7 +153,22 @@ namespace Database.Common.Impl
         /// <returns>the sql query</returns>
         public ISQLQuery GetQuery( string query )
         {
-            return this.session.CreateSQLQuery(query);
+
+            try
+            {
+                return this.session.CreateSQLQuery(query);
+            }
+            catch ( DatabaseException ex )
+            {
+                this.setError();
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                this.setError();
+                throw ( new DatabaseException(ex , "Error while Createing sql query" , query) );
+            }
+
         }
 
 
@@ -169,10 +188,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException ex )
             {
+                this.setError();
                 throw;
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Error in counting the Rows" , null) );
             }
         }
@@ -191,17 +212,19 @@ namespace Database.Common.Impl
         {
             try
             {
-                Transaction = session.BeginTransaction();
+                //Transaction = session.BeginTransaction();
                 session.Delete(entity);
-                CommitTransaction();
+                //CommitTransaction();
             }
             catch ( DatabaseException ex )
             {
+                this.setError();
                 throw;
             }
             catch ( Exception ex )
             {
-                RollbackTransaction();
+                //RollbackTransaction();
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not delete the entity!" , entity) );
             }
         }
@@ -221,10 +244,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Error in deletewhere!") );
             }
         }
@@ -246,6 +271,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Error in selecting max") );
             }
 
@@ -266,10 +292,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException )
             {
+                this.setError();
                 throw;
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not load the entity with the id " + objId , null) );
             }
 
@@ -286,17 +314,19 @@ namespace Database.Common.Impl
         {
             try
             {
-                Transaction = session.BeginTransaction();
+                //Transaction = session.BeginTransaction();
                 session.SaveOrUpdate(entity);
-                CommitTransaction();
+                //CommitTransaction();
             }
             catch ( DatabaseException )
             {
+                this.setError();
                 throw;
             }
             catch ( Exception ex )
             {
-                RollbackTransaction();
+                //RollbackTransaction();
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not save/update the entity!" , entity) );
             }
         }
@@ -315,10 +345,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "An Error in List occurd") );
             }
 
@@ -347,10 +379,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Different Error in selecting") );
             }
         }
@@ -374,10 +408,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select first entity!") );
             }
         }
@@ -400,10 +436,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select first entity orderd!" , null) );
             }
         }
@@ -426,10 +464,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select all entity!" , "selectManyWhere") );
             }
         }
@@ -456,10 +496,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select all entity!" , "selectManyWhere") );
             }
 
@@ -480,6 +522,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "More than one entity is matching the criteria" , "SelectSingel") );
             }
         }
@@ -502,6 +545,7 @@ namespace Database.Common.Impl
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select entity/ies. Watch your linq expression!" , "selectManyWhere Linq Expression") );
             }
         }
@@ -524,15 +568,17 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select entities. Watch your linq expression!" , "selectManyWhere Linq Expression") );
             }
         }
 
-      
+
 
         /// <summary>
         /// Calls the SelectManyWhere method with the given linq expression.
@@ -552,10 +598,12 @@ namespace Database.Common.Impl
             }
             catch ( DatabaseException dex )
             {
+                this.setError();
                 throw ( dex );
             }
             catch ( Exception ex )
             {
+                this.setError();
                 throw ( new DatabaseException(ex , "Could not select entity. Watch your linq expression!" , "selectSingelWhere Linq Expression") );
             }
         }
@@ -570,7 +618,10 @@ namespace Database.Common.Impl
         {
             if ( Transaction != null )
             {
-                CommitTransaction();
+                if ( this.errorOccoured )
+                    RollbackTransaction();
+                else
+                    CommitTransaction();
             }
             if ( session != null )
             {

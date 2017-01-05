@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LagerverwaltungBL.Model
 {
-    [Class(Table = "werkstattlager" , Name = "LagerverwaltungBL.Model.Werkstattlager,LagerverwaltungBL")]
+    [Class(Table = "werkstattlager" , Name = "LagerverwaltungBL.Model.Werkstattlager,LagerverwaltungBL", SelectBeforeUpdate =true, DynamicUpdate =true)]
     public class Werkstattlager : IEntity
     {
         [Property(Name = "Bestand" , Column = "lagerbastand")]

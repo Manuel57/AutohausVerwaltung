@@ -8,5 +8,6 @@ namespace LagerVerwaltung.ViewModel
 {
     public class ChangeTeilViewModel
     {
+
     }
 }

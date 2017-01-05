@@ -22,10 +22,8 @@ namespace BenutzerverwaltungBL.Controller
     public static class RechnungManager
     {
 
-        #region private fields
-        private static string SEARCHFFORRECHNUNGEN = "SEARCHFORRECHNUNG";
+        #region private fields     
         private static string TABLERECHNUNGDOCS = "RECHNUNGDOCS";
-        private static string TABLERECHNUNGHELP = "RECHNUNGDOCSHELPTABLE";
         private static IRepository repository = null;
         #endregion
 
@@ -71,6 +69,11 @@ namespace BenutzerverwaltungBL.Controller
 
         }
 
+        /// <summary>
+        /// inserts all Bills, which have not already been safed
+        /// as pdf, in the DB as PDF
+        /// </summary>
+        /// <param name="customerID">the customer identifier</param>
         public static void InsertAllRechnungAsDoc(int customerID)
         {
 

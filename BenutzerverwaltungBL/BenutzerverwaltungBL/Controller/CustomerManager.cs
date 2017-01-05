@@ -243,6 +243,7 @@ namespace BenutzerverwaltungBL.Controller
         /// <summary>
         /// deletes the given customer in the database and all bills of the customer.
         /// throws an exception if an error occurs.
+        /// Ensures that all bills of the customer are saved as PDF in the DB
         /// </summary>
         /// <param name="customerToDelete"></param>
         /// <returns>true if succeeded or throws an exception</returns>
@@ -253,6 +254,7 @@ namespace BenutzerverwaltungBL.Controller
                 using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     RechnungManager.InsertAllRechnungAsDoc(customerToDelete.CustomerId);
+
                     customerToDelete.Rechnungen.ToList()
                        .ForEach(item => item.Reparaturen.ToList()
                        .ForEach(i => repository.Delete(i)

@@ -8,7 +8,7 @@ using Database.Common;
 
 namespace BenutzerverwaltungBL.Model.DataObjects
 {
-    [Class(Table ="Kunde",Name = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL")]
+    [Class(Table ="Kunde",Name = "BenutzerverwaltungBL.Model.DataObjects.Customer,BenutzerverwaltungBL", SelectBeforeUpdate = true, DynamicUpdate = true)]
     public class Customer: ICloneable,IEntity
     {
         

@@ -37,46 +37,55 @@ function getLongLat(info) {
 
 
 function initMap() {
-    if(!(typeof(lagerCoords == 'undefined'))) {
-        for (var i in lagerCoords) {
-            getLongLat(lagerCoords[i]);
-            //calcRoute(werkstatt.coordinates, lagerCoords[i].coordinates);
-        }
+    if (typeof lagerCoords === 'undefined') {
+        lagerCoords = [];
     }
-    getLongLat(werkstatt);
 
-    this.mapInfo.matrixService.getDistanceMatrix(
-      {
-          origins: [werkstatt.coordinates],
-          destinations: lagerCoords.map(function (el) { return el.coordinates; }),
-          travelMode: google.maps.TravelMode.DRIVING,
-          unitSystem: google.maps.UnitSystem.METRIC,
-          avoidHighways: false,
-          avoidTolls: false
-      }, callback);
+    for (var i in lagerCoords) {
+        getLongLat(lagerCoords[i]);
+        //calcRoute(werkstatt.coordinates, lagerCoords[i].coordinates);
+    }
+    try {
+        getLongLat(werkstatt);
 
-    function callback(response, status) {
+        this.mapInfo.matrixService.getDistanceMatrix(
+          {
+              origins: [werkstatt.coordinates],
+              destinations: lagerCoords.map(function (el) { return el.coordinates; }),
+              travelMode: google.maps.TravelMode.DRIVING,
+              unitSystem: google.maps.UnitSystem.METRIC,
+              avoidHighways: false,
+              avoidTolls: false
+          }, callback);
 
-        for (var i in response.rows) {
-            for (var j in response.rows[i].elements) {
-            }
-        }
-        var shortest = response.rows[0].elements.reduce(function (p, v) {
-            return (p.duration.value < v.duration.value ? p : v);
-        });
-
-        var cnt = 0;
-        for (var i in response.rows) {
-            for (var j in response.rows[i].elements) {
-                if (shortest == response.rows[i].elements[j]) {
-                    cnt = j;
-                    break;
+        function callback(response, status) {
+            try {
+                for (var i in response.rows) {
+                    for (var j in response.rows[i].elements) {
+                    }
                 }
+                var shortest = response.rows[0].elements.reduce(function (p, v) {
+                    return (p.duration.value < v.duration.value ? p : v);
+                });
+
+                var cnt = 0;
+                for (var i in response.rows) {
+                    for (var j in response.rows[i].elements) {
+                        if (shortest == response.rows[i].elements[j]) {
+                            cnt = j;
+                            break;
+                        }
+                    }
+                }
+                calcRoute(werkstatt.coordinates, response.destinationAddresses[cnt]);
+                mapInfo.setTime(shortest.duration.text);
+                window.external.FinishedCalculating(shortest.duration.text);
+            } catch (exception) {
+
             }
         }
-        calcRoute(werkstatt.coordinates, response.destinationAddresses[cnt]);
-        mapInfo.setTime(shortest.duration.text);
-        window.external.FinishedCalculating(shortest.duration.text);
+    } catch (ex) {
+
     }
 }
 function getTime() {

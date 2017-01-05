@@ -30,6 +30,7 @@ namespace LagerVerwaltung.ViewModel
         #endregion
 
         #region public fields
+        public Action<bool> TeilChanged { get; set; }
         public ObservableCollection<Autoteile> allTeile { get; set; }
         public ObservableCollection<Message> importantMessages { get; set; }
         public RelayCommand CreateTeilCommand { get; set; }
@@ -40,6 +41,9 @@ namespace LagerVerwaltung.ViewModel
         public string PartToOrder { get; set; }
         public string Preis { get; set; }
         public string Bestand { get; set; }
+        public Action<Autoteile> TeilNotOk { get; internal set; }
+        public Action<string> TeilOk { get; internal set; }
+        private DispatcherTimer timer;
         #endregion
         public MainWindowViewModel()
         {
@@ -50,7 +54,16 @@ namespace LagerVerwaltung.ViewModel
             this.OrderTeilCommand = new RelayCommand(this.orderTeil);
             this.messageThread = new Thread(getMessages);
             this.BestandKrititsch += test;
+            this.timer = new DispatcherTimer();
+            this.timer.Tick += timerTick;
+            this.timer.Interval = TimeSpan.FromMilliseconds(500);
          
+        }
+        private bool toggle = false;
+        private void timerTick( object sender , EventArgs e )
+        {
+            this.toggle = !toggle;
+            this.TeilChanged(toggle);
         }
         #region public methods
         public void Init(string name, int min)
@@ -146,6 +159,13 @@ namespace LagerVerwaltung.ViewModel
 
                 BestellenView bv = new BestellenView(allTeile.ToList().Find(item => item.Bezeichnung == PartToOrder),WERKSTATT);
                 bv.ShowDialog();
+                if ( this.importantMessages.DefaultIfEmpty(null).FirstOrDefault(item => item.teil.Equals(PartToOrder)) != null )
+                {
+                    this.TeilOk(PartToOrder);
+                    this.importantMessages.Remove(this.importantMessages.DefaultIfEmpty(null).FirstOrDefault(item => item.teil.Equals(PartToOrder)));
+                    if ( this.importantMessages.Count == 0 )
+                        this.timer.Stop();
+                }
             }
             catch (Exception ex)
             {
@@ -168,8 +188,10 @@ namespace LagerVerwaltung.ViewModel
                           
                            foreach(Autoteile a in TeileManager.GetKritischeTeile(WERKSTATT,MINBESTAND))
                            {
-                               this.importantMessages.Add(new Message() { Short = "Lagerbestand von "+a.Bezeichnung+"  kritisch!\nBestand: " + TeileManager.GetBestand(WERKSTATT,a.Bezeichnung),teil = a.Bezeichnung });
-
+                               Message m = new Message() { Short = "Lagerbestand von " + a.Bezeichnung + "  kritisch!\nBestand: " + TeileManager.GetBestand(WERKSTATT , a.Bezeichnung) , teil = a.Bezeichnung };
+                               this.importantMessages.Add(m);
+                               this.TeilNotOk(a);
+                               this.timer.Start();
                            }
                            
                         });

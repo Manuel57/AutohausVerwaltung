@@ -8,7 +8,6 @@ using BenutzerverwaltungBL.Model.DataObjects;
 using iTextSharp.text.pdf;
 using System.IO;
 using iTextSharp.text;
-using iTextSharp;
 using Remotion.Linq.Collections;
 
 namespace BenutzerverwaltungBL.Controller

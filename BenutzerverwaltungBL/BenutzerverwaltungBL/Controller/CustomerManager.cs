@@ -22,7 +22,7 @@ namespace BenutzerverwaltungBL.Controller
     {
         #region private fields
         private static string DEFAULTWERKSTATTKONZERN = "THE MECHANICS";
-        private static IRepository repository = null;
+        //private static IRepository repository = null;
         #endregion
 
         #region methods
@@ -40,7 +40,7 @@ namespace BenutzerverwaltungBL.Controller
         {
             try
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(vorname+nachname, birthDate);
                     Customer customer = new Customer()
@@ -83,7 +83,7 @@ namespace BenutzerverwaltungBL.Controller
         {
             try
             {               
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                    return repository.GetById<Customer>(id);
                 }
@@ -111,7 +111,7 @@ namespace BenutzerverwaltungBL.Controller
         {
             try
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     return repository.SelectSingleWhere(expression);
                 }
@@ -137,7 +137,7 @@ namespace BenutzerverwaltungBL.Controller
             try
             {
                 IEnumerable<Customer> ret = null;
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     ret = new List<Customer>(repository.SelectMany<Customer>().AsEnumerable());
 
@@ -167,7 +167,7 @@ namespace BenutzerverwaltungBL.Controller
             try
             {
                 IEnumerable<Customer> ret = null;
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     ret = new List<Customer>(repository.SelectManyWhere(expression));
                 }
@@ -195,7 +195,7 @@ namespace BenutzerverwaltungBL.Controller
             try
             {
                 IEnumerable<Customer> ret = null;
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     ret = new List<Customer>(repository.SelectManyWhere<Customer>(criteria));
                 }
@@ -223,7 +223,7 @@ namespace BenutzerverwaltungBL.Controller
         {
             try
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     repository.SaveOrUpdate(newCustomer);
                 }
@@ -251,7 +251,7 @@ namespace BenutzerverwaltungBL.Controller
         {
             try 
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     RechnungManager.InsertAllRechnungAsDoc(customerToDelete.CustomerId);
 

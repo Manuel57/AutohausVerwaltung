@@ -91,6 +91,7 @@ namespace Benutzerverwaltung.View
             {
                 ( this.root.DataContext as DetailsViewModel ).Kunde = c;
                 ( this.root.DataContext as DetailsViewModel ).ChangedAll();
+                ( this.root.DataContext as DetailsViewModel ).Close = ( ) => { this.Close(); };
             }
             catch ( Exception )
             {

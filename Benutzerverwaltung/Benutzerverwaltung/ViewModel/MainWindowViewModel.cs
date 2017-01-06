@@ -59,7 +59,7 @@ namespace Benutzerverwaltung.ViewModel
                 CustomerDetailsView cdv = new CustomerDetailsView(
                     CustomerDetailsMode.Delete , this.Emp.DefaultIfEmpty(null).
                     FirstOrDefault(item => item.CustomerId.Equals(CustId)));
-                cdv.Show();
+                cdv.ShowDialog();
                 updateView();
             }
             catch ( Exception ex )

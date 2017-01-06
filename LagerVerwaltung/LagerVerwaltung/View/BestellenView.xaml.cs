@@ -49,9 +49,7 @@ namespace LagerVerwaltung.View
                 this.Dispatcher.Invoke(( ) =>
                 {
                     this.browser.InvokeScript("initMap");
-
-
-
+                    
                 });
             }).Start();
             

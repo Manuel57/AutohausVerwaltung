@@ -24,7 +24,7 @@ namespace BenutzerverwaltungBL.Controller
 
         #region private fields     
         private static string TABLERECHNUNGDOCS = "RECHNUNGDOCS";
-        private static IRepository repository = null;
+        //private static IRepository repository = null;
         #endregion
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace BenutzerverwaltungBL.Controller
             {
                 bool ret = true;
                 Rechnung rechnungn;
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     rechnungn = repository.SelectSingle<Rechnung>(DetachedCriteria.For<Rechnung>()
                                                                   .Add(Restrictions.IdEq(rechnungsId)));
@@ -79,13 +79,13 @@ namespace BenutzerverwaltungBL.Controller
 
             try
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
-                {
+                //using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                //{
                     Customer c = CustomerManager.GetSingleCustomerById(customerID);
                     c.Rechnungen.ToList()
                                 .Where(item => item.IsAlreadyPdf == false).ToList()
                                 .ForEach(item => InsertRechnungAsDoc(item.Rechnungsnummer));
-                }
+                //}
             }
             catch (DatabaseException)
             {
@@ -108,7 +108,7 @@ namespace BenutzerverwaltungBL.Controller
             try
             {
                 List<byte[]> ret = new List<byte[]>();
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ISQLQuery query = repository.GetQuery("select text from " + TABLERECHNUNGDOCS + " r where r.title like ?");
                     query.SetString(0 , "%" + customerID + "%");
@@ -146,7 +146,7 @@ namespace BenutzerverwaltungBL.Controller
             {
                 byte[] ret = null;
 
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     Rechnung r = repository.SelectSingle<Rechnung>(DetachedCriteria.For<Rechnung>()
                                                                   .Add(Restrictions.IdEq(rechnungsID)));
@@ -155,6 +155,7 @@ namespace BenutzerverwaltungBL.Controller
                     query.SetString(0 , customerID + "%" + r.Rechnungsdatum.ToShortDateString());
                     query.AddScalar("text" , NHibernateUtil.BinaryBlob);
                     ret = query.UniqueResult() as byte[];
+
 
                 }
 

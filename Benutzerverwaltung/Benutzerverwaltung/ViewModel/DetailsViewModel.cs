@@ -19,6 +19,7 @@ namespace Benutzerverwaltung.ViewModel
         public RelayCommand ReparaturenCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand ChangeCommand { get; set; }
+        public Action Close { get; internal set; }
 
         public DetailsViewModel( )
         {
@@ -81,6 +82,7 @@ namespace Benutzerverwaltung.ViewModel
                     //    !item.IsAlreadyPdf).ToList<Rechnung>().
                     //    ForEach(item => RechnungManager.InsertRechnungAsDoc(item.Rechnungsnummer));
                     CustomerManager.DeleteCustomer(this.Kunde);
+                    this.Close();
                 }
             }
             catch ( Exception ex )

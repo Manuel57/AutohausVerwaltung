@@ -68,7 +68,6 @@ namespace Benutzerverwaltung.ViewModel
 
         /// <summary>
         /// Removes the customer
-        /// Saves all the customer's bills before deleting
         /// </summary>
         private void delete( )
         {
@@ -77,10 +76,7 @@ namespace Benutzerverwaltung.ViewModel
             {
                 MessageBoxResult dialogResult = MessageBox.Show(Properties.Resources.AreYouSure , "Delete" , MessageBoxButton.YesNo , MessageBoxImage.Warning);
                 if ( dialogResult.Equals(MessageBoxResult.Yes) )
-                {
-                    //this.Kunde.Rechnungen.Where<Rechnung>(item =>
-                    //    !item.IsAlreadyPdf).ToList<Rechnung>().
-                    //    ForEach(item => RechnungManager.InsertRechnungAsDoc(item.Rechnungsnummer));
+                {                    
                     CustomerManager.DeleteCustomer(this.Kunde);
                     this.Close();
                 }

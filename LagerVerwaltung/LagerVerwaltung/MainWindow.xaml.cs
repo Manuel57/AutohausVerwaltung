@@ -93,7 +93,7 @@ namespace LagerVerwaltung
                 min = bs.GetMin();
             }
 
-                ( this.root.DataContext as MainWindowViewModel ).Init(s , min);
+            ( this.root.DataContext as MainWindowViewModel ).Init(s , min);
             ( this.root.DataContext as MainWindowViewModel ).TeilChanged = teilChanged;
             ( this.root.DataContext as MainWindowViewModel ).TeilNotOk = teilNotOk;
             ( this.root.DataContext as MainWindowViewModel ).TeilOk = teilOK;

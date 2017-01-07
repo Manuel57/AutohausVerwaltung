@@ -54,7 +54,8 @@ namespace LagerverwaltungBL.Controller
                 using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    return wl.Where<Werkstattlager>(item => item.Werkstatt.Standort.Equals(standort)).Select<Werkstattlager , Autoteile>(item => item.Teil);
+                    return wl.Where<Werkstattlager>(item => item.Werkstatt.Standort.Equals(standort))
+                             .Select<Werkstattlager , Autoteile>(item => item.Teil);
                 }
             }
             catch ( DatabaseException )
@@ -68,7 +69,14 @@ namespace LagerverwaltungBL.Controller
 
         }
 
-       
+       /// <summary>
+       /// Gets alle Teile from the given Werkstatt
+       /// where the amount is less than the given minBestand.
+       /// Throws an exception if an error occurs
+       /// </summary>
+       /// <param name="standort">the name of the Werkstatt</param>
+       /// <param name="minBestand">the critical amout of Teile</param>
+       /// <returns>a List of Autoteile</returns>
         public static IEnumerable<Autoteile> GetKritischeTeile( string standort, int minBestand)
         {
             try
@@ -77,12 +85,11 @@ namespace LagerverwaltungBL.Controller
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(
                         repository.SelectMany<Werkstattlager>().AsEnumerable());
-                    List<Autoteile> ret = new List<Autoteile>();
-
+                 
                     return wl?.Where<Werkstattlager>(item =>
-                    item.Werkstatt.Standort.Equals(standort) &&
-                    item.Bestand < minBestand)
-                    .Select<Werkstattlager, Autoteile>(item => item.Teil);
+                                        item.Werkstatt.Standort.Equals(standort) &&
+                                        item.Bestand < minBestand)
+                              .Select<Werkstattlager, Autoteile>(item => item.Teil);
                 }
             }
             catch ( DatabaseException )
@@ -91,11 +98,18 @@ namespace LagerverwaltungBL.Controller
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
+                throw ( new DatabaseException(ex , "Error in selecting critical autoteile ") );
             }
 
         }
 
+        /// <summary>
+        /// gets the amount of the teil stored in the given 
+        /// Werkstatt.
+        /// </summary>
+        /// <param name="standort">the name of the Werkstatt</param>
+        /// <param name="teil">the name of the Teil</param>
+        /// <returns>either default(int) or the amount of the teil in the Werkstatt</returns>
         public static int? GetBestand(string standort, string teil)
         {
             try
@@ -122,6 +136,7 @@ namespace LagerverwaltungBL.Controller
             }
 
         }
+       
         /// <summary>
         /// Creates a teil and returns a copy of it
         /// </summary>

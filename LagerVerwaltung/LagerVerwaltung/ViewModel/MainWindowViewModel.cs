@@ -22,11 +22,13 @@ namespace LagerVerwaltung.ViewModel
     {
         #region private fields
         private static double threadSlepp = 0.5;
-        private List<Autoteile> stattController = null;
+       // private List<Autoteile> stattController = null;
         private Thread messageThread = null;
         private bool shutDownThread = false;
         private static string WERKSTATT = "Villach";
         private static int MINBESTAND = 100;
+        private bool toggle = false;
+        private DispatcherTimer timer;
         #endregion
 
         #region public fields
@@ -36,14 +38,12 @@ namespace LagerVerwaltung.ViewModel
         public RelayCommand CreateTeilCommand { get; set; }
         public RelayCommand OrderTeilCommand { get; set; }
         public Window MainWindow { set; private get; }
-
-        public event EventHandler<EventArgs> BestandKrititsch;
         public string PartToOrder { get; set; }
         public string Preis { get; set; }
         public string Bestand { get; set; }
         public Action<Autoteile> TeilNotOk { get; internal set; }
         public Action<string> TeilOk { get; internal set; }
-        private DispatcherTimer timer;
+       
         #endregion
         public MainWindowViewModel()
         {
@@ -53,13 +53,13 @@ namespace LagerVerwaltung.ViewModel
             this.CreateTeilCommand = new RelayCommand(this.createTeil);
             this.OrderTeilCommand = new RelayCommand(this.orderTeil);
             this.messageThread = new Thread(getMessages);
-            this.BestandKrititsch += test;
+           
             this.timer = new DispatcherTimer();
             this.timer.Tick += timerTick;
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
          
         }
-        private bool toggle = false;
+      
         private void timerTick( object sender , EventArgs e )
         {
             this.toggle = !toggle;
@@ -195,8 +195,7 @@ namespace LagerVerwaltung.ViewModel
                            }
                            
                         });
-                        //foreach teil in importantan  Message
-                        BestandKrititsch(this, null);
+                      
                     }
 
                     Thread.Sleep(TimeSpan.FromMinutes(threadSlepp));
@@ -208,10 +207,7 @@ namespace LagerVerwaltung.ViewModel
                 ExceptionHelper.Handle(ex);
             }
         }
-        private void test(object s, EventArgs e)
-        {
-            //rot färben vom Rand
-        }
+     
 
         private void propertyChanged(params string[] properties)
         {
@@ -238,7 +234,6 @@ namespace LagerVerwaltung.ViewModel
         {
             try
             {
-
                 allTeile.Clear();
                 foreach(Autoteile a in TeileManager.GetAutoteile())
                 {
@@ -255,7 +250,7 @@ namespace LagerVerwaltung.ViewModel
 
         }
 
-        private void createTeile()
+        /*private void createTeile()
         {
             this.stattController = new List<Autoteile>();
             Autoteile reifen = new Autoteile() { Bezeichnung = "Reifen", Preis = 400 };
@@ -266,7 +261,7 @@ namespace LagerVerwaltung.ViewModel
             stattController.Add(schraube);
             stattController.Add(vergaser);
 
-        }
+        }*/
         #endregion
     }
 }

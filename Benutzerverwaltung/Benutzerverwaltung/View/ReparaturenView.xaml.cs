@@ -37,8 +37,7 @@ namespace Benutzerverwaltung.View
         }
 
         /// <summary>
-        /// Create Rechnung  !!!!Verbesserungsbedürftig 
-        ///  -> BL benötigt funktion für rechnung  erstellen per Rechnungsnummer
+        /// Creates a Rechnung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

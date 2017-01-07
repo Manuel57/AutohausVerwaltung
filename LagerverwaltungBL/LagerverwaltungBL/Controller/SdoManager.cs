@@ -24,12 +24,12 @@ namespace LagerverwaltungBL.Controller
         /// Creates a json string containing the coordinates of all zentrallager having the given teil instock
         /// </summary>
         /// <param name="teil">the teil</param>
-        /// <param name="werkstat">the werkstatt</param>
+        /// <param name="werkstatt">the werkstatt</param>
         /// <returns>json string</returns>
-        public static string GetJsonCoordinates( Autoteile teil ,string werkstat)
+        public static string GetJsonCoordinates( Autoteile teil ,string werkstatt)
         {
             string ret = string.Empty;
-            ret = GetJsonCoordinates(GetZentrallagerByTeil(teil), werkstat);
+            ret = GetJsonCoordinates(GetZentrallagerByTeil(teil), werkstatt);
             return ret;
         }
         /// <summary>
@@ -129,8 +129,7 @@ namespace LagerverwaltungBL.Controller
                     cols.Add(new Column() { Alias = "lon" , Name = "t.X" , Type = NHibernate.NHibernateUtil.String });
                     cols.Add(new Column() { Alias = "lat" , Name = "t.Y" , Type = NHibernate.NHibernateUtil.String });
                     foreach ( var item in lager )
-                    {
-                        //object[] coords =
+                    {                       
                         IList lst = ( repository as RepositoryForSpecialDataTypes ).GetQuery(Database.Connection.Database.GetTableName<T>() + ", table(sdo_util.getvertices(" +sdoCol + ")) t" ,
                     string.Format("not " + sdoCol + " is null and " + Database.Connection.Database.GetColumnName<T>(idCol) + " = '{0}'" , item.Id) , cols); 
                         if ( lst.Count > 0 )

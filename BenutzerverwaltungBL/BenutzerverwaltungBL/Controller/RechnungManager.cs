@@ -79,13 +79,12 @@ namespace BenutzerverwaltungBL.Controller
 
             try
             {
-                //using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
-                //{
+               
                     Customer c = CustomerManager.GetSingleCustomerById(customerID);
                     c.Rechnungen.ToList()
                                 .Where(item => item.IsAlreadyPdf == false).ToList()
                                 .ForEach(item => InsertRechnungAsDoc(item.Rechnungsnummer));
-                //}
+               
             }
             catch (DatabaseException)
             {
@@ -138,7 +137,7 @@ namespace BenutzerverwaltungBL.Controller
         /// by checking the date given
         /// </summary>
         /// <param name="customerID">the customer whos bill to select</param>
-        /// <param name="rechnungsDatum">the date of which the bill is</param>
+        /// <param name="rechnungsID">the id of the bill</param>
         /// <returns> a byte [] or null or throws an exception </returns>
         public static byte[] GetCertainRechnungForKunde( int customerID , int rechnungsID )
         {
@@ -155,7 +154,6 @@ namespace BenutzerverwaltungBL.Controller
                     query.SetString(0 , customerID + "%" + r.Rechnungsdatum.ToShortDateString());
                     query.AddScalar("text" , NHibernateUtil.BinaryBlob);
                     ret = query.UniqueResult() as byte[];
-
 
                 }
 

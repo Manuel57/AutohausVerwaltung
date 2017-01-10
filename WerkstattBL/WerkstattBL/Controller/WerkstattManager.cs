@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace WerkstattBL.Controller
 {
    public static class WerkstattManager
-    {
-        private static IRepository repository = null;
-
+    {       
         public static void GetMessagesForToday(DateTime now) { }
-        public static void CreateReparatur(int RepartID, int Rechnungsnummer,DateTime date,string Standort) { }
-        private static void DecreaseMenge(int RepartID, string Standort) { } 
+        public static void CreateReparatur(int repartID, int rechnungsnummer,DateTime date,string standort) { }
+        public static void DeleteFromHelp(int rechnungsnummer, DateTime date, int kundenID) { }
+        private static void DecreaseMenge(int repartID, string standort) { } 
+
     }
 }

@@ -14,7 +14,7 @@ namespace LagerverwaltungBL.Controller
 {
     public class TeileManager
     {
-        private static IRepository repository = null;
+       // private static IRepository repository = null;
 
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace LagerverwaltungBL.Controller
         {
             try
             {
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     return new List<Autoteile>(repository.SelectMany<Autoteile>().AsEnumerable());
                 }
@@ -51,7 +51,7 @@ namespace LagerverwaltungBL.Controller
         {
             try
             {
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectMany<Werkstattlager>().AsEnumerable());
                     return wl.Where<Werkstattlager>(item => item.Werkstatt.Standort.Equals(standort))
@@ -81,7 +81,7 @@ namespace LagerverwaltungBL.Controller
         {
             try
             {
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(
                         repository.SelectMany<Werkstattlager>().AsEnumerable());
@@ -114,7 +114,7 @@ namespace LagerverwaltungBL.Controller
         {
             try
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     List<Werkstattlager> wl = new List<Werkstattlager>(
                         repository.SelectMany<Werkstattlager>().AsEnumerable());
@@ -148,7 +148,7 @@ namespace LagerverwaltungBL.Controller
             {
                 try
                 {
-                    using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                    using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                     {
                         Autoteile autoteil = new Autoteile() { Bezeichnung = bezeichnung , Preis = preis };
 
@@ -186,7 +186,7 @@ namespace LagerverwaltungBL.Controller
             Werkstattlager lager = null;
             try
             {
-                using ( repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     long count = repository.CountWhere<Werkstattlager>(DetachedCriteria.For<Werkstattlager>()
                                                         .Add(Restrictions.Where<Werkstattlager>(item => item.Werkstatt.Standort == (werkstatt)))
@@ -229,7 +229,7 @@ namespace LagerverwaltungBL.Controller
 
             try
             {
-                using (repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
                 {
                     List<string> ret = new List<string>();
                     ret = repository.SelectMany<Werkstatt>().AsEnumerable()

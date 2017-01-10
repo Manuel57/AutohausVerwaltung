@@ -9,11 +9,13 @@
                             elem.setAttribute(arguments[i], arguments[i + 1]);
                         }
                         return elem;
-                    }(document.createElement("script"), "src", src, "type", "text/javascript");
+                    }(document.createElement("script"), "src", src, "type",
+                                                    "text/javascript");
                 })(args[i]));
             }
         })();
     }, false);
-})("head", "http://maps.googleapis.com/maps/api/js?sensor=false", "mapInfo.js", "data.js", "map.js");
+})("head", "http://maps.googleapis.com/maps/api/js?sensor=false",
+    "mapInfo.js", "data.js", "map.js");
 
 

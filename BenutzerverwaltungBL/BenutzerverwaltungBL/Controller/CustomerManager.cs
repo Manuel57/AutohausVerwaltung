@@ -260,6 +260,7 @@ namespace BenutzerverwaltungBL.Controller
                        .ForEach(i => repository.Delete(i)
                        ));
 
+
                     repository.Delete(customerToDelete);
                 }
                 return true;

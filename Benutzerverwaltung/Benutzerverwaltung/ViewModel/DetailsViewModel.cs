@@ -57,7 +57,14 @@ namespace Benutzerverwaltung.ViewModel
         {
             try
             {
-                CustomerManager.UpdateCustomer(this.Kunde);
+                if ( !string.IsNullOrEmpty(this.Kunde.Adress) &&
+                    !string.IsNullOrEmpty(this.Kunde.FirstName) &&
+                    !string.IsNullOrEmpty(this.Kunde.LastName) &&
+                    !string.IsNullOrEmpty(this.Kunde.Username) &&
+                    !string.IsNullOrEmpty(this.Kunde.WerkstattKonzern) )
+                    CustomerManager.UpdateCustomer(this.Kunde);
+                else
+                    throw new Exception("Nicht alle Werte eingegeben!");
             }
 
             catch ( Exception ex )
@@ -76,7 +83,7 @@ namespace Benutzerverwaltung.ViewModel
             {
                 MessageBoxResult dialogResult = MessageBox.Show(Properties.Resources.AreYouSure , "Delete" , MessageBoxButton.YesNo , MessageBoxImage.Warning);
                 if ( dialogResult.Equals(MessageBoxResult.Yes) )
-                {                    
+                {
                     CustomerManager.DeleteCustomer(this.Kunde);
                     this.Close();
                 }

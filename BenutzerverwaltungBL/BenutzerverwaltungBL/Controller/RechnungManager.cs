@@ -64,7 +64,7 @@ namespace BenutzerverwaltungBL.Controller
             }
             catch ( Exception ex )
             {
-                throw ( new DatabaseException(ex , "") );
+                throw ( new DatabaseException(ex , "Fehler beim ausstellen der Rechnung", "Überprüfen Sie ob die Rechnung bereits aussgestellt wurde", "Wenn Sie keine Lösung finden, melden Sie sich bei unserem Service Team.", "Danke") );
             }
 
         }

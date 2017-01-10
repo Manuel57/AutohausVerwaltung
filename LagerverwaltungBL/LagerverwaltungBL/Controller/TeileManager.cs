@@ -43,7 +43,7 @@ namespace LagerverwaltungBL.Controller
 
 
         /// <summary>
-        /// Gets all Teile of a Werkstatt
+        /// Gets all <see cref="LagerverwaltungBL.Model.Autoteile"/>  of a Werkstatt
         /// </summary>
         /// <param name="standort">The Standort of the Werkstatt</param>
         /// <returns></returns>
@@ -223,7 +223,7 @@ namespace LagerverwaltungBL.Controller
         /// <summary>
         /// selects the names of all Werkstätten in der DB
         /// </summary>
-        /// <returns>a List of all names</returns>
+        /// <returns>a list of all names</returns>
         public static IEnumerable<string> AllWerkstattNames()
         {
 
@@ -234,6 +234,9 @@ namespace LagerverwaltungBL.Controller
                     List<string> ret = new List<string>();
                     ret = repository.SelectMany<Werkstatt>().AsEnumerable()
                                      .Select<Werkstatt, string>(item => item.Standort).ToList();
+
+
+
                     return ret;
                 }
             }

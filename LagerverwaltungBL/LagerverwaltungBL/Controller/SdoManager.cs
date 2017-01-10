@@ -1,10 +1,13 @@
-﻿using Database.Common;
+﻿// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2017-1-3</date>
+
+using Database.Common;
 using Database.Common.Impl;
 using LagerverwaltungBL.Model;
 using Newtonsoft.Json;
 using NHibernate;
 using NHibernate.Criterion;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,21 +24,21 @@ namespace LagerverwaltungBL.Controller
 
 
         /// <summary>
-        /// Creates a json string containing the coordinates of all zentrallager having the given teil instock
+        /// Creates a json string containing the coordinates of all <see cref="LagerverwaltungBL.Model.Zentrallager"/> having the given <see cref="LagerverwaltungBL.Model.Autoteile"/> instock
         /// </summary>
-        /// <param name="teil">the teil</param>
-        /// <param name="werkstatt">the werkstatt</param>
+        /// <param name="teil">the <see cref="LagerverwaltungBL.Model.Autoteile"/></param>
+        /// <param name="werkstatt">the <see cref="LagerverwaltungBL.Model.Werkstatt"/></param>
         /// <returns>json string</returns>
-        public static string GetJsonCoordinates( Autoteile teil ,string werkstatt)
+        public static string GetJsonCoordinates( Autoteile teil , string werkstatt )
         {
             string ret = string.Empty;
-            ret = GetJsonCoordinates(GetZentrallagerByTeil(teil), werkstatt);
+            ret = GetJsonCoordinates(GetZentrallagerByTeil(teil) , werkstatt);
             return ret;
         }
         /// <summary>
-        /// Gets all Zentrallager having the given teil
+        /// Gets all <see cref="LagerverwaltungBL.Model.Zentrallager"/> having the given <see cref="LagerverwaltungBL.Model.Autoteile"/>
         /// </summary>
-        /// <param name="teil">the teil</param>
+        /// <param name="teil">the <see cref="LagerverwaltungBL.Model.Autoteile"/></param>
         /// <returns>List of <see cref="LagerverwaltungBL.Model.Zentrallager"/></returns>
         public static List<Zentrallager> GetZentrallagerByTeil( Autoteile teil )
         {
@@ -46,7 +49,7 @@ namespace LagerverwaltungBL.Controller
                 {
                     lager = new List<Zentrallager>(repository.SelectManyWhere<Zentrallager>(item => item.Teile.Contains(teil)));
                 }
-                AddCoordinates< Zentrallager>(lager,"koordinatenz", "Standort");
+                AddCoordinates<Zentrallager>(lager , "koordinatenz" , "Standort");
                 return lager;
             }
             catch ( DatabaseException )
@@ -60,14 +63,14 @@ namespace LagerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// Gets a json string containing the coordinates of the given lager and werkstatt
+        /// Gets a json string containing the coordinates of the given list of <see cref="LagerverwaltungBL.Model.Zentrallager"/> and <see cref="LagerverwaltungBL.Model.Werkstatt"/>
         /// </summary>
         /// <param name="lager">the list of lager</param>
         /// <param name="werkstatt">the werkstatt</param>
         /// <returns>string for two javascript variable containing the array
         ///          of lager coordinates and the coordinates of the werkstatt
         /// </returns>
-        public static string GetJsonCoordinates( List<Zentrallager> lager, string werkstatt )
+        public static string GetJsonCoordinates( List<Zentrallager> lager , string werkstatt )
         {
             string ret = string.Empty;
             object[] arr = lager.Where(item => item.Coordinates != null).Select(item => new { name = item.Standort , coordinates = new { lat = item.Coordinates.X , lng = item.Coordinates.Y } }).ToArray();
@@ -77,7 +80,7 @@ namespace LagerverwaltungBL.Controller
             Werkstatt w = GetWerkstatt(werkstatt);
             object toSer = new { name = w.Standort , coordinates = new { lat = w.Coordinates.X , lng = w.Coordinates.Y } };
 
-            s += string.Format(" var werkstatt = JSON.parse('{0}');", JsonConvert.SerializeObject(toSer , Formatting.None));
+            s += string.Format(" var werkstatt = JSON.parse('{0}');" , JsonConvert.SerializeObject(toSer , Formatting.None));
             return s;
         }
 
@@ -87,7 +90,7 @@ namespace LagerverwaltungBL.Controller
         /// </summary>
         /// <param name="werkstatt">the werkstatt</param>
         /// <returns>werkstatt</returns>
-        private static Werkstatt GetWerkstatt(string werkstatt )
+        private static Werkstatt GetWerkstatt( string werkstatt )
         {
             try
             {
@@ -97,6 +100,9 @@ namespace LagerverwaltungBL.Controller
                     lager = new List<Werkstatt>(repository.SelectMany<Werkstatt>().AsEnumerable());
                 }
                 Werkstatt w = lager.Find(item => item.Standort.Equals(werkstatt));
+
+
+
                 AddCoordinates<Werkstatt>(new List<Werkstatt>() { w } , "koordinaten" , "Standort");
                 return w;
 
@@ -118,7 +124,7 @@ namespace LagerverwaltungBL.Controller
         /// <param name="lager"></param>
         /// <param name="sdoCol"></param>
         /// <param name="idCol"></param>
-        private static void AddCoordinates<T>( List<T> lager , string sdoCol, string idCol) where T : SdoObject, IEntity
+        private static void AddCoordinates<T>( List<T> lager , string sdoCol , string idCol ) where T : SdoObject, IEntity
         {
             try
             {
@@ -129,9 +135,9 @@ namespace LagerverwaltungBL.Controller
                     cols.Add(new Column() { Alias = "lon" , Name = "t.X" , Type = NHibernate.NHibernateUtil.String });
                     cols.Add(new Column() { Alias = "lat" , Name = "t.Y" , Type = NHibernate.NHibernateUtil.String });
                     foreach ( var item in lager )
-                    {                       
-                        IList lst = ( repository as RepositoryForSpecialDataTypes ).GetQuery(Database.Connection.Database.GetTableName<T>() + ", table(sdo_util.getvertices(" +sdoCol + ")) t" ,
-                    string.Format("not " + sdoCol + " is null and " + Database.Connection.Database.GetColumnName<T>(idCol) + " = '{0}'" , item.Id) , cols); 
+                    {
+                        IList lst = ( repository as RepositoryForSpecialDataTypes ).GetQuery(Database.Connection.Database.GetTableName<T>() + ", table(sdo_util.getvertices(" + sdoCol + ")) t" ,
+                    string.Format("not " + sdoCol + " is null and " + Database.Connection.Database.GetColumnName<T>(idCol) + " = '{0}'" , item.Id) , cols);
                         if ( lst.Count > 0 )
                         {
                             object[] coords = lst?[0] as object[] ?? default(object[]);
@@ -162,9 +168,9 @@ namespace LagerverwaltungBL.Controller
                 {
                     lager = new List<Zentrallager>(repository.SelectMany<Zentrallager>().AsEnumerable());
                 }
-                AddCoordinates<Zentrallager>(lager, "koordinatenz", "Standort");
+                AddCoordinates<Zentrallager>(lager , "koordinatenz" , "Standort");
                 return lager;
-                
+
             }
             catch ( DatabaseException )
             {

@@ -30,7 +30,7 @@ namespace Benutzerverwaltung.ViewModel
                 this.CreateCommand = new RelayCommand(create);
             }
             catch ( Exception ex )
-            {              
+            {
                 ExceptionHelper.Handle(ex);
             }
 
@@ -43,9 +43,24 @@ namespace Benutzerverwaltung.ViewModel
         {
             try
             {
-                Customer c = CustomerManager.CreateCustomer("" , this.FirstName , this.LastName , DateTime.Parse(BirthDate) , this.Address);
+                if ( string.IsNullOrEmpty(this.Address) ||
+                    string.IsNullOrEmpty(this.FirstName) ||
+                    string.IsNullOrEmpty(this.LastName) )
+                    throw new Exception("Nicht alle Werte eingegeben");
+                DateTime bd;
+                try
+                {
+                    bd = DateTime.Parse(BirthDate);
+
+                }
+                catch ( Exception e )
+                {
+                    throw new Exception("Datumsformat nicht korrekt!");
+                }
+                Customer c = CustomerManager.CreateCustomer("" , this.FirstName , this.LastName , bd , this.Address);
                 UserInfoView uiv = new UserInfoView(c);
                 uiv.ShowDialog();
+
             }
             catch ( Exception ex )
             {

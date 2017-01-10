@@ -1,4 +1,7 @@
-﻿using Database.Common;
+﻿// <author>Manuel Lackenbucher</author>
+// <author>Thomas Huber</author>
+// <date>2016-12-13</date>
+using Database.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

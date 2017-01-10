@@ -79,6 +79,7 @@ namespace Benutzerverwaltung.ViewModel
                     CustomerDetailsMode.Details , this.Emp.DefaultIfEmpty(null)
                     .FirstOrDefault(item => item.CustomerId.Equals(CustId)));
                 cdv.Show();
+                updateView();
             }
             catch ( Exception ex )
             {

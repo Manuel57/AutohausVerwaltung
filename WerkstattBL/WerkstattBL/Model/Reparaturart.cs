@@ -1,4 +1,5 @@
-﻿using NHibernate.Mapping.Attributes;
+﻿using Database.Common;
+using NHibernate.Mapping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace WerkstattBL.Model
 {
     [Class(Table = "Reparaturart", Name = "WerkstattBL.Model.Reparaturart,WerkstattBL")]
-    public class Reparaturart
+    public class Reparaturart : IEntity
     {
         [Id(Name = "ReparaturArtId", Column = "Reparaturartid")]
         public virtual int ReparaturArtId { get; set; }

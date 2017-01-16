@@ -1,4 +1,5 @@
-﻿using NHibernate.Mapping.Attributes;
+﻿using Database.Common;
+using NHibernate.Mapping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace WerkstattBL.Model
 {
     [Class(Table ="kundenrechhilfe",Name = "WerkstattBL.Model.KundenRechnungsHilfe,WerkstattBL.Model")]
-    public class KundenRechnungsHilfe
+    public class KundenRechnungsHilfe : IEntity
     {
         [CompositeId(1)]
         [KeyProperty(2, Name = "KundenID", Column = "KundenID", TypeType = typeof(int))]

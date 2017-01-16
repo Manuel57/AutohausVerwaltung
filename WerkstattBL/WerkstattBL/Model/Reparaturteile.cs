@@ -1,4 +1,5 @@
-﻿using NHibernate.Mapping.Attributes;
+﻿using Database.Common;
+using NHibernate.Mapping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace WerkstattBL.Model
 {
     [Class(Table ="Reparaturteile",Name ="WerkstattBL.Model.Reparaturteile,WerkstattBL",SelectBeforeUpdate =true,DynamicUpdate =true)]
-   public class Reparaturteile
+   public class Reparaturteile : IEntity
     {
         [CompositeId(1)]
         [KeyManyToOne(2, Column = "autoteilbez", Name = "Teil", Lazy = RestrictedLaziness.False, Class = "WerkstattBL.Model.Autoteile,WerkstattBL", ClassType = typeof(Autoteile))]

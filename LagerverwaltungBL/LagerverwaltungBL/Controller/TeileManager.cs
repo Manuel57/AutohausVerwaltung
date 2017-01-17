@@ -14,13 +14,13 @@ namespace LagerverwaltungBL.Controller
 {
     public class TeileManager
     {
-       // private static IRepository repository = null;
+        // private static IRepository repository = null;
 
 
         /// <summary>
-        /// Returns all Teile
+        /// Returns all <see cref="Autoteile"/>
         /// </summary>
-        /// <returns>all Teile</returns>
+        /// <returns>all <see cref="Autoteile"/></returns>
         public static IEnumerable<Autoteile> GetAutoteile( )
         {
             try
@@ -43,9 +43,9 @@ namespace LagerverwaltungBL.Controller
 
 
         /// <summary>
-        /// Gets all <see cref="LagerverwaltungBL.Model.Autoteile"/>  of a Werkstatt
+        /// Gets all <see cref="LagerverwaltungBL.Model.Autoteile"/>  of a <see cref="Werkstatt"/>
         /// </summary>
-        /// <param name="standort">The Standort of the Werkstatt</param>
+        /// <param name="standort">The Standort of the <see cref="Werkstatt"/></param>
         /// <returns></returns>
         public static IEnumerable<Autoteile> GetAutoteileWerkstatt( string standort )
         {
@@ -69,14 +69,14 @@ namespace LagerverwaltungBL.Controller
 
         }
 
-       /// <summary>
-       /// Gets alle Teile from the given Werkstatt
-       /// where the amount is less than the given minBestand.
-       /// Throws an exception if an error occurs
-       /// </summary>
-       /// <param name="standort">the name of the Werkstatt</param>
-       /// <param name="minBestand">the critical amout of Teile</param>
-       /// <returns>a List of Autoteile</returns>
+        /// <summary>
+        /// Gets alle <see cref="Autoteile"/> from the given <see cref="Werkstatt"/>
+        /// where the amount is less than the given minBestand.
+        /// Throws an exception if an error occurs
+        /// </summary>
+        /// <param name="standort">the name of the <see cref="Werkstatt"/></param>
+        /// <param name="minBestand">the critical amout of <see cref="Autoteile"/></param>
+        /// <returns>a List of <see cref="Autoteile"/></returns>
         public static IEnumerable<Autoteile> GetKritischeTeile( string standort, int minBestand)
         {
             try
@@ -104,12 +104,12 @@ namespace LagerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// gets the amount of the teil stored in the given 
-        /// Werkstatt.
+        /// gets the amount of the <see cref="Autoteile"/> stored in the given 
+        /// <see cref="Werkstatt"/>.
         /// </summary>
-        /// <param name="standort">the name of the Werkstatt</param>
-        /// <param name="teil">the name of the Teil</param>
-        /// <returns>either default(int) or the amount of the teil in the Werkstatt</returns>
+        /// <param name="standort">the name of the <see cref="Werkstatt"/></param>
+        /// <param name="teil">the name of the <see cref="Autoteile"/></param>
+        /// <returns>either default(int) or the amount of the <see cref="Autoteile"/> in the <see cref="Werkstatt"/></returns>
         public static int? GetBestand(string standort, string teil)
         {
             try
@@ -136,13 +136,13 @@ namespace LagerverwaltungBL.Controller
             }
 
         }
-       
+
         /// <summary>
-        /// Creates a teil and returns a copy of it
+        /// Creates a <see cref="Autoteile"/> and returns a copy of it
         /// </summary>
         /// <param name="bezeichnung">The bezeichnung</param>
         /// <param name="preis">The price</param>
-        /// <returns>Copy of created teil</returns>
+        /// <returns>Copy of created <see cref="Autoteile"/></returns>
         public static Autoteile CreateAutoteil( string bezeichnung , double preis )
         {
             {
@@ -171,14 +171,14 @@ namespace LagerverwaltungBL.Controller
 
         }
 
-         /// <summary>
-        /// Orders a autoteil to the given wekskstatt
+        /// <summary>
+        /// Orders a <see cref="Autoteile"/> to the given <see cref="Werkstatt"/>
         /// updates the inventory
-        /// creates a new Werkstattlager if it has not already been existing
+        /// creates a new <see cref="Werkstattlager"/> if it has not already been existing
         /// </summary>
-        /// <param name="bezeichnung">the bezeichnung of the autoteil</param>
-        /// <param name="werkstatt">the unique standort of the werkstatt</param>
-        /// <param name="zentrallager">the unique standort of the zentrallager</param>
+        /// <param name="bezeichnung">the <see cref="Autoteile.Bezeichnung"/> of the <see cref="Autoteile"/></param>
+        /// <param name="werkstatt">the unique <see cref="Werkstatt.Standort"/> of the <see cref="Werkstatt"/></param>
+        /// <param name="zentrallager">the unique <see cref="Zentrallager.Standort"/> of the <see cref="Zentrallager"/></param>
         /// <param name="quantity">the quantity</param>
         /// <returns>true if everything has been ok</returns>
         public static bool Order(string bezeichnung, string werkstatt, string zentrallager, int quantity)
@@ -221,7 +221,7 @@ namespace LagerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// selects the names of all Werkstätten in der DB
+        /// selects the names of all <see cref="Werkstatt"/> from the database
         /// </summary>
         /// <returns>a list of all names</returns>
         public static IEnumerable<string> AllWerkstattNames()

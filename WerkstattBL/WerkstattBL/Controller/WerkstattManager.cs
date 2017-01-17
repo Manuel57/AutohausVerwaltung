@@ -4,6 +4,7 @@ using NHibernate.Criterion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,11 +113,11 @@ namespace WerkstattBL.Controller
                     List<Reparaturteile> repTeile = repository.SelectMany<Reparaturteile>()
                                                                 .Where(item => item.RepArt.ReparaturArtId == repartID)
                                                                 .ToList();
-
+                    List<Autoteile> teile = repTeile.Select<Reparaturteile, Autoteile>(item => item.Teil).ToList();
                     //könnt a anders gmacht werden mit Restriction.In oda so
                     List<Werkstattlager> wl = repository.SelectManyWhere<Werkstattlager>(DetachedCriteria.For<Werkstattlager>()
                                                             .Add(Restrictions.Where<Werkstattlager>(item => item.Werkstatt == standort))
-                                                            .Add(Restrictions.Where<Autoteile>(item => repTeile.Select<Reparaturteile, Autoteile>(teil => teil.Teil).Contains(item)))
+                                                            .Add(Restrictions.In("Teil",new Collection<Autoteile>(teile)))
                                                             ).ToList();
 
                     wl.ForEach(item => item.Bestand -= repTeile.Find(teil => teil.Teil == item.Teil).Menge);

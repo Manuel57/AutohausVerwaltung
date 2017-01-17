@@ -34,7 +34,7 @@ namespace Benutzerverwaltung.ViewModel
         }
 
         /// <summary>
-        /// Shows the Reparaturen view
+        /// Shows the ReparaturenView
         /// </summary>
         private void ShowReparaturen( )
         {

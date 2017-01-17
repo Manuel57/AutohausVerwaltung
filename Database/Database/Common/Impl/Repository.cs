@@ -158,7 +158,7 @@ namespace Database.Common.Impl
             {
                 return this.session.CreateSQLQuery(query);
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException)
             {
                 this.setError();
                 throw;
@@ -216,7 +216,7 @@ namespace Database.Common.Impl
                 session.Delete(entity);
                 //CommitTransaction();
             }
-            catch ( DatabaseException ex )
+            catch ( DatabaseException )
             {
                 this.setError();
                 throw;

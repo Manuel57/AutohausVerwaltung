@@ -35,6 +35,7 @@ namespace LagerverwaltungBL.Controller
             ret = GetJsonCoordinates(GetZentrallagerByTeil(teil) , werkstatt);
             return ret;
         }
+       
         /// <summary>
         /// Gets all <see cref="LagerverwaltungBL.Model.Zentrallager"/> having the given <see cref="LagerverwaltungBL.Model.Autoteile"/>
         /// </summary>
@@ -65,8 +66,8 @@ namespace LagerverwaltungBL.Controller
         /// <summary>
         /// Gets a json string containing the coordinates of the given list of <see cref="LagerverwaltungBL.Model.Zentrallager"/> and <see cref="LagerverwaltungBL.Model.Werkstatt"/>
         /// </summary>
-        /// <param name="lager">the list of lager</param>
-        /// <param name="werkstatt">the werkstatt</param>
+        /// <param name="lager">the list of <see cref="Zentrallager"/></param>
+        /// <param name="werkstatt">the <see cref="Werkstatt.Standort"/></param>
         /// <returns>string for two javascript variable containing the array
         ///          of lager coordinates and the coordinates of the werkstatt
         /// </returns>
@@ -86,10 +87,10 @@ namespace LagerverwaltungBL.Controller
 
 
         /// <summary>
-        /// Gets the werkstatt
+        /// Gets the <see cref="Werkstatt"/>
         /// </summary>
-        /// <param name="werkstatt">the werkstatt</param>
-        /// <returns>werkstatt</returns>
+        /// <param name="werkstatt">the <see cref="Werkstatt"/></param>
+        /// <returns>a <see cref="Werkstatt"/></returns>
         private static Werkstatt GetWerkstatt( string werkstatt )
         {
             try
@@ -155,10 +156,11 @@ namespace LagerverwaltungBL.Controller
                 throw ( new DatabaseException(ex , "Error in selecting all autoteile ") );
             }
         }
+
         /// <summary>
-        /// Gets all zentrallager
+        /// Gets all <see cref="Zentrallager"/>
         /// </summary>
-        /// <returns>list of zentrallager</returns>
+        /// <returns>list of <see cref="Zentrallager"/></returns>
         public static List<Zentrallager> GetZentrallager( )
         {
             try

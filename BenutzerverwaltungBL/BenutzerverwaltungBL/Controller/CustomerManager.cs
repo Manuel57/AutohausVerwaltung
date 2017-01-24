@@ -30,12 +30,12 @@ namespace BenutzerverwaltungBL.Controller
         /// Creates a customer and inserts it into the database.
         /// Creates the random username and password for the customer.
         /// </summary>
-        /// <param name="werkstattKonzern">name of the werkstattkonzern</param>
+        /// <param name="companyName">name of the company </param>
         /// <param name="fullName">the full name of the customer e.g. Huber Thomas</param>
         /// <param name="birthDate">the birth date of the customer</param>
         /// <param name="adresse">the adresse of the customer e.g. 9500 Villach Italienerstraße 3</param>
         /// <returns>a copie of the customer</returns>
-        public static Customer CreateCustomer(string werkstattKonzern,string vorname,string nachname, DateTime birthDate,
+        public static Customer CreateCustomer(string companyName,string vorname,string nachname, DateTime birthDate,
                                         string adresse)
         {
             try
@@ -239,13 +239,13 @@ namespace BenutzerverwaltungBL.Controller
             }
 
         }
-        
+
         /// <summary>
-        /// deletes the given customer in the database and all bills of the customer.
+        /// deletes the given customer in the database and all <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> of the customer.
         /// throws an exception if an error occurs.
-        /// Ensures that all bills of the customer are saved as PDF in the DB
+        /// Ensures that all  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> of the customer are saved as PDF in the DB
         /// </summary>
-        /// <param name="customerToDelete"></param>
+        /// <param name="customerToDelete">the customer to delete</param>
         /// <returns>true if succeeded or throws an exception</returns>
         public static bool DeleteCustomer(Customer customerToDelete)
         {

@@ -24,7 +24,7 @@ namespace BenutzerverwaltungBL.Controller
         #endregion
 
         /// <summary>
-        /// generates a bill as pdf out of the given bill
+        /// generates a  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> as pdf out of the given  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/>
         /// and returns it as byte[] for storing it in a db
         /// </summary>
         /// <param name="rechnung">the object whhich should be "converted" to a pdf</param>
@@ -153,7 +153,7 @@ namespace BenutzerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// generates the first line of the bill wih the last name of the customer
+        /// generates the first line of the  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> wih the last name of the customer
         /// </summary>
         /// <param name="d">the document to add </param>
         private static void addAnredeText( Document d )

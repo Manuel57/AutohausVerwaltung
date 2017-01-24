@@ -15,7 +15,13 @@ namespace Database.Common.Impl
 
         private RepositoryForSpecialDataTypes( ) { session = Database.Connection.Database.Instance.OpenSession(); }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="whereClause"></param>
+        /// <param name="colums"></param>
+        /// <returns></returns>
         public IList GetQuery( string table, string whereClause , HashSet<Column> colums )
         {
 

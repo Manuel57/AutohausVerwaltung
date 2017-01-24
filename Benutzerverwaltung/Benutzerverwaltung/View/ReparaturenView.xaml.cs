@@ -37,7 +37,7 @@ namespace Benutzerverwaltung.View
         }
 
         /// <summary>
-        /// Creates a Rechnung
+        /// Creates a  <see cref="Rechnung"/> as pdf
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

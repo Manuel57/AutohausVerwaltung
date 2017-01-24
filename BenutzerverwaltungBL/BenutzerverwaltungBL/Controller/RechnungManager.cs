@@ -28,11 +28,11 @@ namespace BenutzerverwaltungBL.Controller
         #endregion
 
         /// <summary>
-        /// inserts the bill as pdf in the db
-        /// the titel is genrated out of the details of the bill
+        /// inserts the  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> as pdf in the db
+        /// the titel is genrated out of the details of the  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/>
         /// throws an exception if an error occurs
         /// </summary>
-        /// <param name="rechnungsId">the identifier of the bill</param>
+        /// <param name="rechnungsId">the identifier of the  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/></param>
         /// <returns>true or throws an exception</returns>
         public static bool InsertRechnungAsDoc( int rechnungsId )
         {
@@ -70,21 +70,18 @@ namespace BenutzerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// inserts all Bills, which have not already been safed
+        /// inserts all  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/>, which have not already been safed
         /// as pdf, in the DB as PDF
         /// </summary>
         /// <param name="customerID">the customer identifier</param>
         public static void InsertAllRechnungAsDoc(int customerID)
         {
-
             try
-            {
-               
+            {               
                     Customer c = CustomerManager.GetSingleCustomerById(customerID);
                     c.Rechnungen.ToList()
                                 .Where(item => item.IsAlreadyPdf == false).ToList()
-                                .ForEach(item => InsertRechnungAsDoc(item.Rechnungsnummer));
-               
+                                .ForEach(item => InsertRechnungAsDoc(item.Rechnungsnummer));               
             }
             catch (DatabaseException)
             {
@@ -99,7 +96,7 @@ namespace BenutzerverwaltungBL.Controller
 
         /// <summary>
         /// returns a list of byte[] containing all
-        /// docs for the given customer id
+        /// pfds for the given customer id
         /// </summary>
         /// <param name="customerID">the id of the customer</param>
         public static List<byte[]> GetAllRechnungenForKunde( int customerID )
@@ -133,11 +130,11 @@ namespace BenutzerverwaltungBL.Controller
         }
 
         /// <summary>
-        /// selects a certain bill of the customer given 
+        /// selects a certain  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> of the customer given 
         /// by checking the date given
         /// </summary>
-        /// <param name="customerID">the customer whos bill to select</param>
-        /// <param name="rechnungsID">the id of the bill</param>
+        /// <param name="customerID">the customer whos  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/> to select</param>
+        /// <param name="rechnungsID">the id of the  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/></param>
         /// <returns> a byte [] or null or throws an exception </returns>
         public static byte[] GetCertainRechnungForKunde( int customerID , int rechnungsID )
         {
@@ -172,7 +169,7 @@ namespace BenutzerverwaltungBL.Controller
 
         /// <summary>
         /// calls the PdfGenerator to Generate a pdf out of the 
-        /// given bill.
+        /// given  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/>.
         /// returns the pdf as byte[]
         /// </summary>
         /// <param name="rechnungn"></param>
@@ -184,7 +181,7 @@ namespace BenutzerverwaltungBL.Controller
 
         /// <summary>
         /// generates the titel for storing in the database
-        /// out of the given bill
+        /// out of the given  <see cref="BenutzerverwaltungBL.Model.DataObjects.Rechnung"/>
         /// </summary>
         /// <param name="rechnungn"></param>
         /// <returns>a generated titel</returns>

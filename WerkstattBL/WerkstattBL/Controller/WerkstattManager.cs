@@ -12,14 +12,14 @@ using WerkstattBL.Model;
 
 namespace WerkstattBL.Controller
 {
-   public static class WerkstattManager
-    {       
-        public static IEnumerable<KundenRechnungsHilfe> GetMessagesForToday(DateTime now)
+    public static class WerkstattManager
+    {
+        public static IEnumerable<KundenRechnungsHilfe> GetMessagesForToday( DateTime now )
         {
 
             try
             {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     List<KundenRechnungsHilfe> ret = repository.SelectManyWhere<KundenRechnungsHilfe>(DetachedCriteria.For<KundenRechnungsHilfe>()
                                                                 .Add(Restrictions.Where<KundenRechnungsHilfe>(item => item.Datum.ToShortDateString() == now.ToShortDateString())
@@ -27,63 +27,63 @@ namespace WerkstattBL.Controller
                     return ret;
                 }
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in getting Messages for today!"));
+                throw ( new DatabaseException(ex , "Error in getting Messages for today!") );
             }
 
         }
-        public static bool CreateReparatur(int repartID, int rechnungsnummer,DateTime date,string standort)
+        public static bool CreateReparatur( int repartID , int rechnungsnummer , DateTime date , string standort )
         {
 
             try
             {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     bool ret = false;
                     Reparaturart rArt = repository.SelectSingleWhere<Reparaturart>(item => item.ReparaturArtId == repartID);
                     Reparatur rep = new Reparatur()
                     {
-                        ReparaturId = repository.Max<Reparatur, int>("ReparaturId") + 1,
-                        Rechnungsnummer = rechnungsnummer,
-                        RepArt = rArt,
-                        Standort = standort,
+                        ReparaturId = repository.Max<Reparatur , int>("ReparaturId") + 1 ,
+                        Rechnungsnummer = rechnungsnummer ,
+                        RepArt = rArt ,
+                        Standort = standort ,
                         ReparaturDatum = date
                     };
 
                     repository.SaveOrUpdate<Reparatur>(rep);
                     //für reparatur benötigte Teile aus Bestand nehmen
-                    DecreaseMenge(repartID, standort);
+                    DecreaseMenge(repartID , standort);
 
                     ret = true;
 
                     return ret;
                 }
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in creating a Reparatur!"));
+                throw ( new DatabaseException(ex , "Error in creating a Reparatur!") );
             }
 
         }
-        public static void DeleteFromHelp(int rechnungsnummer,int kundenID)
+        public static void DeleteFromHelp( int rechnungsnummer , int kundenID )
         {
 
             try
             {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    IDictionary dic = new Dictionary<string, int>();
-                    dic.Add("KundenID", kundenID);
-                    dic.Add("Rechnungsnummer", rechnungsnummer);
+                    IDictionary dic = new Dictionary<string , int>();
+                    dic.Add("KundenID" , kundenID);
+                    dic.Add("Rechnungsnummer" , rechnungsnummer);
 
                     repository.SelectManyWhere<KundenRechnungsHilfe>(DetachedCriteria.For<KundenRechnungsHilfe>()
                                                                     .Add(Restrictions.AllEq(dic)))
@@ -91,22 +91,22 @@ namespace WerkstattBL.Controller
                                                                     .ForEach(item => repository.Delete(item));
                 }
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in delting messages!"));
+                throw ( new DatabaseException(ex , "Error in delting messages!") );
             }
 
         }
-        private static void DecreaseMenge(int repartID, string standort)
+        private static void DecreaseMenge( int repartID , string standort )
         {
 
             try
             {
-                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
 
                     List<Reparaturteile> repTeile = repository.SelectMany<Reparaturteile>()
@@ -116,24 +116,42 @@ namespace WerkstattBL.Controller
                     //könnt a anders gmacht werden mit Restriction.In oda so
                     List<Werkstattlager> wl = repository.SelectManyWhere<Werkstattlager>(DetachedCriteria.For<Werkstattlager>()
                                                             .Add(Restrictions.Where<Werkstattlager>(item => item.Werkstatt == standort))
-                                                            .Add(Restrictions.Where<Autoteile>(item => repTeile.Select<Reparaturteile, Autoteile>(teil => teil.Teil).Contains(item)))
+                                                            .Add(Restrictions.Where<Autoteile>(item => repTeile.Select<Reparaturteile , Autoteile>(teil => teil.Teil).Contains(item)))
                                                             ).ToList();
 
                     wl.ForEach(item => item.Bestand -= repTeile.Find(teil => teil.Teil == item.Teil).Menge);
 
+
+                    //Please try the version below
+
+                    //List<Reparaturteile> z = null;
+                    //( from we in repository.SelectMany<Werkstattlager>()
+                    //  let l = ( from s in repository.SelectMany<Reparaturteile>()
+                    //            where s.RepArt.ReparaturArtId.Equals(repartID)
+                    //            select s )
+                    //  let d = new { z = l }
+                    //  where we.Werkstatt
+                    //  .Equals(standort) && (
+                    //      from x in l select x.Teil ).Contains(we.Teil)
+
+                    //  select we ).ToList().ForEach(item => item.Bestand -=
+                    //  ( ( List<Reparaturteile> ) ( from t in z
+                    //                               where t.Teil.Equals(item.Teil)
+                    //                               select t ) ).First().Menge);
+
                     repository.SaveOrUpdateMore(wl);
                 }
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in decreasing amount of Teile"));
+                throw ( new DatabaseException(ex , "Error in decreasing amount of Teile") );
             }
 
-        } 
+        }
 
     }
 }

@@ -101,6 +101,40 @@ namespace WerkstattBL.Controller
             }
 
         }
+
+        public static IEnumerable<string> GetAlleStandort()
+        {
+
+            try
+            {
+                using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                {
+                  
+                    IList<string> ret = (repository.GetQuery("select standort from werkstatt")).List<string>();
+                    return ret;
+                }
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw (new DatabaseException(ex, ""));
+            }
+
+        }
+
+        public static IEnumerable<Reparaturart> GetAlleFürStandort(string standort)
+        {
+            using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+            {
+                IList<int> repArtId = (repository.GetQuery("select reperaturartid from reparturangebot where standort = ?").SetString(0,standort)
+                                    ).List<int>();
+                IEnumerable<Reparaturart> ret = repository.SelectManyWhere<Reparaturart>(item => repArtId.Contains(item.ReparaturArtId));
+                return ret;
+            }
+        }
         private static void DecreaseMenge( int repartID , string standort )
         {
 

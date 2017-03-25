@@ -35,39 +35,42 @@ namespace BenutzerverwaltungBL.Controller
         /// <param name="birthDate">the birth date of the customer</param>
         /// <param name="adresse">the adresse of the customer e.g. 9500 Villach Italienerstraße 3</param>
         /// <returns>a copie of the customer</returns>
-        public static Customer CreateCustomer(string companyName,string vorname,string nachname, DateTime birthDate,
-                                        string adresse)
+        public static Customer CreateCustomer( string companyName , string vorname , string nachname , DateTime birthDate ,
+                                        string adresse )
         {
             try
             {
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(vorname+nachname, birthDate);
+                    string origPw = string.Empty;                    
+                    UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(vorname + nachname , birthDate , out origPw);
                     Customer customer = new Customer()
                     {
-                        CustomerId = repository.Max<Customer, int>("CustomerId")+1,
-                        Adress = adresse,
-                        WerkstattKonzern = DEFAULTWERKSTATTKONZERN,
-                        FirstName = vorname,
-                        LastName = nachname,
-                        BirthDate = birthDate,
-                        Username = user.Username,
+                        CustomerId = repository.Max<Customer , int>("CustomerId") + 1 ,
+                        Adress = adresse ,
+                        WerkstattKonzern = DEFAULTWERKSTATTKONZERN ,
+                        FirstName = vorname ,
+                        LastName = nachname ,
+                        BirthDate = birthDate ,
+                        Username = user.Username ,
                         Password = user.Password
                     };
 
                     repository.SaveOrUpdate(customer);
 
-                    return customer.Clone() as Customer;
+                    Customer copy = customer.Clone() as Customer;
+                    copy.Password = origPw;
+                    return copy;
                 }
 
             }
-            catch (DatabaseException )
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in creating customer!"));
+                throw ( new DatabaseException(ex , "Error in creating customer!") );
             }
 
         }
@@ -79,23 +82,23 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="id">the id of the customer to select</param>
         /// <returns>the customer with the given id from the database</returns>
-        public static Customer GetSingleCustomerById(int id)
+        public static Customer GetSingleCustomerById( int id )
         {
             try
-            {               
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+            {
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                   return repository.GetById<Customer>(id);
+                    return repository.GetById<Customer>(id);
                 }
-                
+
             }
-            catch (DatabaseException )
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in selecting singel customer by id "+id));
+                throw ( new DatabaseException(ex , "Error in selecting singel customer by id " + id) );
             }
 
         }
@@ -107,22 +110,22 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="expression"></param>
         /// <returns>the customer matching the given expression</returns>
-        public static Customer GetSingleCustomerByExpression(Expression<Func<Customer, bool>> expression)
+        public static Customer GetSingleCustomerByExpression( Expression<Func<Customer , bool>> expression )
         {
             try
             {
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     return repository.SelectSingleWhere(expression);
                 }
             }
-            catch (DatabaseException )
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, ""));
+                throw ( new DatabaseException(ex , "") );
             }
 
         }
@@ -132,54 +135,56 @@ namespace BenutzerverwaltungBL.Controller
         /// throws an exception if an error occurs.
         /// </summary>
         /// <returns> a IEnumerable of all customers</returns>
-        public static IEnumerable<Customer> GetAllCustomers()
+        public static IEnumerable<Customer> GetAllCustomers( )
         {
             try
             {
                 IEnumerable<Customer> ret = null;
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ret = new List<Customer>(repository.SelectMany<Customer>().AsEnumerable());
+                    ( ret as List<Customer> ).RemoveAll(item => item.CustomerId == -777);
 
-                   
                 }
                 return ret;
             }
-            catch (DatabaseException )
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in UserManager selecting all customers" ));
+                throw ( new DatabaseException(ex , "Error in UserManager selecting all customers") );
             }
 
         }
-        
+
         /// <summary>
         /// returns all customers matching the given expression.
         /// throws an exception if an error occurs.
         /// </summary>
         /// <param name="expression"></param>
         /// <returns>IEnumerable of all customers mathcing the expression given</returns>
-        public static IEnumerable<Customer>GetAllCustomersWhere(Expression<Func<Customer, bool>> expression)
+        public static IEnumerable<Customer> GetAllCustomersWhere( Expression<Func<Customer , bool>> expression )
         {
             try
             {
                 IEnumerable<Customer> ret = null;
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ret = new List<Customer>(repository.SelectManyWhere(expression));
+                    
                 }
+                
                 return ret;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in selecting customers with linq expression!"));
+                throw ( new DatabaseException(ex , "Error in selecting customers with linq expression!") );
             }
 
         }
@@ -190,24 +195,24 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="expression"></param>
         /// <returns>IEnumerable of all customers mathcing the criteria given</returns>
-        public static IEnumerable<Customer> GetAllCustomersWhere(DetachedCriteria criteria)
+        public static IEnumerable<Customer> GetAllCustomersWhere( DetachedCriteria criteria )
         {
             try
             {
                 IEnumerable<Customer> ret = null;
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ret = new List<Customer>(repository.SelectManyWhere<Customer>(criteria));
                 }
                 return ret;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in selecting customers with criteria!"));
+                throw ( new DatabaseException(ex , "Error in selecting customers with criteria!") );
             }
 
         }
@@ -219,23 +224,23 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="newCustomer"></param>
         /// <returns>true if succeeded or throws an exception</returns>
-        public static bool UpdateCustomer(Customer newCustomer)
+        public static bool UpdateCustomer( Customer newCustomer )
         {
             try
             {
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     repository.SaveOrUpdate(newCustomer);
                 }
                 return true;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, ""));
+                throw ( new DatabaseException(ex , "") );
             }
 
         }
@@ -247,11 +252,11 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="customerToDelete">the customer to delete</param>
         /// <returns>true if succeeded or throws an exception</returns>
-        public static bool DeleteCustomer(Customer customerToDelete)
+        public static bool DeleteCustomer( Customer customerToDelete )
         {
-            try 
+            try
             {
-                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
+                using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     RechnungManager.InsertAllRechnungAsDoc(customerToDelete.CustomerId);
 
@@ -265,13 +270,13 @@ namespace BenutzerverwaltungBL.Controller
                 }
                 return true;
             }
-            catch (DatabaseException)
+            catch ( DatabaseException )
             {
                 throw;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                throw (new DatabaseException(ex, "Error in CustomerManager deleting customer "+customerToDelete.FirstName));
+                throw ( new DatabaseException(ex , "Error in CustomerManager deleting customer " + customerToDelete.FirstName) );
             }
 
         }

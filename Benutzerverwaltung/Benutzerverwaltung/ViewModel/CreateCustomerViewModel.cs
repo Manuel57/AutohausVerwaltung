@@ -57,6 +57,7 @@ namespace Benutzerverwaltung.ViewModel
                 {
                     throw new Exception("Datumsformat nicht korrekt!");
                 }
+
                 Customer c = CustomerManager.CreateCustomer("" , this.FirstName , this.LastName , bd , this.Address);
                 UserInfoView uiv = new UserInfoView(c);
                 uiv.ShowDialog();

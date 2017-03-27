@@ -14,17 +14,18 @@ namespace WerkstattBL.Controller
 {
     public static class WerkstattManager
     {
-        public static IEnumerable<KundenRechnungsHilfe> GetMessagesForToday( DateTime now )
+        public static IEnumerable<Kundenrechhilfe> GetMessagesForToday( DateTime now, string sta)
         {
 
             try
             {
                 using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    List<KundenRechnungsHilfe> ret = repository.SelectManyWhere<KundenRechnungsHilfe>(DetachedCriteria.For<KundenRechnungsHilfe>()
-                                                                .Add(Restrictions.Where<KundenRechnungsHilfe>(item => item.Datum.ToShortDateString() == now.ToShortDateString())
-                        )).ToList();
-                    return ret;
+                    //
+                    List<Kundenrechhilfe> ret = new List<Kundenrechhilfe>(repository.SelectManyWhere<Kundenrechhilfe>(DetachedCriteria.For<Kundenrechhilfe>()
+                                                                                           .Add(Restrictions.Where<Kundenrechhilfe>(item => item.Standort == sta))
+                                                                ));
+                    return ret.Where(item => item.Datum.ToShortDateString() == now.ToShortDateString());
                 }
             }
             catch ( DatabaseException )
@@ -85,7 +86,7 @@ namespace WerkstattBL.Controller
                     dic.Add("KundenID" , kundenID);
                     dic.Add("Rechnungsnummer" , rechnungsnummer);
 
-                    repository.SelectManyWhere<KundenRechnungsHilfe>(DetachedCriteria.For<KundenRechnungsHilfe>()
+                    repository.SelectManyWhere<Kundenrechhilfe>(DetachedCriteria.For<Kundenrechhilfe>()
                                                                     .Add(Restrictions.AllEq(dic)))
                                                                     .ToList()
                                                                     .ForEach(item => repository.Delete(item));
@@ -111,7 +112,7 @@ namespace WerkstattBL.Controller
                 {
                   
                     IList<string> ret = (repository.GetQuery("select standort from werkstatt")).List<string>();
-                    return ret;
+                    return new List<string>( ret);
                 }
             }
             catch (DatabaseException)
@@ -129,10 +130,10 @@ namespace WerkstattBL.Controller
         {
             using (IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>())
             {
-                IList<int> repArtId = (repository.GetQuery("select reperaturartid from reparturangebot where standort = ?").SetString(0,standort)
-                                    ).List<int>();
+                IList<decimal> repArtId = (repository.GetQuery("select Reparaturartid from REparaturangebot where standort = ?").SetString(0,standort)
+                                    ).List<decimal>();
                 IEnumerable<Reparaturart> ret = repository.SelectManyWhere<Reparaturart>(item => repArtId.Contains(item.ReparaturArtId));
-                return ret;
+                return new List<Reparaturart>(ret);
             }
         }
         private static void DecreaseMenge( int repartID , string standort )
@@ -143,16 +144,16 @@ namespace WerkstattBL.Controller
                 using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
 
-                    List<Reparaturteile> repTeile = repository.SelectMany<Reparaturteile>()
-                                                                .Where(item => item.RepArt.ReparaturArtId == repartID)
-                                                                .ToList();
-
-                    //könnt a anders gmacht werden mit Restriction.In oda so
-                    List<Werkstattlager> wl = repository.SelectManyWhere<Werkstattlager>(DetachedCriteria.For<Werkstattlager>()
-                                                            .Add(Restrictions.Where<Werkstattlager>(item => item.Werkstatt == standort))
-                                                            .Add(Restrictions.Where<Autoteile>(item => repTeile.Select<Reparaturteile , Autoteile>(teil => teil.Teil).Contains(item)))
-                                                            ).ToList();
-
+                    List<Reparaturteile> repTeile = new List<Reparaturteile>( repository.SelectManyWhere<Reparaturteile>(
+                                                                                DetachedCriteria.For<Reparaturteile>()
+                                                                                 .Add(Restrictions.Where<Reparaturteile>(item => item.RepArt.ReparaturArtId == repartID)
+                                                                            )));
+                    List<Autoteile> autoteile = repTeile.Select(teil => teil.Teil).ToList();
+                     //könnt a anders gmacht werden mit Restriction.In oda so
+                    List<Werkstattlager> wl = new List<Werkstattlager>(repository.SelectManyWhere<Werkstattlager>(DetachedCriteria.For<Werkstattlager>()
+                                                            .Add(Restrictions.Where<Werkstattlager>(item => item.Standort == standort)))
+                                                             .ToList());
+                    wl = wl.Where(item => autoteile.Contains(item.Teil)).ToList();
                     wl.ForEach(item => item.Bestand -= repTeile.Find(teil => teil.Teil == item.Teil).Menge);
 
 

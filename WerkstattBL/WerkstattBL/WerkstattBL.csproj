@@ -56,7 +56,7 @@
     <Compile Include="Configuration\ConfigManager.cs" />
     <Compile Include="Controller\WerkstattManager.cs" />
     <Compile Include="Model\Autoteile.cs" />
-    <Compile Include="Model\KundenRechnungsHilfe.cs" />
+    <Compile Include="Model\Kundenrechhilfe.cs" />
     <Compile Include="Model\Reparatur.cs" />
     <Compile Include="Model\Reparaturart.cs" />
     <Compile Include="Model\Reparaturteile.cs" />

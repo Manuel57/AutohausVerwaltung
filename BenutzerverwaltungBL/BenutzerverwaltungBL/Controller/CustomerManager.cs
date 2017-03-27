@@ -56,7 +56,7 @@ namespace BenutzerverwaltungBL.Controller
                     };
 
                     repository.SaveOrUpdate(customer);
-
+                    customer.Password = user.DecPw;
                     return customer.Clone() as Customer;
                 }
 

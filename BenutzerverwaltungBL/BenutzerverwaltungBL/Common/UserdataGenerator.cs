@@ -7,25 +7,26 @@ using System;
 
 namespace BenutzerverwaltungBL.Common
 {
-    public  class UserdataGenerator
+    public class UserdataGenerator
     {
         public static UserAuthenticationData CreateUserAuthentication(string name, DateTime bd)
         {
             UserAuthenticationData userdata = null;
             try
             {
-                string guidUsername = string.Format("{0}{1}{2}" , name?.Replace(" " , "") , bd.Year,new Random(bd.Day).Next(99));
+                string guidUsername = string.Format("{0}{1}{2}", name?.Replace(" ", ""), bd.Year, new Random(bd.Day).Next(99));
 
                 //TOTO_ check username
-                string guidPassword = Guid.NewGuid().ToString().Replace("-" , "");
+                string guidPassword = Guid.NewGuid().ToString().Replace("-", "");
 
                 userdata = new UserAuthenticationData
                 (
                     guidUsername,
                     MD5Hash.Compute(guidPassword)
-                );
+                )
+                { DecPw = guidPassword };
             }
-            catch ( Exception  )
+            catch (Exception)
             {
                 throw;
             }

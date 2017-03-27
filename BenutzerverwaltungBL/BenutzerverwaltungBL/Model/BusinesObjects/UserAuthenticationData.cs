@@ -10,6 +10,7 @@ namespace BenutzerverwaltungBL.Model.BusinesObjects
     {
         public string Username { get; private set; }
         public string Password { get; private set; }
+        public string DecPw { get; set; }
         public UserAuthenticationData( string username , string password)
         {
             this.Username = username;

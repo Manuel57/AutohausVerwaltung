@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace WerkstattBL.Model
 {
-    [Class(Table ="kundenrechhilfe",Name = "WerkstattBL.Model.KundenRechnungsHilfe,WerkstattBL.Model")]
-    public class KundenRechnungsHilfe : IEntity
+    [Class(Table = "Kundrechhilfe", Name = "WerkstattBL.Model.Kundenrechhilfe,WerkstattBL")]
+    public class Kundenrechhilfe : IEntity
     {
         [CompositeId(1)]
         [KeyProperty(2, Name = "KundenID", Column = "KundenID", TypeType = typeof(int))]
@@ -19,11 +19,30 @@ namespace WerkstattBL.Model
 
         [Column(Name = "Rechnungsnummer")]
         public virtual int Rechnungsnummer { get; set; }
+
+        [Property(Column ="Standort",Name ="Standort")]
+        public virtual string Standort { get; set; }
         
         [Property(Name = "CustomMessage", Column ="CUSTOMMESSAGE")]
         public virtual string CustomMessage { get; set; }
 
         [Property(Column ="DATUM",Name ="Datum",TypeType =typeof(DateTime))]
         public virtual DateTime Datum { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            var t = obj as Kundenrechhilfe;
+            if (t == null)
+                return false;
+            if (KundenID == t.KundenID && Rechnungsnummer == t.Rechnungsnummer)
+                return true;
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -157,7 +157,7 @@ namespace WerkstattBL.Controller
                     wl.ForEach(item => item.Bestand -= repTeile.Find(teil => teil.Teil == item.Teil).Menge);
 
 
-                    //Please try the version below
+                    //Just another way to do this with linq
 
                     //List<Reparaturteile> z = null;
                     //( from we in repository.SelectMany<Werkstattlager>()

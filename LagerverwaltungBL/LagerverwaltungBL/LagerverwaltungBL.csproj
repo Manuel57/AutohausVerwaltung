@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="LagerverwaltungBL.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>

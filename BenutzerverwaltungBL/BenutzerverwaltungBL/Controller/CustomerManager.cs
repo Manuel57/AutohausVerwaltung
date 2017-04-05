@@ -42,7 +42,7 @@ namespace BenutzerverwaltungBL.Controller
             {
                 using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    string origPw = string.Empty;                    
+                    string origPw = string.Empty;
                     UserAuthenticationData user = UserdataGenerator.CreateUserAuthentication(vorname + nachname , birthDate , out origPw);
                     Customer customer = new Customer()
                     {
@@ -82,10 +82,11 @@ namespace BenutzerverwaltungBL.Controller
         /// </summary>
         /// <param name="id">the id of the customer to select</param>
         /// <returns>the customer with the given id from the database</returns>
-        public static Customer GetSingleCustomerById( int id )
+        public static Customer GetSingleCustomerById( int id , IRepository repo = null )
         {
             try
             {
+
                 using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     return repository.GetById<Customer>(id);
@@ -173,9 +174,9 @@ namespace BenutzerverwaltungBL.Controller
                 using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
                     ret = new List<Customer>(repository.SelectManyWhere(expression));
-                    
+
                 }
-                
+
                 return ret;
             }
             catch ( DatabaseException )
@@ -258,15 +259,19 @@ namespace BenutzerverwaltungBL.Controller
             {
                 using ( IRepository repository = RepositoryFactory.Instance.CreateRepository<Repository>() )
                 {
-                    RechnungManager.InsertAllRechnungAsDoc(customerToDelete.CustomerId);
+                    RechnungManager.InsertAllRechnungAsDoc(customerToDelete , customerToDelete.CustomerId);
 
                     customerToDelete.Rechnungen.ToList()
                        .ForEach(item => item.Reparaturen.ToList()
                        .ForEach(i => repository.Delete(i)
                        ));
 
+                    //customerToDelete.Rechnungen.ToList().ForEach(item => repository.Delete<Rechnung>(item));
 
-                    repository.Delete(customerToDelete);
+                    repository.GetQuery("delete from kundrechhilfe where kundenid = ?").SetDecimal(0 , customerToDelete.CustomerId).ExecuteUpdate();
+
+                    Customer c = repository.GetById<Customer>(customerToDelete.CustomerId);
+                    repository.Delete(c);
                 }
                 return true;
             }

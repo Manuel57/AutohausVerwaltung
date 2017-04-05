@@ -18,7 +18,7 @@ namespace BenutzerverwaltungBL.Common
             {
                 string guidUsername = string.Format("{0}{1}{2}" , name?.Replace(" " , "") , bd.Year , new Random(bd.Day).Next(99));
                 userdata.Username = "SmZ8mz9r54kgb7xc";
-                userdata.Password = Guid.NewGuid().ToString().Replace("-" , "");
+                userdata.Password = Guid.NewGuid().ToString().Replace("-" , "").Substring(26);
                 origPw = userdata.Password;
 
                 string jsonSend = JsonConverter.serializeData<UserAuthenticationData>(userdata);

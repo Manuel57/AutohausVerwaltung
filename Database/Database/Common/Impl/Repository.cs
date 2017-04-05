@@ -38,6 +38,7 @@ namespace Database.Common.Impl
         #endregion protected fields
 
         #endregion fields
+        
 
         #region constructors
         public Repository( ISession _session ) { session = _session; }
@@ -288,7 +289,7 @@ namespace Database.Common.Impl
         {
             try
             {
-                return Connection.Database.Instance.OpenSession().Get<T>(objId);
+                return session.Get<T>(objId);
             }
             catch ( DatabaseException )
             {

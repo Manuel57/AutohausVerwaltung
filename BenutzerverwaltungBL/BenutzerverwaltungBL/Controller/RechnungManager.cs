@@ -74,11 +74,11 @@ namespace BenutzerverwaltungBL.Controller
         /// as pdf, in the DB as PDF
         /// </summary>
         /// <param name="customerID">the customer identifier</param>
-        public static void InsertAllRechnungAsDoc(int customerID)
+        public static void InsertAllRechnungAsDoc(Customer c,int customerID)
         {
             try
             {               
-                    Customer c = CustomerManager.GetSingleCustomerById(customerID);
+                   // Customer c = CustomerManager.GetSingleCustomerById(customerID);
                     c.Rechnungen.ToList()
                                 .Where(item => item.IsAlreadyPdf == false).ToList()
                                 .ForEach(item => InsertRechnungAsDoc(item.Rechnungsnummer));               

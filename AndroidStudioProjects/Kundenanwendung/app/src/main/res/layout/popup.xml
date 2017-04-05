@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_element"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/black"
+    android:padding="10px"
+    android:orientation="vertical">
+
+    <TextView
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Termin erfolgreich angefragt. Sie bekommen eine Benachrichtigung, sobalt einer Ihrer Termine bestätigt wurde."
+        android:textColor="@android:color/white"/>
+
+
+</LinearLayout>

@@ -12,14 +12,15 @@ namespace WerkstattBL.Model
     public class Werkstattlager : IEntity
     {       
         [CompositeId(1)]
-        [KeyProperty(3, Column = "standort", Name = "Werkstatt")]
-        [KeyManyToOne(2, Column = "bezeichnung", Name = "Teil", Lazy = RestrictedLaziness.False, Class = "WerkstattBL.Model.Autoteile,WerkstattBL", ClassType = typeof(Autoteile))]
+        [KeyProperty(2, Column = "standort", Name = "Standort")]
+        [KeyManyToOne(3, Column = "bezeichnung", Name = "Teil", Lazy = RestrictedLaziness.False, Class = "WerkstattBL.Model.Autoteile,WerkstattBL", ClassType = typeof(Autoteile))]
+
+        [Column(Name = "standort")]
+        public virtual string Standort { get; set; }
 
         [Column(Name = "bezeichnung")]
         public virtual Autoteile Teil { get; set; }
-
-        [Column(Name = "standort")]
-        public virtual string Werkstatt { get; set; }
+        
 
         [Property(Name = "Bestand", Column = "lagerbastand")]
         public virtual int Bestand { get; set; }
@@ -31,7 +32,7 @@ namespace WerkstattBL.Model
             var t = obj as Werkstattlager;
             if (t == null)
                 return false;
-            if (Teil.Bezeichnung.Equals(t.Teil.Bezeichnung) && Werkstatt.Equals(t.Werkstatt))
+            if (Teil.Bezeichnung.Equals(t.Teil.Bezeichnung) && Standort.Equals(t.Standort))
                 return true;
             return false;
         }

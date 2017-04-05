@@ -49,7 +49,8 @@
     <Reference Include="Verwaltung">
       <HintPath>..\..\Autohausverwaltung\Verwaltung\bin\Debug\Verwaltung.dll</HintPath>
     </Reference>
-    <Reference Include="WerkstattBL">
+    <Reference Include="WerkstattBL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WerkstattBL\WerkstattBL\bin\Debug\WerkstattBL.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />

@@ -1,0 +1,35 @@
+﻿<Window x:Class="Werkstatt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Werkstatt"
+        mc:Ignorable="d"
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <DataGrid x:Name="dgMessages" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Height="283" Width="297" SelectionChanged="dgMessages_SelectionChanged"/>
+        <Label x:Name="lblToday" Content="Aufgaben für heute" HorizontalAlignment="Left" Height="32" Margin="22,8,0,0" VerticalAlignment="Top" Width="222"/>
+        <Button x:Name="btnFertig" Content="Fertig gestellt" HorizontalAlignment="Left" Height="23" Margin="34,345,0,0" VerticalAlignment="Top" Width="141" Click="btnFertig_Click"/>
+        <ComboBox x:Name="cmbStandorte" HorizontalAlignment="Left" Height="22" Margin="587,18,0,0" VerticalAlignment="Top" Width="125" SelectionChanged="cmbStandorte_SelectionChanged"/>
+        <Label x:Name="label" Content="Standort" HorizontalAlignment="Left" Height="30" Margin="423,10,0,0" VerticalAlignment="Top" Width="134"/>
+        <Label x:Name="label1" Content="Neue Repartur erstellen" HorizontalAlignment="Left" Height="29" Margin="312,74,0,0" VerticalAlignment="Top" Width="218"/>
+        <Grid HorizontalAlignment="Left" Height="115" Margin="312,124,0,0" VerticalAlignment="Top" Width="380" Name="grdRepartur">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Name="coulmnLabel" Width="233*">
+                </ColumnDefinition>
+                <ColumnDefinition Name="columnTools" Width="120*">
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" x:Name="label2" Content="Welche Reparatur haben Sie durchgeführt?" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="237" Grid.ColumnSpan="2"/>
+            <ComboBox x:Name="cmbReparturArten" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="57,0,-48,0" VerticalAlignment="Top" Width="120"/>
+            <Label x:Name="label3" Content="Gewählter Kunde" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="47" Width="251"/>
+            <Label x:Name="lblKundenId" Content="" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109"/>
+        </Grid>
+        <Button x:Name="btnRepErstellen" Content="Reparatur erstellen" HorizontalAlignment="Left" Height="29" Margin="365,275,0,0" VerticalAlignment="Top" Width="162" Click="btnRepErstellen_Click"/>
+
+    </Grid>
+</Window>

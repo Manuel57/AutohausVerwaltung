@@ -1,0 +1,17 @@
+﻿<Window x:Class="LagerVerwaltung.View.ChangeTeilView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LagerVerwaltung.View"
+         xmlns:viewmodel="clr-namespace:LagerVerwaltung.ViewModel"
+         xmlns:res="clr-namespace:LagerVerwaltung.Properties"
+        mc:Ignorable="d"
+        Title="ChangeTeilView" Height="350" Width="350">
+    <Window.Resources>
+        <viewmodel:ChangeTeilViewModel x:Key="changeViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource changeViewModel}" x:Name="root">
+        
+    </Grid>
+</Window>

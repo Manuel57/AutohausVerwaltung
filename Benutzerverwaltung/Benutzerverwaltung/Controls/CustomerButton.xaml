@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Benutzerverwaltung.Controls.CustomerButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Benutzerverwaltung.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="25">
+    <Grid>
+        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ButtonVisibility}" x:Name="btn" Style="{StaticResource ImageButton}" VerticalAlignment="Top" Width="20" Height="20" Click="button_Click" >
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ImageBtn}"  Height="16" Width="16" >
+                </Image>
+            </StackPanel>
+        </Button>
+
+    </Grid>
+</UserControl>

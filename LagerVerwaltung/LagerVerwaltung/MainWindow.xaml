@@ -4,9 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LagerVerwaltung"
+        xmlns:viewmodel="clr-namespace:LagerVerwaltung.ViewModel"
+         xmlns:res="clr-namespace:LagerVerwaltung.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Loaded="Window_Loaded"
+        Title="MainWindow"  WindowState="Maximized" WindowStartupLocation="CenterScreen" Closing="OnWindowClosing" Width="946.5" Initialized="Window_Initialized">
+    <Window.Resources>
+        <viewmodel:MainWindowViewModel x:Key="mainViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource mainViewModel}" x:Name="root">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="299*"></ColumnDefinition>
+            <ColumnDefinition Width="342*"></ColumnDefinition>
+            <ColumnDefinition Width="297*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label  Content="{x:Static res:Resources.NameOfPart}" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,47,0,0" VerticalAlignment="Top" Width="124"/>
+        <Label  Content="{x:Static res:Resources.Price}" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10,113,0,0" VerticalAlignment="Top" Width="124"/>
+        <Label Content="{x:Static res:Resources.StorageAmount}" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10,182,0,0" VerticalAlignment="Top" Width="124"/>
+
+        <TextBox x:Name="txtSelected" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="169,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" IsEnabled="True" Text="{Binding Path=PartToOrder}"/>
+        <TextBox x:Name="txtPreis" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,113,0,0" TextWrapping="Wrap" Text="{Binding Path=Preis}" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
+        <TextBox x:Name="txtBestand" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="169,182,0,0" TextWrapping="Wrap" Text="{Binding Path=Bestand}" VerticalAlignment="Top" Width="139"  IsEnabled="False"/>
+
+        <Button x:Name="btnChange" Visibility="Hidden" Content="Change Part" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,274,0,0" VerticalAlignment="Top" Width="154" Command="{Binding ChangeTeilCommand}"/>
+        <Button x:Name="btnCreate" Content="{x:Static res:Resources.CreateNewPart}" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,333,0,0" VerticalAlignment="Top" Width="154" Command="{Binding CreateTeilCommand}"/>
+        <Button x:Name="btnOrder" Content="{x:Static res:Resources.OrderPart}" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="24,392,0,0" VerticalAlignment="Top" Width="154"  Command="{Binding OrderTeilCommand}"/>
+
+        <ListView x:Name="lvTeile" Grid.Column="0" Height="283" Margin="30,45,0,0" VerticalAlignment="Top" ItemsSource="{Binding Path=allTeile, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="lvTeile_SelectionChanged" HorizontalAlignment="Left" Width="250">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Bezeichnung }" 
+                        Header="Bezeichnung"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Preis}" Header="Preis"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         
+        <ListView x:Name="lvMessage" Grid.Column="2" HorizontalAlignment="Left" Height="283" Margin="39,45,0,0" VerticalAlignment="Top" Width="248" ItemsSource="{Binding Path=importantMessages, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Short}" Header="Message"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
     </Grid>
 </Window>

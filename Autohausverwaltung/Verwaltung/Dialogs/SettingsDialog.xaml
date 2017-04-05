@@ -1,0 +1,13 @@
+﻿<Window x:Class="Verwaltung.Dialogs.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Verwaltung.Dialogs"
+         xmlns:wpg="clr-namespace:WPG;assembly=WPG"
+        mc:Ignorable="d"
+        Title="SettingsDialog" Height="300" Width="441.549" Closing="Window_Closing" Initialized="Window_Initialized">
+    <Grid Initialized="Grid_Initialized">
+        <wpg:PropertyGrid AutomaticlyExpandObjects="False"  Width="320" Foreground="BlanchedAlmond" Instance="{Binding ElementName=myGrid}" x:Name="wpgMyControl" ShowDescription="False" ShowPreview="false"  />
+    </Grid>
+</Window>

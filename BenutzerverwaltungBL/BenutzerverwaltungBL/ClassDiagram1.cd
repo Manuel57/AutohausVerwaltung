@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BenutzerverwaltungBL.Common.UserdataGenerator">
+    <Position X="2.75" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\UserdataGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Configuration.ConfigureBl">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Configuration\ConfigureBl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Controller.CustomerManager">
+    <Position X="13.75" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAQAAABAABAAAAAAAAAAAgAgAIAAAAAAAAIA=</HashCode>
+      <FileName>Controller\CustomerManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Controller.JsonConverter">
+    <Position X="11.25" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\JsonConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Controller.PdfGenerator">
+    <Position X="8.25" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gCCAAAAAAAAAEACACAAAAgABAIAAAABAAAABAEAQkAA=</HashCode>
+      <FileName>Controller\PdfGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Controller.RechnungManager">
+    <Position X="11" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAYAAAAAAAAABAAgAAAAAAAAQAgAAAA=</HashCode>
+      <FileName>Controller\RechnungManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Controller.Web.HttpConnectionController">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAACAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Controller\Web\HttpConnectionController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Instance" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Model.BusinesObjects.UserAuthenticationData">
+    <Position X="5.25" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\BusinesObjects\UserAuthenticationData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Model.DataObjects.Customer" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAUAAAAAAAAAAAQAAAAQAAAgAABACAAAAAAAAEBg=</HashCode>
+      <FileName>Model\DataObjects\Customer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Rechnungen" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Model.DataObjects.Rechnung" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACBAAAgAAAEAAAAAAAAAAAAABAAACAAAAAAAAI=</HashCode>
+      <FileName>Model\DataObjects\Rechnung.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Kunde" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Reparaturen" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Model.DataObjects.Reparatur" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAgAAAgAAAAAAAAAAAAIAAQABBAAAAAAA=</HashCode>
+      <FileName>Model\DataObjects\Reparatur.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Rechnungsnummer" />
+      <Property Name="RepArt" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BenutzerverwaltungBL.Model.DataObjects.ReparaturArt" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAIAAAAEAAAAAAAAAABA=</HashCode>
+      <FileName>Model\DataObjects\ReparaturArt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,89 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Benutzerverwaltung" xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <Style x:Key="ImageButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" 
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        CornerRadius="5"
+                        Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="Gainsboro" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.25" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="lvColBorder">
+        <Setter Property="Control.BorderThickness" Value="0.25 0 0 0" />
+        <Setter Property="Control.BorderBrush" Value="#FF6DA2FF" />
+    </Style>
+
+
+    <SolidColorBrush x:Key="MainWindowControlsBackground" Color="#FF0B4B81"/>
+    <SolidColorBrush x:Key="MainWindowControlsBorder" Color="#FF000687"/>
+    <DropShadowEffect x:Key="MainWindowDropShadow" ShadowDepth="1"/>
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                    <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                        <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style x:Key="HighlightingOff" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Background" Value="Transparent" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+
+                    <Border
+                         BorderBrush="{DynamicResource MainWindowControlsBorder}"
+                         BorderThickness="0"
+                         CornerRadius="5"
+                         Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="7" BlurRadius="5" Direction="300" />
+                        </Border.Effect>
+                        <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}"/>
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="20,5,20,3"/>
+    </Style>
+    <Thickness x:Key="ListViewColumnMargin">15,0</Thickness>
+    <Style x:Key="textBoxStyle">
+        <Setter Property="Control.Background" Value="{DynamicResource MainWindowControlsBackground}"/>
+        <Setter Property="Control.BorderBrush" Value="{DynamicResource MainWindowControlsBorder}"/>
+        <Setter Property="Control.Foreground" Value="White"/>
+        <Setter Property="Control.FontSize" Value="14"/>
+        <Setter Property="UIElement.Effect" Value="{DynamicResource MainWindowDropShadow}"/>
+    </Style>
+
+
+    <System:Double x:Key="FontSize">14</System:Double>
+</ResourceDictionary>

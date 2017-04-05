@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Database.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d5a09</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d5a</Value>
+    </Setting>
+    <Setting Name="IpAdresseIntern" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.128.152</Value>
+    </Setting>
+    <Setting Name="IpAdresseExtern" Type="System.String" Scope="User">
+      <Value Profile="(Default)">212.152.179.117</Value>
+    </Setting>
+    <Setting Name="ServiceName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ora11g</Value>
+    </Setting>
+    <Setting Name="IpCurrent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.128.152</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

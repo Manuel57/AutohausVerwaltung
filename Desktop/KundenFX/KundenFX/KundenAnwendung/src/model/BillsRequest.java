@@ -1,0 +1,32 @@
+package model;
+
+import java.time.LocalDate;
+
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
+public class BillsRequest {
+
+	private LocalDate dateTo = null;
+	private LocalDate dateFrom = null;
+	private String username = null;
+	public LocalDate getDateTo() {
+		return dateTo;
+	}
+	public void setDateTo(LocalDate dateTo) {
+		this.dateTo = dateTo;
+	}
+	public LocalDate getDateFrom() {
+		return dateFrom;
+	}
+	public void setDateFrom(LocalDate dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+
+}

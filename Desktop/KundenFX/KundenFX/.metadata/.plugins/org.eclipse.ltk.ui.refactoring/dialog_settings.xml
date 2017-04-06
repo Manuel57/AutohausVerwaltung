@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+	</section>
+	<section name="RefactoringWizard.preview">
+		<item value="600" key="width"/>
+		<item value="400" key="height"/>
+	</section>
+	<section name="InferTypeArguments">
+		<item value="true" key="leaveUnconstrainedRaw"/>
+		<item value="true" key="assumeCloneReturnsSameType"/>
+	</section>
+	<section name="RefactoringWizard.Externalize strings in &apos;RechnungController.java&apos;">
+		<item value="681" key="width"/>
+		<item value="519" key="height"/>
+	</section>
+</section>

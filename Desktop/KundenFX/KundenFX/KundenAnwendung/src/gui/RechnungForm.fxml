@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="311.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RechnungController">
+	<children>
+      <RadioButton fx:id="rbtnWeek" layoutX="217.0" layoutY="50.0" mnemonicParsing="false" text="Wöchentlich">
+         <toggleGroup>
+            <ToggleGroup fx:id="group" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbtnMonth" layoutX="217.0" layoutY="69.0" mnemonicParsing="false" text="Monatlich" toggleGroup="$group" />
+      <RadioButton fx:id="rbtnHalfYear" layoutX="217.0" layoutY="88.0" mnemonicParsing="false" text="Halb Jährlich" toggleGroup="$group" />
+      <Label fx:id="lblChoose" layoutX="14.0" layoutY="50.0" text="Bitte wählen Sie einen Zeitraum:" />
+      <Label layoutX="233.0" layoutY="24.0" text="Zeiträume" />
+      <Label fx:id="lblZeitraum" layoutX="14.0" layoutY="146.0" text="BItte Woche/Monat eingeben:" />
+      <TextField fx:id="txtMoWe" layoutX="199.0" layoutY="141.0" promptText="Woche/Monat" />
+      <Button fx:id="btnShow" layoutX="27.0" layoutY="207.0" mnemonicParsing="false" onAction="#btnShow_Click" text="Anzeigen" />
+      <Label fx:id="lblError" layoutX="384.0" layoutY="146.0" stylesheets="@../style/Lablestyle.css" />
+      
+	</children>
+</AnchorPane>

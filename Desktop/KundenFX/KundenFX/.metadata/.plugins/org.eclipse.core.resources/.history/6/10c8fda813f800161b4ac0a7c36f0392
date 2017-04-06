@@ -1,0 +1,12 @@
+package gui;
+
+import javafx.event.Event;
+import javafx.fxml.FXML;
+
+public class RechnungController {
+
+	@FXML
+	private void mouse_click(Event mv) {
+		System.out.println("ok");
+	}
+}

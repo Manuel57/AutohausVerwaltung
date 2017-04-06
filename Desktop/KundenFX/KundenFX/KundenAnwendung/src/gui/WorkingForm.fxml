@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="505.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.WorkingController">
+	<children>
+		<TabPane fx:id="tabPane" prefHeight="505.0" prefWidth="642.0" tabClosingPolicy="UNAVAILABLE">
+			<tabs>
+				<Tab fx:id="tabRechnung" text="Rechnung">
+				
+				</Tab>
+				<Tab fx:id="tabReparaturen" text="Reparaturen">
+					<content>
+						<fx:include source="ReparaturForm.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabChange" text="ChangePassword">
+					<content>
+						<fx:include source="ChangePWD.fxml" />
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</children>
+</AnchorPane>

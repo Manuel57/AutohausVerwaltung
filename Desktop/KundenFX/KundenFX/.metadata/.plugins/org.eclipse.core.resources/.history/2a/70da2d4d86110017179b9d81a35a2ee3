@@ -1,0 +1,75 @@
+package gui;
+
+import java.io.IOException;
+
+import com.google.gson.Gson;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import model.GlobalVars;
+import model.User;
+import webserviceaccess.WebserviceController;
+
+public class MainController {
+
+	@FXML
+	private Button btnLogin;
+	@FXML
+	private TextField txtUser;
+	@FXML
+	private PasswordField pfPwd;
+	@FXML
+	private Label lblError;
+	private User currentUser = null;
+	
+	@FXML
+	private void btnLogin_Click(ActionEvent av) {
+		try {
+			if (txtUser.getText().isEmpty() || pfPwd.getText().isEmpty()) {
+				lblError.setText("Username/Password leer");
+			} else {
+				lblError.setText("");
+				if (checkUserData(txtUser.getText(), pfPwd.getText())) {
+					Node node = (Node) av.getSource();
+					Stage stage = (Stage) node.getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/WorkingForm.fxml"));
+					Parent root = loader.load();
+					WorkingController w = loader.getController();
+					w.init(currentUser);
+
+					Scene scene = new Scene(root);
+					stage.setScene(scene);
+					stage.show();
+					w.selectFirst();
+
+				} else {
+					lblError.setText("Invalid Username/Password");
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private boolean checkUserData(String username, String pwd) {
+		// mit Webservice checken
+		this.currentUser = new User();
+		currentUser.setPasswort(pwd);
+		currentUser.setUsername(username);
+	
+		return WebserviceController.getInstance().checkUsername(currentUser);
+		//return true;
+	}
+
+}

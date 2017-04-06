@@ -1,0 +1,185 @@
+package webserviceaccess;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientResponse;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import model.GlobalVars;
+import model.ReparaturAnfrage;
+import model.User;
+
+public class WebserviceController {
+
+	private User currentUser;
+	private URL url;
+	private HttpsURLConnection con;
+
+	private WebserviceController() {
+
+		currentUser = new User();
+	}
+
+	private static WebserviceController instance = new WebserviceController();
+
+	public static WebserviceController getInstance() {
+		return instance;
+	}
+
+	public boolean checkUsername(User check) throws Exception {
+		boolean b = false;
+		this.currentUser.setPasswort(check.getPassword());
+		this.currentUser.setUsername(check.getUsername());
+		String userCredentials = check.getUsername()+":"+check.getPassword();
+		String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+		System.out.println(basicAuth);
+		String input = new Gson().toJson(check);
+		
+		url = new URL(getBaseURI()+"/user/check");
+		con = (HttpsURLConnection) url.openConnection();
+
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", basicAuth);
+		con.setRequestProperty("Content-Type","application/json");
+		con.setDoOutput(true);
+		OutputStreamWriter wr= new OutputStreamWriter(con.getOutputStream());
+		wr.write(input);
+		wr.close();
+		System.out.println(input);
+		System.out.println(con.getResponseCode());
+		
+		BufferedReader in = new BufferedReader( new InputStreamReader(con.getInputStream()));
+		String response;
+		StringBuffer buffer = new StringBuffer();
+		while((response = in.readLine())!= null) {
+			buffer.append(response);
+		}
+		in.close();
+		
+		 b = new Gson().fromJson(buffer.toString(), Boolean.class);
+		 System.out.println(b);
+		return b;
+
+	}
+	
+	public boolean changePassword(User newUser) throws Exception {
+		boolean b = true;
+		
+		String userCredentials = this.currentUser.getUsername()+":"+this.currentUser.getPassword();
+		String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+		System.out.println(basicAuth);
+		this.currentUser.setPasswort(newUser.getPassword());
+		
+		String input = new Gson().toJson(newUser);
+		
+		url = new URL(getBaseURI()+"/user/changepw");
+		con = (HttpsURLConnection) url.openConnection();
+
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", basicAuth);
+		con.setRequestProperty("Content-Type","application/json");
+		con.setDoOutput(true);
+		OutputStreamWriter wr= new OutputStreamWriter(con.getOutputStream());
+		wr.write(input);
+		wr.close();
+		System.out.println(input);
+		System.out.println(con.getResponseCode());
+		if(con.getResponseCode() != 200) {
+			b = false;
+		}
+		
+		return b;
+
+	}
+
+	public void getRechnungen(String zeitr, int number, User kunde) {
+		switch (zeitr) {
+		case GlobalVars.WEEK:
+			break;
+		case GlobalVars.MONTH:
+			break;
+		case GlobalVars.HALFYEAR:
+			break;
+		default:
+			break;
+		}
+	}
+	 public List<String> getAllAvailableServices(String standort) {
+		 List<String> all = new ArrayList<String>();
+		 //abfrage an Webservice
+		 for(int i = 0; i < 5;i++) {
+			 if(standort.equals("Villach")) {
+				 all.add("Item"+i*100);
+			 } else{
+			 all.add("Item"+i);
+			 }
+		 }
+		 return all;
+	 }
+	 
+	 public List<String> getAllStandorte() throws Exception {
+		 
+		 List<String> allStandorte = new ArrayList<String>();
+		 String userCredentials = this.currentUser.getUsername()+":"+this.currentUser.getPassword();
+			String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+			System.out.println(basicAuth);
+			
+			
+			url = new URL(getBaseURI()+"/main/standorte");
+			con = (HttpsURLConnection) url.openConnection();
+
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Authorization", basicAuth);
+			//con.setRequestProperty("Content-Type","application/json");
+			BufferedReader in = new BufferedReader( new InputStreamReader(con.getInputStream()));
+			String response;
+			StringBuffer buffer = new StringBuffer();
+			while((response = in.readLine())!= null) {
+				buffer.append(response);
+			}
+			in.close();
+			Type collType = new TypeToken<List<String>>() {}.getType();
+			allStandorte = new Gson().fromJson(buffer.toString(), collType);
+			
+		 return allStandorte;
+	 }
+	 
+	 public String checkService(ReparaturAnfrage rA) {
+			//Webservice Json schicken rA
+		 //return ob termin geht oder nicht
+			return "21.2.2017";
+		}
+	 public boolean insertTermin(ReparaturAnfrage rA) {
+		//Webservice Json schicken rA und dort eintragen
+		 return true;
+	 }
+
+	private static String getBaseURI() {
+		return "https://manuel57.ddns.net/AutohausWebservice/rest";
+
+	}
+
+	
+}

@@ -1,0 +1,9 @@
+package model;
+
+public class BillsRequest {
+
+	public BillsRequest() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

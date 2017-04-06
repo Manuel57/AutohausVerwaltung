@@ -1,0 +1,224 @@
+package gui;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.sun.javafx.scene.control.skin.DatePickerContent;
+import com.sun.javafx.scene.control.skin.DatePickerSkin;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
+import model.GlobalVars;
+import model.ReparaturAnfrage;
+import model.User;
+import webserviceaccess.WebserviceController;
+
+public class ReparaturController {
+
+	private DateCell iniCell = null;
+	private DateCell endCell = null;
+	private User currentUser = null;
+	private String customMessage = "";
+	private List<String> leistungen = new ArrayList<String>();
+	private List<Date> termine = new ArrayList<Date>();
+
+	@FXML
+	private ListView<String> lvServices;
+	@FXML
+	private ComboBox<String> cmbStandort;
+	@FXML
+	private Button checkDate;
+	@FXML
+	private DatePicker datePicker;
+	@FXML
+	private TextArea txtCustomMessage;
+	@FXML
+	private Label lblError;
+
+	public void init(User currentUser) {
+		if (currentUser != null) {
+			this.currentUser = currentUser;
+		}
+		System.out.println("Repartur init");
+		// alle Standorte holen
+		List<String> standorte = new ArrayList<String>();
+		try {
+			standorte = WebserviceController.getInstance().getAllStandorte();
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
+			e1.printStackTrace();
+		}
+		ObservableList<String> observableList = FXCollections.observableList(standorte);
+
+		cmbStandort.setItems(observableList);
+		cmbStandort.valueProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue ov, String t, String t1) {
+				changeListViewItems(cmbStandort.getSelectionModel().getSelectedItem().toString());
+			}
+		});
+
+		datePicker.setValue(LocalDate.now());
+		datePicker.showingProperty().addListener((obs, b, b1) -> {
+			if (b1) {
+				DatePickerContent content = (DatePickerContent) ((DatePickerSkin) datePicker.getSkin())
+						.getPopupContent();
+
+				List<DateCell> cells = content.lookupAll(".day-cell").stream()
+						.filter(ce -> !ce.getStyleClass().contains("next-month")).map(n -> (DateCell) n)
+						.collect(Collectors.toList());
+
+				content.setOnMouseDragged(e -> {
+					Node n = e.getPickResult().getIntersectedNode();
+					DateCell c = null;
+					if (n instanceof DateCell) {
+						c = (DateCell) n;
+					} else if (n instanceof Text) {
+						c = (DateCell) (n.getParent());
+					}
+					if (c != null && c.getStyleClass().contains("day-cell")
+							&& !c.getStyleClass().contains("next-month")) {
+						if (iniCell == null) {
+							iniCell = c;
+						}
+						endCell = c;
+					}
+					if (iniCell != null && endCell != null) {
+						int ini = (int) Math.min(Integer.parseInt(iniCell.getText()),
+								Integer.parseInt(endCell.getText()));
+						int end = (int) Math.max(Integer.parseInt(iniCell.getText()),
+								Integer.parseInt(endCell.getText()));
+						cells.stream().forEach(ce -> ce.getStyleClass().remove("selected"));
+						cells.stream().filter(ce -> Integer.parseInt(ce.getText()) >= ini)
+								.filter(ce -> Integer.parseInt(ce.getText()) <= end)
+								.forEach(ce -> ce.getStyleClass().add("selected"));
+					}
+				});
+				content.setOnMouseReleased(e -> {
+					if (iniCell != null && endCell != null) {
+						fillDates(datePicker.getValue().getMonth().ordinal(), Integer.parseInt(iniCell.getText()),
+								Integer.parseInt(endCell.getText()));
+					}
+					endCell = null;
+					iniCell = null;
+				});
+			}
+		});
+
+	}
+
+	private void fillDates(int month, int start, int end) {
+		Calendar c = Calendar.getInstance();
+		for (int i = start; i <= end; i++) {
+			c.set(LocalDate.now().getYear(), month - 1, i, 0, 0);
+			this.termine.add(c.getTime());
+		}
+
+	}
+
+	private void changeListViewItems(String standort) {
+
+		lvServices.getItems().clear();
+		List<String> services = WebserviceController.getInstance().getAllAvailableServices(standort);
+		for (String s : services) {
+			lvServices.getItems().add(s);
+		}
+
+		lvServices.setCellFactory(CheckBoxListCell.forListView(new Callback<String, ObservableValue<Boolean>>() {
+			@Override
+			public ObservableValue<Boolean> call(String item) {
+				BooleanProperty observable = new SimpleBooleanProperty();
+				observable.addListener((obs, wasSelected, isNowSelected) -> {
+					addOrRemoveItem(item, isNowSelected);
+				});
+
+				return observable;
+
+			}
+		}));
+	}
+
+	private void addOrRemoveItem(String leistung, boolean currentState) {
+
+		if (currentState && !checkLeistung(leistung)) {
+			this.leistungen.add(leistung);
+		} else if (!currentState && checkLeistung(leistung)) {
+			this.leistungen.remove(leistung);
+		}
+	}
+
+	private boolean checkLeistung(String leistung) {
+		// TODO Auto-generated method stub
+		return this.leistungen.contains(leistung);
+	}
+
+	@FXML
+	private void btnCheckDate_Click(ActionEvent av) {
+		this.lblError.setText("");
+		if (this.leistungen.size() < 1) {
+			this.lblError.setText(GlobalVars.ERROR_NOSERVICE);
+		} else if (this.termine.size() < 1) {
+			lblError.setText(GlobalVars.ERROR_NODATE);
+		} else {
+			System.out.println("Check date");
+			this.customMessage = this.txtCustomMessage.getText();
+			ReparaturAnfrage rA = new ReparaturAnfrage(this.currentUser, this.customMessage);
+
+			rA.setDatesToCheck(this.termine);
+			rA.setLeistungen(this.leistungen);
+			String date = WebserviceController.getInstance().checkService(rA);
+			if (date != null) {
+
+				Alert alert = new Alert(AlertType.CONFIRMATION,
+						"Der nächste freie Termin wäre der\n " + date + "!\nIst dieser Termin passend für Sie? ",
+						ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+				alert.showAndWait();
+
+				if (alert.getResult() == ButtonType.YES) {
+					// webservice termin eintragen lassen
+					if (WebserviceController.getInstance().insertTermin(rA)) {
+						alert = new Alert(AlertType.INFORMATION, "Der Termin " + date + " wurde für Sie reserviert!");
+						alert.show();
+					} else {
+						// mal schaun
+					}
+				} else if (alert.getResult() == ButtonType.NO) {
+					alert = new Alert(AlertType.INFORMATION,
+							"Bitte wählen Sie einen anderen Zeitraum\noder einen anderen Standort!");
+					alert.show();
+				}
+			} else {
+
+				Alert alert = new Alert(AlertType.INFORMATION,
+						"Der von Ihnen gewählte Zeitraum\n ist leider nicht mehr vorhanden!");
+
+				alert.show();
+			}
+		}
+	}
+
+}

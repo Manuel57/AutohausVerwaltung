@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/aopalliance-repackaged-2.5.0-b05.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/hk2-api-2.5.0-b05.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/hk2-locator-2.5.0-b05.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/hk2-utils-2.5.0-b05.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/javassist-3.20.0-GA.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/javax.inject-2.5.0-b05.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/javax.ws.rs-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jaxb-api-2.2.7.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-common.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-guava-2.24.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-media-jaxb.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-server.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/org.osgi.core-4.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-client-2.26-b03.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-media-json-jackson1-2.25.1.jar"/>
+	<classpathentry kind="lib" path="/home/pupil/workspace/BSD/KundenFX/libs/jersey-client.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

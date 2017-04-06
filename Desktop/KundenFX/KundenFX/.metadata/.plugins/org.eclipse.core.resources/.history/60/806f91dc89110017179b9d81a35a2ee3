@@ -1,0 +1,9 @@
+package gui;
+
+public class ChangePwdController {
+
+	public ChangePwdController() {
+		// TODO Auto-generated constructor stub
+	}
+
+}
